@@ -3,7 +3,7 @@ import {toast} from 'react-toastify'
 import { useNavigate } from "react-router-dom"
 import {FaSignInAlt} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'
-import {login, reset} from '../features/auth/authSlice'
+import {login} from '../features/auth/authSlice'
 import Spinner from "../components/Spinner"
 
 
@@ -27,12 +27,10 @@ function Login() {
       }
       
       //redirect when Logged in
-      if(isSuccess || user){
+      // if(isSuccess || user){
           
-          navigate('/')
-      }
-  
-      dispatch(reset())
+      //     navigate('/')
+      // }
   
   },[isError, isSuccess, user, message, navigate, dispatch])
 
@@ -52,6 +50,11 @@ function Login() {
         }
 
         dispatch(login(userData))
+          .unwrap()
+          .then(()=>{
+              navigate('/')
+          })
+          .catch(toast.error)
 
     }
 

@@ -10,7 +10,7 @@ const User = require('../models/userModel')
 
 const registerUser = asyncHandler(async (req,res) => {
     
-    const { name, email, password} = req.body
+    const { name, email, password, picture} = req.body
 
     //validation
     if(!name || !email || !password) {
@@ -43,6 +43,7 @@ const registerUser = asyncHandler(async (req,res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            picture: user.picture,
             token: generateToken(user._id)
         })
     }else{
@@ -52,6 +53,40 @@ const registerUser = asyncHandler(async (req,res) => {
 
     //res.send( `hola ${req.body.name}`)
 })
+
+// @desc    Update user 
+// @route   PUT /api/users/:id
+// @access  Private
+const updateUser = asyncHandler(async (req,res) => {
+    try{
+// Get works using id in the JWT
+//console.log("userController: ", req.user)
+    const user = await User.findById(req.params.id)
+    console.log('userController: ', req.file)
+
+    if(!user){
+        res.status(401)
+        throw new Error('User not found or not conected')
+    }
+
+    // Obtener la parte de la ruta después de la carpeta 'uploads'
+    const relativePath = req.file.path.split('uploads')[1];
+    const updateUser = await User.findByIdAndUpdate(req.params.id, {picture: process.env.SERVER+"uploads"+relativePath}, {new:true})
+    const userUpdated = {
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        picture: updateUser.picture,
+        token: updateUser.token
+    }
+    res.status(200).json(userUpdated)
+    }catch (error){
+        // Handle any errors that occur during execution
+        res.status(500).json({ message: error.message || 'Internal Server Error' });
+    }
+    
+})
+
 
 // @desc    Login a user
 // @route   /api/users/login 
@@ -68,6 +103,7 @@ const loginUser = asyncHandler(async (req,res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            picture: user.picture,
             token: generateToken(user._id)
         })
     }else {
@@ -82,9 +118,11 @@ const loginUser = asyncHandler(async (req,res) => {
 // @access  Private
 const getMe = asyncHandler(async (req,res) => {
     const user = {
-        id: req.user.id,
+        _id: req.user.id,
         email: req.user.email,
-        name: req.user.name
+        name: req.user.name,
+        picture: req.user.picture,
+        token: generateToken(req.user.id)
     }
     res.status(200).json(user)
 })
@@ -101,6 +139,7 @@ const generateToken = (id) => {
 
 module.exports = {
     registerUser,
+    updateUser,
     loginUser,
     getMe
 }

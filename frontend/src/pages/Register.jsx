@@ -4,6 +4,7 @@ import {toast} from 'react-toastify'
 import {FaUser} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'
 import {register, reset} from '../features/auth/authSlice'
+import { createProfile } from "../features/candidate/canSlice"
 import Spinner from "../components/Spinner"
 
 function Register() {
@@ -32,7 +33,7 @@ useEffect(()=>{
         navigate('/')
     }
 
-    dispatch(reset())
+    //dispatch(reset())
 
 },[isError, isSuccess, user, message, navigate, dispatch])
 
@@ -56,6 +57,16 @@ useEffect(()=>{
             }
 
             dispatch(register(userData))
+                .then((successData)=>{
+                    // console.log("Register return success Data: ", successData.payload._id )
+                    // console.log("Register test: ", user._id)
+                    const fd = new FormData()
+                    fd.append('user', successData.payload._id)
+                    dispatch(createProfile(fd))
+                })
+                .catch((error)=>{
+                    toast.error(error.message)
+                })
         }
     }
 

@@ -31,18 +31,6 @@ function NewWork() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
-    // useEffect(()=>{
-    //     if(isError){
-    //         toast.error(message)
-    //     }
-
-    //     if(isSuccess){
-    //         dispatch(reset())
-    //         //navigate('/works')
-    //     }
-    //     dispatch(reset())
-    // }, [dispatch, isError,isSuccess, navigate, message])
-    
     const onSubmit = (e) => {
         e.preventDefault()
         

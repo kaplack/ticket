@@ -9,6 +9,8 @@ import Header from './components/Header'
 import PrivateRoute from './components/PrivateRoute'
 import Works from './pages/Works'
 import Work from './pages/Work'
+import CanLayout from './pages/CandidateLayout/CanLayout'
+import Footer from './components/Footer'
 
 
 
@@ -17,7 +19,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='container'>
+        
           <Header />
           <Routes>
             <Route path='/' element={<Home />} />
@@ -26,8 +28,11 @@ function App() {
             <Route path='/new-work' element={<PrivateRoute><NewWork /></PrivateRoute>} />
             <Route path='/works' element={<PrivateRoute><Works /></PrivateRoute>} />
             <Route path='/works/:workId' element={<PrivateRoute><Work /></PrivateRoute>} />
+            <Route path='/profile/Candidate/*' element={<PrivateRoute><CanLayout/></PrivateRoute>} />
+            
           </Routes>
-        </div>
+          <Footer />
+        
       </Router>
       <ToastContainer />
     </>

@@ -1,95 +1,44 @@
+@import './assets/jobzilla/css/variables';
+@import './assets/jobzilla/css/media-queries';
+@import './assets/jobzilla/css/header-full-width';
+@import './assets/jobzilla/css/components/search';
+@import './assets/jobzilla/css/components/jobCategories';
+//@import './assets/jobzilla/css/components/howItWorks';
+@import './assets/jobzilla/css/bootstrap.min.css';
+@import './assets/jobzilla/css/style.scss';
+//@import './assets/jobzilla/css/style.css';
+
 @import './scss/abstract/mixins';
 @import './scss/base/base';
 
 @import './scss/component/menu';
+@import './scss/component/header';
+@import './scss/component/buttons';
+@import './scss/component/publicWorks';
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: 'Poppins', sans-serif;
-  height: 100vh;
-}
-
-a {
-  text-decoration: none;
-  color: #000;
-}
-
-p {
-  line-height: 1.7;
-}
-
-ul {
-  list-style: none;
-}
-
-li {
-  line-height: 2.2;
-}
-
-h1,
-h2,
-h3 {
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.container {
-  width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 20px;
-  text-align: center;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid #e6e6e6;
-  margin-bottom: 60px;
-}
-
-.header ul {
+/* candidate profile page */
+.cv-box{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
+  &__link{
+    flex: 1 1 80%;
+  }
+
+  &__button{
+    flex: 1 0 20%;
+    border: none;
+    background-color: transparent;
+    color: black;
+    font-size: 2rem;
+    border-radius: 50%;
+  }
 }
 
-.header ul li {
-  margin-left: 20px;
-}
 
-.header ul li a {
-  display: flex;
-  align-items: center;
-}
-
-.header ul li a:hover {
-  color: #777;
-}
-
-.header ul li a svg {
-  margin-right: 5px;
-}
-
-.heading {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 50px;
-  padding: 0 20px;
-}
-
-.heading p {
-  color: #828282;
-}
 
 .boxes {
   display: grid;
@@ -141,54 +90,6 @@ h3 {
   margin: 0 0 5px 3px;
 }
 
-.btn {
-  padding: 10px 20px;
-  border: 1px solid #000;
-  border-radius: 5px;
-  background: #000;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  text-align: center;
-  appearance: button;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn svg {
-  margin-right: 8px;
-}
-
-.btn-reverse {
-  background: #fff;
-  color: #000;
-}
-
-.btn-block {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.btn-sm {
-  padding: 5px 15px;
-  font-size: 13px;
-}
-
-.btn-danger {
-  background: darkred;
-  border: none;
-}
-
-.btn-back {
-  width: 150px;
-  margin-bottom: 20px;
-}
-
-.btn:hover {
-  transform: scale(0.98);
-}
 
 .ticket-created {
   border: 1px solid #e6e6e6;

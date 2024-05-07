@@ -1,0 +1,56 @@
+/*how it work*/
+.twm-w-process-steps-2{
+	padding-left: 80px;
+	padding-top: 30px;
+	position: relative;
+	@include breakpoint-1024{
+		padding-left: 50px;
+	}
+	@include breakpoint-991{
+		padding-left: 30px;
+	}
+	.twm-large-number{
+		font-size: 60px;
+		font-weight: 600;
+		line-height: 50px;
+		position: absolute;
+		right: 15px;
+		top: 15px;
+		font-family: $poppins-font;
+	}
+	.twm-w-pro-top{
+		margin-left: 20px;
+		margin-bottom: 40px;
+		padding:25px;
+		border-radius: 10px;
+		position: relative;
+		.twm-media{
+			position: absolute;
+			left: -50px;
+			top: 10px;
+			width: 90px;
+			height: 95px;
+			background-color: $clr-white;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 10px;
+			box-shadow: -5px 10px 25px rgba(56, 152, 226, 0.4);
+			svg{
+				font-size: 4rem;
+			}
+		}
+		.twm-title{color: $clr-dark;  margin-bottom: 30px; margin-top: 40px; margin-left: 30px;}
+	}
+	p{margin-bottom: 0px; font-size: 14px;}
+}
+
+/*how it work*/
+.twm-how-it-work-area2{
+	.container{
+		&>.row{
+			display: flex;
+			align-items: center;
+		}
+	}
+}
