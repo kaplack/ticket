@@ -33,11 +33,17 @@ function JobList() {
                     {/* title="" END*/}
                     <div className="section-content">
                         <div className="twm-jobs-list-wrap">
-                            <ul>
-                                {allWorks.map((work) => {
-                                return <li key={work._id} ><JobListItem  work={work} /> </li>
-                                })}
-                            </ul>
+                            {allWorks.length > 0 ? (
+                                <ul>
+                                    {allWorks.map((work) => (
+                                        <li key={work._id}>
+                                            <JobListItem work={work} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p>No se han publicado trabajos aún.</p>
+                            )}
                             <div className="text-center m-b30">
                                 <NavLink to="/works" className=" site-button">Ver todos los trabajos</NavLink>
                             </div>
