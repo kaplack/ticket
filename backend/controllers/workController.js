@@ -153,6 +153,9 @@ const updateWork = asyncHandler(async (req,res) => {
 
 const getAllWorks = asyncHandler(async (req,res) => {
     const work = await Work.find()
+
+    //filtrar solo los elementos necesarios para el JobList
+    
     res.status(200).json(work)
 })
 

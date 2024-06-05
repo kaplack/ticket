@@ -5,17 +5,20 @@ import {FaUser} from 'react-icons/fa'
 import {useSelector, useDispatch} from 'react-redux'
 import {register, reset} from '../features/auth/authSlice'
 import { createProfile } from "../features/candidate/canSlice"
+import { createEmpProfile } from "../features/employer/empSlice"
 import Spinner from "../components/Spinner"
 
 function Register() {
     const [formData, setFormData] = useState({
         name:'',
         email: '',
+        phone: '',
+        profile: '',
         password: '',
         password2: ''
     })
 
-    const {name, email, password, password2} = formData
+    const {name, email, phone, profile, password, password2} = formData
 
 const dispatch = useDispatch()
 const navigate = useNavigate()
@@ -47,12 +50,14 @@ useEffect(()=>{
     const onSubmit = (e) => {
         e.preventDefault()
 
-        if(password != password2) {
+        if(password !== password2) {
             toast.error('Passwords do not match')
         } else {
             const userData = {
                 name,
                 email,
+                phone,
+                profile,
                 password
             }
 
@@ -62,7 +67,12 @@ useEffect(()=>{
                     // console.log("Register test: ", user._id)
                     const fd = new FormData()
                     fd.append('user', successData.payload._id)
-                    dispatch(createProfile(fd))
+                    if(profile === 'Candidate'){
+                        dispatch(createProfile(fd))
+                    }else{
+                        dispatch(createEmpProfile(fd))
+                    }
+                    
                 })
                 .catch((error)=>{
                     toast.error(error.message)
@@ -88,6 +98,24 @@ useEffect(()=>{
             <div className="form-group">
                 <input type="email" className="form-control" id='email' name='email' value={email} onChange={onChange} placeholder='Ingresa tu email' required />
             </div>
+            <div className="form-group">
+                <input type="text" className="form-control" id='phone' name='phone' value={phone} onChange={onChange} placeholder='Ingresa tu celular' required />
+            </div>
+            <div className='form-group' required>
+                    
+                        <select
+                        className="form-control"
+                        name='profile'
+                        id='profile'
+                        value={profile}
+                        onChange={onChange}
+                        required
+                        >
+                        <option value='' selected="true" disabled="disabled">selecciona tu perfil</option>
+                        <option value='Candidate'>Candidato</option>
+                        <option value='Employer'>Empleador</option>
+                    </select>
+                </div>
             <div className="form-group">
                 <input type="password" className="form-control" id='password' name='password' value={password} onChange={onChange} placeholder='Ingresa tu password' required />
             </div>

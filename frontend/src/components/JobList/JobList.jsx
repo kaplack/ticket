@@ -2,19 +2,51 @@ import {useEffect, useState} from 'react'
 import {toast} from 'react-toastify'
 import {useSelector, useDispatch} from 'react-redux'
 import {getAllWorks, reset} from '../../features/work/workSlice'
+import {empGetAllProfile} from '../../features/employer/empSlice'
 import JobListItem from './JobListItem'
 import { NavLink } from 'react-router-dom'
 
 
 function JobList() {
 
+  const [itemInfo,setItemInfo] =useState(null)
     const {allWorks} = useSelector((state)=>state.work)
+    const {allEmployers} = useSelector((state)=>state.employer)
+    
+    //User,Puesto, FechaDePublicación, lugar, salarioMensual, empresa, webDeLaEmpresa 
+    //modificar 
+
 
     const dispatch = useDispatch()
-    useEffect(()=>{
+    useEffect(() => {
+        let isMounted = true; // Para evitar actualizaciones después de desmontar
+      
         dispatch(getAllWorks())
-        .catch(toast.error)
-    }, [dispatch])
+          .then(() => {
+            if (isMounted) {
+              // Aquí deberías actualizar el estado si es necesario
+            }
+          })
+          .catch(error => {
+            toast.error(error.message);
+          });
+      
+        dispatch(empGetAllProfile())
+          .then(() => {
+            if (isMounted) {
+              // Aquí deberías actualizar el estado si es necesario
+            }
+          })
+          .catch(error => {
+            toast.error(error.message);
+          });
+      
+        return () => {
+          isMounted = false; // Para evitar actualizaciones después de desmontar
+        };
+      }, [dispatch]);
+
+      
 
   return (
     <>

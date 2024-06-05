@@ -6398,6 +6398,9 @@ strong {
 			border-radius: 50%;
 			width: 40px;
 			height: 40px;
+			/* added by Kaplack */
+			object-fit: cover;
+			/* jusqui*/
 		}
 	}
 	ul {
@@ -6423,22 +6426,22 @@ strong {
 			}
 		}
 	}
-	.user-name:before {
-		font-family: "Font Awesome 5 Free";
-		content: "\f107";
-		font-weight: 900;
-		transition: $transition;
-		display: inline-block;
-		margin-left: 6px;
-		color: $clr-primary;
-		position: absolute;
-		top: 50%;
-		right: 0px;
-		transform: translateY(-50%);
-		@include breakpoint-400{
-			font-size: 18px;
-		}
-	}
+	// .user-name:before {
+	// 	font-family: "Font Awesome 5 Free";
+	// 	content: "\f107";
+	// 	font-weight: 900;
+	// 	transition: $transition;
+	// 	display: inline-block;
+	// 	margin-left: 6px;
+	// 	color: $clr-primary;
+	// 	position: absolute;
+	// 	top: 50%;
+	// 	right: 0px;
+	// 	transform: translateY(-50%);
+	// 	@include breakpoint-400{
+	// 		font-size: 18px;
+	// 	}
+	// }
 }
 
 .dashboard-user-section {
@@ -6675,7 +6678,8 @@ strong {
 	margin-bottom: 16px;
 	a{
 		img{
-			max-width: 130px;
+			//max-width: 130px; original
+			max-width: 175px; 
 		}
 	}
 }
@@ -6685,7 +6689,8 @@ strong {
 	&.scrollbar-macosx {
 		height: calc(100vh - 150px);
 		padding-left: 30px;
-		overflow-y: scroll;
+		/* comments by Kaplack */
+		//overflow-y: scroll;
 	}
 	ul {
 		list-style: none;
@@ -6757,6 +6762,7 @@ strong {
 				visibility: visible;
 				width: auto;
 			}
+			
 		}
 		>li.active {
 			>a {
@@ -6973,6 +6979,27 @@ strong {
 		width: 100%;
 		display: block;
 	}
+
+	
+}
+
+.add-btn-empProfile{
+	position: absolute;
+	bottom: 10px;
+    left: 10px;
+}
+
+.add-relative{
+	position: relative;
+	padding: 5px;
+	border: 1px solid  #f0f6fe;
+	border-radius: .5rem;
+	img{
+		border-radius: .5rem;
+		height: 350px;
+		width: 100%;
+		object-fit: cover;
+	}
 }
 
 /*dashboard List*/
@@ -7160,7 +7187,8 @@ strong {
 	img {
 		border-radius: 10px;
 		display: block;
-		width: 128px;
+		//width: 128px;
+		width: auto;
 		height: 128px;
 		object-fit: cover;
 		object-position: top;

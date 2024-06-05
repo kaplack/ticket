@@ -6,7 +6,7 @@ function WorkItem({work}) {
       <div>{new Date(work.createdAt).toLocaleString()}</div>
       <div>{work.title}</div>
       <div className={`status status-${work.workStatus}`}>{work.workStatus}</div>
-      <Link to={`/works/${work._id}`} className='btn-btn-reverse btn-sm'>Ver</Link>
+      <Link to={`${work._id}`} className='btn-btn-reverse btn-sm'>Ver</Link>
     </div>
   )
 }

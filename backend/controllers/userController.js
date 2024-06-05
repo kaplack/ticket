@@ -10,7 +10,7 @@ const User = require('../models/userModel')
 
 const registerUser = asyncHandler(async (req,res) => {
     
-    const { name, email, password, picture} = req.body
+    const { name, email, phone, profile, password, picture} = req.body
 
     //validation
     if(!name || !email || !password) {
@@ -35,6 +35,8 @@ const registerUser = asyncHandler(async (req,res) => {
     const user = await User.create({
         name,
         email,
+        phone,
+        profile,
         password: hashedPassword
     })
     
@@ -43,6 +45,8 @@ const registerUser = asyncHandler(async (req,res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            phone: user.phone,
+            profile: user.profile,
             picture: user.picture,
             token: generateToken(user._id)
         })
@@ -62,7 +66,7 @@ const updateUser = asyncHandler(async (req,res) => {
 // Get works using id in the JWT
 //console.log("userController: ", req.user)
     const user = await User.findById(req.params.id)
-    console.log('userController: ', req.file)
+    //console.log('userController: ', req.file)
 
     if(!user){
         res.status(401)
@@ -76,6 +80,8 @@ const updateUser = asyncHandler(async (req,res) => {
         _id: updateUser._id,
         name: updateUser.name,
         email: updateUser.email,
+        phone: updateUser.phone,
+        profile: updateUser.profile,
         picture: updateUser.picture,
         token: updateUser.token
     }
@@ -103,6 +109,8 @@ const loginUser = asyncHandler(async (req,res) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            phone: user.phone,
+            profile: user.profile,
             picture: user.picture,
             token: generateToken(user._id)
         })
@@ -121,6 +129,8 @@ const getMe = asyncHandler(async (req,res) => {
         _id: req.user.id,
         email: req.user.email,
         name: req.user.name,
+        phone: user.phone,
+        profile: user.profile,
         picture: req.user.picture,
         token: generateToken(req.user.id)
     }

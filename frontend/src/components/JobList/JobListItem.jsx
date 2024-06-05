@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
+import {useSelector} from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 function JobListItem({work}) {
 
+    //const {allEmployers} = useSelector((state)=>state.employer)
+    //console.log(allEmployers)
+    //const [empInfo, setEmpInfo] = useState({})
+    // const info =[]; 
+    // allEmployers.map((employer)=>{
+    //     if(employer.user === work.user){
+    //         return info = employer;
+    //     }
+    // })
+    
     function calcularDiferenciaDias(fechaBase) {
         // Convertir la fecha de la base de datos a un objeto de fecha
         const fechaBaseObjeto = new Date(fechaBase);
@@ -25,7 +36,7 @@ function JobListItem({work}) {
     <>
         <div className="twm-jobs-list-style1 mb-5">
             <div className="twm-media">
-                <img src="" alt="" />
+                <img src="" alt="logo empleador" />
             </div>
             <div className="twm-mid-content">
                 <NavLink to="/" className="twm-job-title">

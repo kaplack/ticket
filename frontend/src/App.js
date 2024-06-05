@@ -10,6 +10,8 @@ import PrivateRoute from './components/PrivateRoute'
 import Works from './pages/Works'
 import Work from './pages/Work'
 import CanLayout from './pages/CandidateLayout/CanLayout'
+import EmpLayout from './pages/EmployerLayout/EmpLayout'
+import EmpHeaderSection from './pages/EmployerLayout/EmpHeader'
 import Footer from './components/Footer'
 
 
@@ -19,20 +21,20 @@ function App() {
   return (
     <>
       <Router>
-        
-          <Header />
+        <Header />
           <Routes>
+          
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/new-work' element={<PrivateRoute><NewWork /></PrivateRoute>} />
             <Route path='/works' element={<PrivateRoute><Works /></PrivateRoute>} />
             <Route path='/works/:workId' element={<PrivateRoute><Work /></PrivateRoute>} />
-            <Route path='/profile/Candidate/*' element={<PrivateRoute><CanLayout/></PrivateRoute>} />
+            <Route path='/profile/candidate/*' element={<PrivateRoute><CanLayout/></PrivateRoute>} />
+            <Route path='/profile/employer/*' element={<PrivateRoute><EmpLayout/></PrivateRoute>} />
             
           </Routes>
-          <Footer />
-        
+        <Footer />
       </Router>
       <ToastContainer />
     </>

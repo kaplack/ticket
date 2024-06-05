@@ -1,9 +1,15 @@
+// BOTH PROFILES CONTROLLERS
+
+
 const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 const CanProfile = require('../models/canProfileModel')
+const EmpProfile = require('../models/empProfileModel')
 const path = require('path')
 const fs = require('fs')
 
+
+// ---------------------------------------------------------------- CANDIDATE CONTROLLER 
 
 // @desc    create candidate profile
 // @route   POST /api/profile
@@ -45,8 +51,8 @@ const updateCanProfile = asyncHandler(async (req, res) => {
     let fileName = "";
     if (req.file) {
       console.log(req.file)
-      relativePath = process.env.SERVER + "uploads" + req.file.path.split('uploads')[1];
-      fileName = req.file.filename;
+      relativePath = req.file.location;
+      fileName = req.file.key;
       
       // Si el perfil ya tiene información en el campo resume, agregamos un nuevo objeto
     if (profile.resume && profile.resume.length > 0) {
@@ -144,10 +150,129 @@ const delCvFile = asyncHandler(async (req,res) => {
   
 })
 
-  
+
+// ---------------------------------------------------------------- EMPLOYER CONTROLLER 
+
+const createEmpProfile = asyncHandler(async (req, res) => {
+  //console.log(req.files)
+  try {
+    // El registro dispara un createProfile que se crea con el código de usuario unicamente.
+
+    // Crear el perfil del candidato
+    const newProfile = await EmpProfile.create({
+      user: req.user.id
+    });
+
+    res.status(201).json(newProfile);
+  } catch (error) {
+    console.log('error al crear perfil: ', error);
+    res.status(500).json({ error: 'Error al crear el perfil' });
+  }
+});
+
+// @desc    update employer profile
+// @route   PUT /api/profile/employer
+// @access  Private
+// Controlador para actualizar el perfil del candidato
+const updateEmpProfile = asyncHandler(async (req, res) => {
+  try {
+    // Los datos del formulario y la imagen subida estarán disponibles en 'req.body' y 'req.file'
+    const { companyName, compType, idNumber, numCol, description, facebook, twitter, linkedin, whatsapp, instagram, youtube } = req.body;
+  console.log(facebook, twitter)
+
+  // Obtener el perfil actual
+  let profile = await EmpProfile.findOne({ user: req.user.id });
+
+  // Obtener  ruta relativa después de la carpeta 'uploads'
+  let relativePath = "";
+  let fileName = "";
+  if (req.files) {
+      console.log(req.files);
+      const imgFiles = req.files;
+      for (let key in imgFiles){
+        const imgFile = imgFiles[key][0]
+        //console.log("Dentro del for: ", imgFile[0])
+        //console.log(key[0])
+        relativePath = imgFile.location;
+        fileName = imgFile.key;
+        if(key === "logo"){
+          profile.logo = { fileName, relativePath };
+        }else{
+          profile.cover = { fileName, relativePath };
+        }
+        
+      }
+  }
+    if (!profile) {
+      return res.status(404).json({ error: 'Perfil no encontrado' });
+    }
+    // Actualizar el perfil del candidato con el resto de los datos
+    if (companyName !== undefined) profile.companyName = companyName;
+    if (compType !== undefined) profile.compType = compType;
+    if (idNumber !== undefined) profile.idNumber = idNumber;
+    if (numCol !== undefined) profile.numCol = numCol;
+    if (description !== undefined) profile.description = description;
+    if (facebook !== undefined) profile.facebook = facebook;
+    if (twitter !== undefined) profile.twitter = twitter;
+    if (linkedin !== undefined) profile.linkedin = linkedin;
+    if (whatsapp !== undefined) profile.whatsapp = whatsapp;
+    if (instagram !== undefined) profile.instagram = instagram;
+    if (youtube !== undefined) profile.youtube = youtube;
+    //console.log(profile)
+    await profile.save();
+
+    res.status(200).json(profile);
+  } catch (error) {
+    console.log('error al actualizar perfil: ', error);
+    res.status(500).json({ error: 'Error al actualizar el perfil' });
+  }
+});
+
+// @desc    Get user profile
+// @route   GET /api/profile/
+// @access  Private
+const getEmpProfile = asyncHandler(async (req,res) => {
+  // Get works using id in the JWT
+  const profile = await EmpProfile.findOne({user:req.user.id})
+
+  if(!profile){
+      res.status(401)
+      throw new Error('User havent got profile')
+  }
+
+  res.status(200).json(profile)
+})
+
+// @desc    Get all employers profiles
+// @route   GET /api/profile/allemployers
+// @access  Private
+const getEmpAllProfile = asyncHandler(async (req,res) => {
+  // Get works using id in the JWT
+  const profiles = await EmpProfile.find()
+
+  //joblist requerimiento
+  const allProfilesSelection = []
+  profiles.map((item)=>{
+    const el = {
+      'user': item.user,
+      'companyName': item.companyName,
+      'logo': item.logo[0].relativePath
+    }
+    allProfilesSelection.push(el)
+  })
+
+  res.status(200).json(allProfilesSelection)
+})
+
+
+
   module.exports = {
     createCanProfile,
     updateCanProfile,
     getCanProfile,
-    delCvFile
+    delCvFile,
+    createEmpProfile,
+    updateEmpProfile,
+    getEmpProfile,
+    getEmpAllProfile
   };

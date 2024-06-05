@@ -1,4 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+
+const imgSchema = new mongoose.Schema({
+    fileName: String,
+    relativePath: String
+});
 
 const emProfileSchema = mongoose.Schema({
     user:{
@@ -7,51 +12,74 @@ const emProfileSchema = mongoose.Schema({
         require: true,
         ref:'User'
     },
-    picture:{
+    companyName:{
+        type: String
+    },
+    phone:{
+        type: String
+    },
+    email:{
         type: String
     },
     compType:{
-        type: String,
-        require: true,
-        enum: ['Publica', 'Privada']
-    },
-    idType:{
-        type: String,
-        require: true,
-        enum: ['RUC', 'RUS']
+        type: String,   
+        //enum: ['Publica', 'Privada']
     },
     idNumber:{
         type: String,
-        require: true,
+        //enum: ['RUC', 'RUS']
+    },
+    numCol:{
+        type: String,
     },
     description:{
         type: String,
-        require: true
+        
     },
     mission:{
         type: String,
-        require: true
+        
     },
     vision:{
         type: String,
-        require: true
+        
     },
     ubication:{
         type: String,
-        require: true
+        
     },
     worksNumber:{
         type: String,
-        require: true
+        
     },
     sector:{
         type: String,
-        require: true
+        
     },
     rating:{
         type: Number,
     },
-    
+    logo:[imgSchema],
+    cover:[imgSchema],
+
+    facebook: {
+        type: String,
+    },
+    twitter: {
+        type: String,
+    },
+    linkedin: {
+        type: String,
+    },
+    whatsapp: {
+        type: String,
+    },
+    instagram: {
+        type: String,
+    },
+    youtube: {
+        type: String,
+    }
 }, 
 {
     timestamps: true

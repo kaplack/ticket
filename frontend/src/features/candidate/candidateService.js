@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const API_URL = '/api/profile/'
+const API_URL = '/api/profile/candidate'
 
 //CREATE PROFILE
 const createProfile = async (profileData, token) => {

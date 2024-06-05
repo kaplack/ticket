@@ -1,8 +1,13 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 function Footer() {
-  return (
+    const location = useLocation();
+
+    const isEmployerRoute = location.pathname.startsWith('/profile/Employer');
+
+  if (!isEmployerRoute) {
+      return (
     <>
     
     {/* <footer className="footer-dark" style={{ backgroundImage: `url(${publicUrlFor("images/f-bg.jpg")})` }}> */}
@@ -112,7 +117,7 @@ function Footer() {
             </footer>
     
     </>
-  )
+  )}
 }
 
 export default Footer
