@@ -5,6 +5,7 @@ import {updateProfile, canGetProfile, delCvFile} from '../../features/candidate/
 import {toast} from 'react-toastify'
 import { getMe } from '../../features/auth/authSlice'
 import { FaDeleteLeft } from "react-icons/fa6";
+import { Multiselect } from 'multiselect-react-dropdown';
 
 function CanProfilePage() {
 
@@ -23,12 +24,14 @@ function CanProfilePage() {
     console.log(candidate.doc)
     
     // State del formulario del perfil
-    const [name, setName] = useState(user.name || '');
-    const [email, setEmail] = useState(user.email || '');
+    const [name, setName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [tipoDoc, setTipoDoc] = useState('');
     const [doc, setDoc] = useState('');
     const [phone, setPhone] = useState('');
-    const [lang, setLang] = useState('');
+    // handle multiselector objects 
+    const [selectedValues, setSelectedValues] = useState([]);
+    const [lang, setLang] = useState([]);
     const [nationality, setNationality] = useState('');
     const [genre, setGenre] = useState('');
     const [age, setAge] = useState('');
@@ -45,15 +48,26 @@ function CanProfilePage() {
 
     useEffect(() => {
         if (candidate) {
-            setName(user.name || '');
-            setEmail(user.email || '');
+            setName(candidate.name || '');
+            setLastName(candidate.lastName || '');
             setTipoDoc(candidate.tipoDoc || '');
             setDoc(candidate.doc || '');
             setPhone(candidate.phone || '');
-            setLang(candidate.lang || '');
+
+            // Convertir los idiomas del perfil en el formato necesario para el multiselect
+            //let selectedLangs = [];
+            if( candidate.lang && candidate.lang.length > 0) {
+                setSelectedValues(candidate.lang.map((lang, index) => ({ name: lang, id: index + 1 })))
+                } else {
+                setSelectedValues([])
+            };
+
+            //setLang(selectedValues);
+            
+            //setLang(candidate.lang || '');
             setNationality(candidate.nationality || '');
             setGenre(candidate.genre || '');
-            setAge(candidate.age || '');
+            setAge(convertDate(candidate.age) || '');
             setDisability(candidate.disability || '');
             setDiagnosis(candidate.diagnosis || '');
             setCountry(candidate.country || '');
@@ -76,10 +90,15 @@ function CanProfilePage() {
         e.preventDefault()
         const formData = new FormData()
         //Informacion personal
+        formData.append('name', name)
+        formData.append('lastName', lastName)
         formData.append('tipoDoc', tipoDoc)
         formData.append('doc', doc)
         formData.append('phone', phone)
-        formData.append('lang', lang)
+        // Verificar si hay un archivo adjunto en cvFile antes de agregarlo al FormData
+        if (lang && lang.length !== 0 && lang != null) {
+            formData.append('lang', JSON.stringify(lang)); // Convertir el array a JSON string)
+        }
         formData.append('nationality', nationality)
         formData.append('genre', genre)
         formData.append('age', age)
@@ -127,6 +146,36 @@ function CanProfilePage() {
             });
     };
 
+    // Select Lang
+
+    const [langOptions, setLangOptions] = useState([
+        { name: 'Español', id: 1 },
+        { name: 'Inglés', id: 2 },
+        { name: 'Portugués', id: 3 },
+        { name: 'Quechua', id: 4 },
+        { name: 'Aymara', id: 5 },
+      ]);
+
+
+    const handleSelect = (selectedList) => {
+        //setSelectedValues(selectedList);
+        setLang(selectedList.map(item => item.name)); // Actualiza el estado de lang
+      };
+    
+    const handleRemove = (selectedList) => {
+        //setSelectedValues(selectedList);
+        setLang(selectedList.map(item => item.name)); // Actualiza el estado de lang
+    };
+
+    // Función para convertir la fecha al formato YYYY-MM-DD
+    const convertDate = (isoDate) => {
+        const date = new Date(isoDate);
+        const year = date.getFullYear();
+        const month = (`0${date.getMonth() + 1}`).slice(-2); // Agrega un 0 si el mes es menor a 10
+        const day = (`0${date.getDate() +1}`).slice(-2); // Agrega un 0 si el día es menor a 10
+        return `${year}-${month}-${day}`;
+    };
+    
   return (
     <>
             <form onSubmit={handleSaveChanges}>
@@ -140,16 +189,16 @@ function CanProfilePage() {
                                 <div className="form-group">
                                     <label>Nombre</label>
                                     <div className="ls-inputicon-box">
-                                        <input className="form-control" name="name" type="text" value={name} onChange={(e)=>setName(e.target.value)}/>
+                                        <input className="form-control" name="name" type="text" value={name} onChange={(e)=>setName(e.target.value)} required/>
                                         <i className="fs-input-icon fa fa-user " />
                                     </div>
                                 </div>
                             </div>
                             <div className="col-xl-6 col-lg-6 col-md-12">
                                 <div className="form-group">
-                                    <label>E-mail</label>
+                                    <label>Apellido</label>
                                     <div className="ls-inputicon-box">
-                                        <input className="form-control" name="email" type="email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+                                        <input className="form-control" name="lastName" type="text" value={lastName} onChange={(e)=>setLastName(e.target.value)} required/>
                                         <i className="fs-input-icon fas fa-at" />
                                     </div>
                                 </div>
@@ -196,7 +245,17 @@ function CanProfilePage() {
                                 <div className="form-group">
                                     <label>Idioma</label>
                                     <div className="ls-inputicon-box">
-                                        <input className="form-control" name="lang" type="text" placeholder="e.x English, Spanish" value={lang} onChange={(e)=>setLang(e.target.value)} />
+                                    <Multiselect
+                                        options={langOptions}
+                                        displayValue="name"
+                                        selectedValues={selectedValues}
+                                        onSelect={handleSelect}
+                                        onRemove={handleRemove}
+                                        isObject={true}
+                                        
+                                        customCloseIcon={<span>  x</span>} // Custom close icon for selected items
+                                    />
+                                        
                                         <i className="fs-input-icon fa fa-language" />
                                     </div>
                                 </div>
@@ -214,23 +273,32 @@ function CanProfilePage() {
                                 <div className="form-group">
                                     <label>Genero</label>
                                     <div className="ls-inputicon-box">
-                                        <input className="form-control" name="genre" type="text" placeholder="e.x English, Spanish" value={genre} onChange={(e)=>setGenre(e.target.value)} />
-                                        <i className="fs-input-icon fa fa-language" />
+                                        <select
+                                            className="form-control"
+                                            name="genre"
+                                            value={genre}
+                                            onChange={(e)=>setDisability(e.target.value)} // Manejar cambios de selección
+                                        >
+                                            <option value="">Seleccione</option>
+                                            <option value="Masculino" selected={genre === "Masculino" ? true : false}>Masculino</option>
+                                            <option value="Femenino" selected={genre === "Femenino" ? true : false}>Femenino</option>
+                                            <option value="Prefiero No decirlo" selected={genre === "Prefiero No decirlo" ? true : false}>Prefiero No decirlo</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
                             <div className="col-xl-6 col-lg-6 col-md-12">
                                 <div className="form-group city-outer-bx has-feedback">
-                                    <label>Edad</label>
+                                    <label>Fecha de Nacimiento</label>
                                     <div className="ls-inputicon-box">
-                                        <input className="form-control" name="age" type="text" placeholder="18" value={age} onChange={(e)=>setAge(e.target.value)} />
+                                        <input className="form-control" name="age" type="date" placeholder="18" value={age} onChange={(e)=>setAge(e.target.value)} />
                                         <i className="fs-input-icon fa fa-border-all" />
                                     </div>
                                 </div>
                             </div>
                             <div className="col-xl-6 col-lg-6 col-md-12">
                                 <div className="form-group">
-                                    <label>Discapacidad</label>
+                                    <label>Discapacidad Especifico</label>
                                     <div className="ls-inputicon-box">
                                     <select
                                             className="form-control"
@@ -279,7 +347,7 @@ function CanProfilePage() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-xl-4 col-lg-12 col-md-12">
+                            {/* <div className="col-xl-4 col-lg-12 col-md-12">
                                 <div className="form-group city-outer-bx has-feedback">
                                     <label>Código Postal</label>
                                     <div className="ls-inputicon-box">
@@ -287,12 +355,12 @@ function CanProfilePage() {
                                         <i className="fs-input-icon fas fa-map-pin" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-xl-12 col-lg-12 col-md-12">
                                 <div className="form-group city-outer-bx has-feedback">
                                     <label>Dirección</label>
                                     <div className="ls-inputicon-box">
-                                        <input className="form-control" name="address" type="text" placeholder="1363-1385 Sunset Blvd Angeles, CA 90026 ,USA" value={address} onChange={(e)=>setAddress(e.target.value)} />
+                                        <input className="form-control" name="address" type="text" placeholder="1363-1385 Sunset Blvd Angeles, CA 90026 ,USA" value={address} onChange={(e)=>setAddress(e.target.value)} required/>
                                         <i className="fs-input-icon fas fa-map-marker-alt" />
                                     </div>
                                 </div>
@@ -313,7 +381,10 @@ function CanProfilePage() {
                                             <option value="">Seleccione</option>
                                             <option value="Primaria" selected={nivEduc === "Primaria" ? true : false}>Primaria</option>
                                             <option value="Secundaria" selected={nivEduc === "Secundaria" ? true : false}>Secundaria</option>
+                                            <option value="Técnica" selected={nivEduc === "Técnica" ? true : false}>Técnica</option>
+                                            <option value="Técnica Incompleta" selected={nivEduc === "Técnica Incompleta" ? true : false}>Técnica Incompleta</option>
                                             <option value="Universitaria" selected={nivEduc === "Universitaria" ? true : false}>Universitaria</option>
+                                            <option value="Universitaria Incompleta" selected={nivEduc === "Universitaria Incompleta" ? true : false}>Universitaria Incompleta</option>
                                             <option value="Maestría" selected={nivEduc === "Maestría" ? true : false}>Maestría</option>
                                         </select>
                                         <i className="fs-input-icon fa fa-user-graduate" />
@@ -348,7 +419,7 @@ function CanProfilePage() {
                                 </div>
                             </div>
                             
-                            <div className="col-xl-12 col-lg-12 col-md-12">
+                            {/* <div className="col-xl-12 col-lg-12 col-md-12">
                                 <div className="form-group city-outer-bx has-feedback">
                                     <label>Adjunta tu CV</label>
                                     <div className="ls-inputicon-box">
@@ -370,7 +441,7 @@ function CanProfilePage() {
                                         
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="col-lg-12 col-md-12">
                                 <div className="text-left">
                                     <button type="submit" className="site-button">Guardar Cambios</button>

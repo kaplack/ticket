@@ -12,7 +12,7 @@ function EmpRoutes() {
         <Routes>
             
             <Route path={"/"} element={<EmpProfilePage />} />
-            <Route path={"/company-profile"} element={<EmpProfilePage />} />
+            <Route path={"/profile"} element={<EmpProfilePage />} />
             <Route path={"/new-work"} element={<EmpNewWork />} />
             <Route path={"/works"} element={<EmpWorks />} />
             <Route path={"/works/:workId"} element={<EmpWork />} />

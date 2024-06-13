@@ -12,6 +12,12 @@ const canProfileSchema = mongoose.Schema({
         require: true,
         ref:'User'
     },
+    name:{
+        type: String,
+    },
+    lastName:{
+        type: String,
+    },
     tipoDoc:{
         type: String,
     },
@@ -23,7 +29,7 @@ const canProfileSchema = mongoose.Schema({
         require: true
     },
     lang:{
-        type: String
+        type: [String]
     },
     nationality:{
         type: String
@@ -33,7 +39,7 @@ const canProfileSchema = mongoose.Schema({
         
     },
     age:{
-        type: Number,
+        type: Date,
         
     },
     disability:{

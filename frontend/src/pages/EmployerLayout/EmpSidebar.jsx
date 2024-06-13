@@ -81,7 +81,7 @@ function EmpSidebarSection(props) {
                         <li
                             className="nav-element"
                             onClick={elClick}>
-                            <NavLink to="company-profile"><span className="admin-nav-text">Company Profile</span></NavLink>
+                            <NavLink to="profile"><span className="admin-nav-text">Company Profile</span></NavLink>
                         </li>
                         <li
                             className="nav-element has-child" onClick={displayBlock}>

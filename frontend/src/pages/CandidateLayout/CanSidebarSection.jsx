@@ -67,24 +67,26 @@ function CanSidebarSection() {
   };
 
     return (
-        <><form  action={"/api/users/"+_id}  method="put" encType="multipart/form-data" onSubmit={onSubmit}>
-            <div className="twm-candidate-profile-pic">
-            <img src={previewImage || display} alt="user picture" />
-                
-                    <div className="upload-btn-wrapper">
-                        <div id="upload-image-grid">
-                        {!selectedImage ? (
-                            <button className="site-button button-sm" onClick={openFile}>Editar</button>
-                        ):(
-                            <button className="site-button button-sm" type="submit">Guardar</button>
-                        )}
-                        
-                        <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png" onChange={handleImageChange} />
+        <>
+            {/* <form  action={"/api/users/"+_id}  method="put" encType="multipart/form-data" onSubmit={onSubmit}>
+                <div className="twm-candidate-profile-pic">
+                <img src={previewImage || display} alt="user picture" />
+                    
+                        <div className="upload-btn-wrapper">
+                            <div id="upload-image-grid">
+                            {!selectedImage ? (
+                                <button className="site-button button-sm" onClick={openFile}>Editar</button>
+                            ):(
+                                <button className="site-button button-sm" type="submit">Guardar</button>
+                            )}
+                            
+                            <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png" onChange={handleImageChange} />
+                            </div>
                         </div>
-                    </div>
-               
                 
-            </div> </form>
+                    
+                </div> 
+            </form> */}
             <div className="twm-mid-content text-center">
                 <NavLink to={"/"} className="twm-job-title">
                     <h4>{name}</h4>
@@ -95,8 +97,13 @@ function CanSidebarSection() {
                 <ul>
                     
                     <li >
-                        <NavLink to={"/"}><i className="fa fa-user" />
-                            My Profile
+                        <NavLink to={""}><i className="fa fa-user" />
+                            Perfil
+                        </NavLink>
+                    </li>
+                    <li >
+                        <NavLink to={"resume"}><i className="fa fa-user" />
+                            Curriculum
                         </NavLink>
                     </li>
                    

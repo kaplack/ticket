@@ -35,7 +35,9 @@ function EmpProfilePage() {
   const [email, setEmail] = useState('')
   const [compType, setCompType] = useState('')
   const [idNumber, setIdNumber] = useState('')
-  const [numCol, setNumCol] = useState('')
+  const [country, setCountry] = useState('')
+  const [city, setCity] = useState('')
+  const [address, setAddress] = useState('')
   const [description, setDescription] = useState('')
   const [facebook, setFacebook] = useState('')
   const [twitter, setTwitter] = useState('')
@@ -55,7 +57,9 @@ function EmpProfilePage() {
           setEmail(user.email || '');
           setCompType(employer.compType || '');
           setIdNumber(employer.idNumber || '');
-          setNumCol(employer.numCol || '');
+          setCountry(employer.country || '');
+          setCity(employer.city || '');
+          setAddress(employer.address || '');
           setDescription(employer.description || '');
           setFacebook(employer.facebook || '');
           setTwitter(employer.twitter || '');
@@ -89,8 +93,10 @@ function EmpProfilePage() {
     }
     formData.append('companyName', companyName)
     formData.append('idNumber', idNumber)
-    formData.append('numCol', numCol)
     formData.append('compType', compType)
+    formData.append('country', country)
+    formData.append('city', city)
+    formData.append('address', address)
     formData.append('description', description)
 
     dispatch(updateProfile(formData))
@@ -265,37 +271,43 @@ function EmpProfilePage() {
                                   </div>
                               </div>
                           </div>
-                          <div className="col-xl-4 col-lg-12 col-md-12">
-                              <div className="form-group city-outer-bx has-feedback">
-                                  <label>Numero de trabajadores</label>
-                                  <div className="ls-inputicon-box">
-                                      <select 
-                                        className="form-control" 
-                                        name="numCol" 
-                                        data-live-search="true" 
-                                        title="team-size" 
-                                        id="city" 
-                                        data-bv-field="size"
-                                        value={numCol} 
-                                        onChange={(e)=>setNumCol(e.target.value)}
-                                        >
-                                          <option value='' disabled>Seleccione</option>
-                                          <option value="5-10" selected={numCol === "5-10" ? true : false}>5-10</option>
-                                          <option value="10-100" selected={numCol === "10-100" ? true : false}>10-100</option>
-                                          <option value="101-350" selected={numCol === "101-350" ? true : false}>101-350</option>
-                                          <option value="351-500" selected={numCol === "351-500" ? true : false}>351-500</option>
-                                          <option value="500+" selected={numCol === "500+" ? true : false}>500+</option>
-                                      </select>
-                                      <i className="fs-input-icon fa fa-sort-numeric-up" />
-                                  </div>
-                              </div>
-                          </div>
                           <div className="col-md-12">
                               <div className="form-group">
                                   <label>Descripción</label>
                                   <textarea className="form-control" name="description" rows={3} placeholder="Saludos! Somos una empresa con ideas innovadoras" value={description} onChange={(e)=>setDescription(e.target.value)} />
                               </div>
                           </div>
+                          {/* ----------------------------------------------- RESIDENCIA ------------------------------------------------------------- */}
+                          <div className="panel-heading wt-panel-heading p-a20">
+                                <h4 className="panel-tittle m-a0">Ubicación</h4>
+                            </div>
+                            <div className="col-xl-4 col-lg-6 col-md-12">
+                                <div className="form-group city-outer-bx has-feedback">
+                                    <label>País</label>
+                                    <div className="ls-inputicon-box">
+                                        <input className="form-control" name="country" type="text" placeholder="USA" value={country} onChange={(e)=>setCountry(e.target.value)}  />
+                                        <i className="fs-input-icon fa fa-globe-americas" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xl-4 col-lg-6 col-md-12">
+                                <div className="form-group city-outer-bx has-feedback">
+                                    <label>Ciudad</label>
+                                    <div className="ls-inputicon-box">
+                                        <input className="form-control" name="city" type="text" placeholder="Texas" value={city} onChange={(e)=>setCity(e.target.value)} />
+                                        <i className="fs-input-icon fa fa-globe-americas" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xl-12 col-lg-12 col-md-12">
+                                <div className="form-group city-outer-bx has-feedback">
+                                    <label>Dirección</label>
+                                    <div className="ls-inputicon-box">
+                                        <input className="form-control" name="address" type="text" placeholder="1363-1385 Sunset Blvd Angeles, CA 90026 ,USA" value={address} onChange={(e)=>setAddress(e.target.value)} />
+                                        <i className="fs-input-icon fas fa-map-marker-alt" />
+                                    </div>
+                                </div>
+                            </div>
                           <div className="col-lg-12 col-md-12">
                               <div className="text-left">
                                   <button type="submit" className="site-button">Guardar cambios</button>

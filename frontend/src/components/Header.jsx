@@ -3,7 +3,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice'
-import EmpHeaderSection from '../pages/EmployerLayout/EmpHeader';
+import fipplaLogo from "../assets/img/fipplaLogo2.png"
 
 function Header() {
 
@@ -48,7 +48,7 @@ function Header() {
                                 <div className="container-fluid clearfix">
                                     <div className="logo-header">
                                         <div className="logo-header-inner logo-header-one">
-                                            <NavLink to="/">LOGOO</NavLink>
+                                            <NavLink to="/"><img src={fipplaLogo} alt="FIPPLA LOGO" /></NavLink>
                                         </div>
                                     </div>
                                     {/* NAV Toggle Button */}
@@ -84,7 +84,7 @@ function Header() {
                                                     <>
                                                         <div className="twm-nav-btn-left">
                                                             <a className="twm-nav-sign-up" href={"/profile/" + user.profile} role="button">
-                                                                <FaUser /> {user.name}
+                                                                <FaUser /> {user.email}
                                                             </a>
                                                         </div>
                                                         <div className="twm-nav-btn-left" onClick={onLogout}>

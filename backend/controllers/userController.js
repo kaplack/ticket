@@ -10,10 +10,10 @@ const User = require('../models/userModel')
 
 const registerUser = asyncHandler(async (req,res) => {
     
-    const { name, email, phone, profile, password, picture} = req.body
+    const {  email, phone, profile, password, picture} = req.body
 
     //validation
-    if(!name || !email || !password) {
+    if( !email || !password) {
         res.status(400)
         throw new Error('Please include all fields2')
     }
@@ -33,7 +33,6 @@ const registerUser = asyncHandler(async (req,res) => {
     //create user
 
     const user = await User.create({
-        name,
         email,
         phone,
         profile,
@@ -43,7 +42,6 @@ const registerUser = asyncHandler(async (req,res) => {
     if(user){
         res.status(201).json({
             _id: user._id,
-            name: user.name,
             email: user.email,
             phone: user.phone,
             profile: user.profile,
@@ -78,7 +76,6 @@ const updateUser = asyncHandler(async (req,res) => {
     const updateUser = await User.findByIdAndUpdate(req.params.id, {picture: process.env.SERVER+"uploads"+relativePath}, {new:true})
     const userUpdated = {
         _id: updateUser._id,
-        name: updateUser.name,
         email: updateUser.email,
         phone: updateUser.phone,
         profile: updateUser.profile,
@@ -107,7 +104,6 @@ const loginUser = asyncHandler(async (req,res) => {
     if(user && (await bcrypt.compare(password, user.password))){
         res.status(200).json({
             _id: user._id,
-            name: user.name,
             email: user.email,
             phone: user.phone,
             profile: user.profile,
@@ -128,9 +124,8 @@ const getMe = asyncHandler(async (req,res) => {
     const user = {
         _id: req.user.id,
         email: req.user.email,
-        name: req.user.name,
-        phone: user.phone,
-        profile: user.profile,
+        phone: req.user.phone,
+        profile: req.user.profile,
         picture: req.user.picture,
         token: generateToken(req.user.id)
     }

@@ -38,7 +38,7 @@ const createCanProfile = asyncHandler(async (req, res) => {
 const updateCanProfile = asyncHandler(async (req, res) => {
   try {
     // Los datos del formulario y la imagen subida estarán disponibles en 'req.body' y 'req.file'
-    const { tipoDoc, doc, phone, lang, nationality, genre, age, disability, diagnosis, country, city, postalCode, address, experience,  nivEduc, professionalProfile } = req.body;
+    const { name, lastName, tipoDoc, doc, phone, lang, nationality, genre, age, disability, diagnosis, country, city, postalCode, address, experience,  nivEduc, professionalProfile } = req.body;
     console.log("controller: ", req.body);
 
 
@@ -71,10 +71,14 @@ const updateCanProfile = asyncHandler(async (req, res) => {
     
 
     // Actualizar el perfil del candidato con el resto de los datos
+    profile.name = name;
+    profile.lastName = lastName;
     profile.tipoDoc = tipoDoc;
     profile.doc = doc;
     profile.phone = phone;
-    profile.lang = lang;
+    if (lang !== undefined && lang.length > 0) {
+        profile.lang = JSON.parse(lang); // Convertir el JSON string de vuelta a un array
+    }
     profile.nationality = nationality;
     profile.genre = genre;
     profile.age = age;
@@ -177,7 +181,7 @@ const createEmpProfile = asyncHandler(async (req, res) => {
 const updateEmpProfile = asyncHandler(async (req, res) => {
   try {
     // Los datos del formulario y la imagen subida estarán disponibles en 'req.body' y 'req.file'
-    const { companyName, compType, idNumber, numCol, description, facebook, twitter, linkedin, whatsapp, instagram, youtube } = req.body;
+    const { companyName, compType, idNumber, country, city, address, description, facebook, twitter, linkedin, whatsapp, instagram, youtube } = req.body;
   console.log(facebook, twitter)
 
   // Obtener el perfil actual
@@ -210,7 +214,9 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     if (companyName !== undefined) profile.companyName = companyName;
     if (compType !== undefined) profile.compType = compType;
     if (idNumber !== undefined) profile.idNumber = idNumber;
-    if (numCol !== undefined) profile.numCol = numCol;
+    if (country !== undefined) profile.country = country;
+    if (city !== undefined) profile.city = city;
+    if (address !== undefined) profile.address = address; 
     if (description !== undefined) profile.description = description;
     if (facebook !== undefined) profile.facebook = facebook;
     if (twitter !== undefined) profile.twitter = twitter;
