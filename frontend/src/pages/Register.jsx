@@ -6,6 +6,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {register, reset} from '../features/auth/authSlice'
 import { createProfile } from "../features/candidate/canSlice"
 import { createEmpProfile } from "../features/employer/empSlice"
+import {createResume} from '../features/resume/resSlice'
 import Spinner from "../components/Spinner"
 
 function Register() {
@@ -67,6 +68,7 @@ useEffect(()=>{
                     fd.append('user', successData.payload._id)
                     if(profile === 'Candidate'){
                         dispatch(createProfile(fd))
+                        dispatch(createResume(fd))
                     }else{
                         dispatch(createEmpProfile(fd))
                     }

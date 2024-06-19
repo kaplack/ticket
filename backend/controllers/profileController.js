@@ -5,6 +5,7 @@ const asyncHandler = require('express-async-handler')
 const User = require('../models/userModel')
 const CanProfile = require('../models/canProfileModel')
 const EmpProfile = require('../models/empProfileModel')
+const CanResume = require('../models/canResumeModel')
 const path = require('path')
 const fs = require('fs')
 
@@ -81,7 +82,9 @@ const updateCanProfile = asyncHandler(async (req, res) => {
     }
     profile.nationality = nationality;
     profile.genre = genre;
-    profile.age = age;
+    if(age !== undefined ) {
+      profile.age = age;
+    }
     profile.disability = disability;
     profile.diagnosis = diagnosis;
     profile.country = country;
@@ -152,6 +155,72 @@ const delCvFile = asyncHandler(async (req,res) => {
     res.status(500).json({ error: 'Error al eliminar el archivo' });
   }
   
+})
+
+// CANDIDATE /RESUME
+
+// @desc    create user resume
+// @route   GET /api/profile/candidate/resume
+// @access  Private
+const createResume = asyncHandler(async (req, res) => {
+  //console.log(req.files)
+  try {
+    // El registro dispara un createProfile que se crea con el código de usuario unicamente.
+    //const {keySkills, experiences, education} = req.body
+    // Crear el perfil del candidato
+    const newResume = await CanResume.create({
+      user: req.user.id,
+    });
+
+    res.status(201).json(newResume);
+  } catch (error) {
+    console.log('error al crear CV: ', error);
+    res.status(500).json({ error: 'Error al crear el CV' });
+  }
+});
+
+// @desc    update user resume
+// @route   GET /api/profile/candidate/resume
+// @access  Private
+const updateResume = asyncHandler(async (req, res) => {
+  //console.log(req.files)
+  try {
+    // Obtener el resume actual
+    let resume = await CanResume.findOne({ user: req.user.id }); 
+    console.log('profileController',  resume)
+    // El registro dispara un createProfile que se crea con el código de usuario unicamente.
+    const {skills, experiences, education} = req.body
+    console.log('profileController req.body', req.body)
+    // Crear el perfil del candidato
+
+    if(skills !== undefined) resume.skills = JSON.parse(skills);
+    if(experiences !== undefined) resume.experiences = JSON.parse(experiences);
+    if(education !== undefined) resume.education = JSON.parse(education);
+    
+
+    await resume.save(resume);
+
+    res.status(201).json(resume);
+  } catch (error) {
+    console.log('error al actualizar CV: ', error);
+    res.status(500).json({ error: 'Error al actualizar el CV' });
+  }
+});
+
+
+// @desc    Get user resume
+// @route   GET /api/profile/candidate/resume
+// @access  Private
+const getCanResume = asyncHandler(async (req,res) => {
+  // Get works using id in the JWT
+  const resume = await CanResume.findOne({user:req.user.id})
+
+  if(!resume){
+      res.status(401)
+      throw new Error('User havent got resume')
+  }
+
+  res.status(200).json(resume)
 })
 
 
@@ -280,5 +349,8 @@ const getEmpAllProfile = asyncHandler(async (req,res) => {
     createEmpProfile,
     updateEmpProfile,
     getEmpProfile,
-    getEmpAllProfile
+    getEmpAllProfile,
+    createResume,
+    updateResume,
+    getCanResume
   };

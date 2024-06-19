@@ -101,7 +101,7 @@ function EmpSidebarSection(props) {
                             <a href="#" data-bs-toggle="modal" data-bs-target="#delete-dash-profile"><span className="admin-nav-text">Delete Profile</span></a>
                         </li> */}
                         <li className="nav-element">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#logout-dash-profile" onClick={handleLogout}>
+                            <a href="#" onClick={handleLogout}>
                                 
                                 <span className="admin-nav-text">Logout</span>
                             </a>

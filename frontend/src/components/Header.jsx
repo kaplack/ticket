@@ -84,7 +84,7 @@ function Header() {
                                                     <>
                                                         <div className="twm-nav-btn-left">
                                                             <a className="twm-nav-sign-up" href={"/profile/" + user.profile} role="button">
-                                                                <FaUser /> {user.email}
+                                                                <FaUser /> {user.email.split("@")[0]}
                                                             </a>
                                                         </div>
                                                         <div className="twm-nav-btn-left" onClick={onLogout}>

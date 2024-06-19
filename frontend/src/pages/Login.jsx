@@ -72,7 +72,7 @@ function Login() {
                         <div className="modal-header">
                             <h2 className="modal-title" id="sign_up_popupLabel2">Ingresar</h2>
                             <p>Inicia sesión y accede a nuestra plataforma.</p>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                            {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" /> */}
                         </div>
                         <div className="modal-body">
                             <div className="twm-tabs-style-2">
@@ -102,7 +102,7 @@ function Login() {
 
                                                 <button type="submit"
                                                     className="site-button"
-                                                    data-bs-dismiss="modal"
+                                                    
                                                 >
                                                     Iniciar Sesión
                                                 </button>

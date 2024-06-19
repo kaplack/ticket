@@ -7,7 +7,7 @@ function CandidateRoutes() {
     return (
         <Routes>
             
-            <Route path={"/"} element={<CanProfilePage />} />
+            <Route path={"/detail"} element={<CanProfilePage />} />
             <Route path={"/resume"} element={<CanResumePage />} />
             
             {/* <Route path="*" element={<Error404Page />} /> */}

@@ -2,33 +2,60 @@ import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { FaPlusCircle } from "react-icons/fa";
+import utils from "../../../utils/utils";
 
 function SectionCanEmployment({experiences=[], setExperiences}) {
 
     const [newExperience, setNewExperience] = useState({
         currentWork: "no",
     })
+    const [editIndex, setEditIndex] = useState()
 
     const addExperience = () => {
 
         //declarar un state experienceStatus en boolean
+        if(editIndex>=0){
+            if(newExperience.designation){
+                setExperiences( prev => 
+                    prev.map((item, index)=>
+                        index === editIndex ? newExperience : item
+                    )
+                );
+                setNewExperience({
+                    description: "",
+                    designation:"",
+                    organization:"",
+                    idate:"",
+                    fdate:"",
+                    currentWork: "no",
+                })
+                setEditIndex(-1)
+            }
 
-        
-        if(newExperience.designation){
+        }else{
+            if(newExperience.designation){
                 setExperiences([
                 ...experiences,
                 newExperience,
-            ]);
-            setNewExperience({
-                description: "",
-                designation:"",
-                organization:"",
-                idate:"",
-                fdate:"",
-                currentWork: "no",
-            })
+                ]);
+                setNewExperience({
+                    description: "",
+                    designation:"",
+                    organization:"",
+                    idate:"",
+                    fdate:"",
+                    currentWork: "no",
+                })
+            }
         }
+        
+        
     };
+
+    const delExperience = (experienceToDelete)=>{
+        //console.log(skillToDelete)
+        setExperiences(experiences.filter((_, index) => index !== experienceToDelete));
+    }
 
     function calcularAniosDeExperiencia(fechaInicio, fechaFin) {
         const inicio = new Date(fechaInicio);
@@ -72,6 +99,21 @@ function SectionCanEmployment({experiences=[], setExperiences}) {
     const editExperience = (indexExperience) => {
         console.log(indexExperience)
         setNewExperience(experiences[indexExperience])
+        setEditIndex(indexExperience)
+    }
+
+    const closeExpModal = ()=>{
+        //state edit en -1
+        setEditIndex(-1)
+        //set newexperience to nothing
+        setNewExperience({
+            description: "Primera línea.\nSegunda línea.\n\nCuarta línea.",
+            designation:"",
+            organization:"",
+            idate:"",
+            fdate:"",
+            currentWork: "no",
+        })
     }
 
     return (
@@ -88,26 +130,30 @@ function SectionCanEmployment({experiences=[], setExperiences}) {
                         <p>No hay experiencias laborales agregadas.</p>
                     ) : (
                     experiences.map((experience, index) => (
-                        <div key={index} className="experience-group" skillIndex={index}>
-                            <div className="skill-buttons">
-                            <a data-bs-toggle="modal" href="#Employment" role="button" title="Edit" className="site-text-primary" onClick={()=>editExperience(index)}>
-                                <FaEdit />
-                            </a>
-                                
-                                <button><IoMdClose /></button>
+                        <div key={index} className="resume-item">
+                            <div className="topRight-buttons">
+                                <a data-bs-toggle="modal" href="#Employment" role="button" title="Edit" className="site-text-primary" onClick={()=>editExperience(index)}>
+                                    <FaEdit />
+                                </a>
+                                <a role="button" title="Edit" className="site-text-primary" onClick={()=>delExperience(index)}>
+                                    <IoMdClose />
+                                </a>
                             </div>
                             <div className="form-group">
-                                <p><b>{experience.designation}</b></p>
+                                <h5 className="resume-item__title">{experience.designation}</h5>
                             </div>
-                            <div className="form-group">
-                                <p>{experience.organization}</p>
+                            <div className="resume-item__content">
+                                <div className="form-group">
+                                    <p>{experience.organization}</p>
+                                </div>
+                                <div className="form-group">
+                                    <p>Del {experience.idate ? utils.convertDate(experience.idate):''} al {experience.fdate ? utils.convertDate(experience.fdate):''}, {calcularAniosDeExperiencia(experience.idate,experience.fdate)}.</p>
+                                </div>
+                                <div className="form-group">
+                                    <p className="desc-textarea">{experience.description}</p>
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <p>Del {experience.idate ? cambiarFormatoFecha(experience.idate):''} al {experience.fdate ? cambiarFormatoFecha(experience.fdate):''}, {calcularAniosDeExperiencia(experience.idate,experience.fdate)}.</p>
-                            </div>
-                            <div className="form-group">
-                                <p>{experience.description}</p>
-                            </div>
+                            
                         </div>
                     ))
                     )}
@@ -119,14 +165,14 @@ function SectionCanEmployment({experiences=[], setExperiences}) {
                     <div className="modal-content">
                         <form>
                             <div className="modal-header">
-                                <h2 className="modal-title">Add Employment</h2>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"><IoMdClose /></button>
+                                <h2 className="modal-title">Agrega una experiencia</h2>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={closeExpModal}><IoMdClose /></button>
                             </div>
                             <div className="modal-body">
                                 <div className="row">
                                     <div className="col-xl-12 col-lg-12">
                                         <div className="form-group">
-                                            <label>Your Designation</label>
+                                            <label>Tu cargo</label>
                                             <div className="ls-inputicon-box">
                                                 <input 
                                                     className="form-control" 
@@ -274,10 +320,11 @@ function SectionCanEmployment({experiences=[], setExperiences}) {
                                                 />
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="site-button" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="site-button" data-bs-dismiss="modal" onClick={closeExpModal}>Close</button>
                                 <button type="button" className="site-button" data-bs-dismiss="modal" onClick={addExperience}>Save</button>
                             </div>
                         </form>

@@ -6,6 +6,7 @@ import {toast} from 'react-toastify'
 import { getMe } from '../../features/auth/authSlice'
 import { FaDeleteLeft } from "react-icons/fa6";
 import { Multiselect } from 'multiselect-react-dropdown';
+import { IoIosCloseCircle } from "react-icons/io";
 
 function CanProfilePage() {
 
@@ -52,7 +53,7 @@ function CanProfilePage() {
             setLastName(candidate.lastName || '');
             setTipoDoc(candidate.tipoDoc || '');
             setDoc(candidate.doc || '');
-            setPhone(candidate.phone || '');
+            setPhone(user.phone || '');
 
             // Convertir los idiomas del perfil en el formato necesario para el multiselect
             //let selectedLangs = [];
@@ -214,9 +215,9 @@ function CanProfilePage() {
                                             onChange={(e)=>setTipoDoc(e.target.value)} // Manejar cambios de selección
                                         >
                                             <option value="">Seleccione</option>
-                                            <option value="DNI" selected={tipoDoc === "DNI" ? true : false}>DNI</option>
-                                            <option value="Carnet de Extranjeria" selected={tipoDoc === "Carnet de Extranjeria" ? true : false}>Carnet de Extranjeria</option>
-                                            <option value="Pasaporte" selected={tipoDoc === "Pasaporte" ? true : false}>Pasaporte</option>
+                                            <option value="DNI" >DNI</option>
+                                            <option value="Carnet de Extranjeria" >Carnet de Extranjeria</option>
+                                            <option value="Pasaporte" >Pasaporte</option>
                                         </select>
                                         <i className="fs-input-icon fa fa-user-graduate" />
                                     </div>
@@ -253,7 +254,7 @@ function CanProfilePage() {
                                         onRemove={handleRemove}
                                         isObject={true}
                                         
-                                        customCloseIcon={<span>  x</span>} // Custom close icon for selected items
+                                        customCloseIcon={<span> <IoIosCloseCircle /></span>} // Custom close icon for selected items
                                     />
                                         
                                         <i className="fs-input-icon fa fa-language" />
@@ -277,12 +278,12 @@ function CanProfilePage() {
                                             className="form-control"
                                             name="genre"
                                             value={genre}
-                                            onChange={(e)=>setDisability(e.target.value)} // Manejar cambios de selección
+                                            onChange={(e)=>setGenre(e.target.value)} // Manejar cambios de selección
                                         >
                                             <option value="">Seleccione</option>
-                                            <option value="Masculino" selected={genre === "Masculino" ? true : false}>Masculino</option>
-                                            <option value="Femenino" selected={genre === "Femenino" ? true : false}>Femenino</option>
-                                            <option value="Prefiero No decirlo" selected={genre === "Prefiero No decirlo" ? true : false}>Prefiero No decirlo</option>
+                                            <option value="Masculino" >Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                            <option value="Prefiero No decirlo" >Prefiero No decirlo</option>
                                         </select>
                                     </div>
                                 </div>
@@ -298,7 +299,7 @@ function CanProfilePage() {
                             </div>
                             <div className="col-xl-6 col-lg-6 col-md-12">
                                 <div className="form-group">
-                                    <label>Discapacidad Especifico</label>
+                                    <label>Discapacidad</label>
                                     <div className="ls-inputicon-box">
                                     <select
                                             className="form-control"
@@ -307,14 +308,14 @@ function CanProfilePage() {
                                             onChange={(e)=>setDisability(e.target.value)} // Manejar cambios de selección
                                         >
                                             <option value="">Seleccione</option>
-                                            <option value="Visual" selected={disability === "Visual" ? true : false}>Visual</option>
-                                            <option value="Auditiva" selected={disability === "Auditiva" ? true : false}>Auditiva</option>
-                                            <option value="Física" selected={disability === "Física" ? true : false}>Física</option>
-                                            <option value="Visceral" selected={disability === "Visceral" ? true : false}>Visceral</option>
-                                            <option value="Psíquica" selected={disability === "Psíquica" ? true : false}>Psíquica</option>
-                                            <option value="Intelectual" selected={disability === "Intelectual" ? true : false}>Intelectual</option>
-                                            <option value="Trastorno del Espectro Autista" selected={disability === "Trastorno del Espectro Autista" ? true : false}>Trastorno del Espectro Autista</option>
-                                            <option value="Otro" selected={disability === "Otro" ? true : false}>Otro</option>
+                                            <option value="Visual" >Visual</option>
+                                            <option value="Auditiva" >Auditiva</option>
+                                            <option value="Física" >Física</option>
+                                            <option value="Visceral" >Visceral</option>
+                                            <option value="Psíquica" >Psíquica</option>
+                                            <option value="Intelectual" >Intelectual</option>
+                                            <option value="Trastorno del Espectro Autista" >Trastorno del Espectro Autista</option>
+                                            <option value="Otro" >Otro</option>
                                         </select>
                                         <i className="fs-input-icon fa fa-user-graduate" />
                                     </div>
@@ -322,8 +323,8 @@ function CanProfilePage() {
                             </div>
                             <div className="col-md-12">
                                 <div className="form-group">
-                                    <label>Diagnóstico</label>
-                                    <textarea className="form-control" rows={3} value={diagnosis} onChange={(e)=>setDiagnosis(e.target.value)} defaultValue={"Greetings! when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries."} />
+                                    <label>Diagnóstico Específico</label>
+                                    <textarea className="form-control" rows={3} value={diagnosis} onChange={(e)=>setDiagnosis(e.target.value)} />
                                 </div>
                             </div>
                             <div className="panel-heading wt-panel-heading p-a20">
@@ -379,13 +380,13 @@ function CanProfilePage() {
                                             onChange={(e)=>setNivEduc(e.target.value)} // Manejar cambios de selección
                                         >
                                             <option value="">Seleccione</option>
-                                            <option value="Primaria" selected={nivEduc === "Primaria" ? true : false}>Primaria</option>
-                                            <option value="Secundaria" selected={nivEduc === "Secundaria" ? true : false}>Secundaria</option>
-                                            <option value="Técnica" selected={nivEduc === "Técnica" ? true : false}>Técnica</option>
-                                            <option value="Técnica Incompleta" selected={nivEduc === "Técnica Incompleta" ? true : false}>Técnica Incompleta</option>
-                                            <option value="Universitaria" selected={nivEduc === "Universitaria" ? true : false}>Universitaria</option>
-                                            <option value="Universitaria Incompleta" selected={nivEduc === "Universitaria Incompleta" ? true : false}>Universitaria Incompleta</option>
-                                            <option value="Maestría" selected={nivEduc === "Maestría" ? true : false}>Maestría</option>
+                                            <option value="Primaria" >Primaria</option>
+                                            <option value="Secundaria" >Secundaria</option>
+                                            <option value="Técnica" >Técnica</option>
+                                            <option value="Técnica Incompleta" >Técnica Incompleta</option>
+                                            <option value="Universitaria" >Universitaria</option>
+                                            <option value="Universitaria Incompleta" >Universitaria Incompleta</option>
+                                            <option value="Maestría" >Maestría</option>
                                         </select>
                                         <i className="fs-input-icon fa fa-user-graduate" />
                                     </div>
@@ -402,11 +403,11 @@ function CanProfilePage() {
                                             onChange={(e)=>setExperience(e.target.value)} // Manejar cambios de selección
                                         >
                                             <option value="">Seleccione</option>
-                                            <option value="Sin Experiencia" selected={experience === "Sin Experiencia" ? true : false}>Sin Experiencia</option>
-                                            <option value="1 año o menos" selected={experience === "1 año o menos" ? true : false}>1 año o menos</option>
-                                            <option value="1 a 3 años" selected={experience === "1 a 3 años" ? true : false}>1 a 3 años</option>
-                                            <option value="3 a 6 años" selected={experience === "3 a 6 años" ? true : false}>3 a 6 años</option>
-                                            <option value="6 a más años" selected={experience === "6 a más años" ? true : false}>6 a más años</option>
+                                            <option value="Sin Experiencia" >Sin Experiencia</option>
+                                            <option value="1 año o menos" >1 año o menos</option>
+                                            <option value="1 a 3 años" >1 a 3 años</option>
+                                            <option value="3 a 6 años" >3 a 6 años</option>
+                                            <option value="6 a más años" >6 a más años</option>
                                         </select>
                                         <i className="fs-input-icon fa fa-user-graduate" />
                                     </div>
@@ -415,7 +416,7 @@ function CanProfilePage() {
                             <div className="col-md-12">
                                 <div className="form-group">
                                     <label>Perfil Profesional</label>
-                                    <textarea className="form-control" rows={3} value={professionalProfile} onChange={(e)=>setProfessionalProfile(e.target.value)} defaultValue={"Greetings! when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries."} />
+                                    <textarea className="form-control" rows={3} value={professionalProfile} onChange={(e)=>setProfessionalProfile(e.target.value)}  />
                                 </div>
                             </div>
                             

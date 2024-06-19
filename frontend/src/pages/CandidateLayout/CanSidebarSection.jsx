@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { update, getMe, reset } from "../../features/auth/authSlice";
 import {toast} from 'react-toastify'
+import { HiMiniIdentification } from "react-icons/hi2";
+import { FaFileInvoice } from "react-icons/fa";
 
 function CanSidebarSection() {
     
@@ -96,13 +98,13 @@ function CanSidebarSection() {
             <div className="twm-nav-list-1">
                 <ul>
                     
-                    <li >
-                        <NavLink to={""}><i className="fa fa-user" />
+                    <li>
+                        <NavLink className={"sidebar__link"} to={"detail"} ><HiMiniIdentification />
                             Perfil
                         </NavLink>
                     </li>
                     <li >
-                        <NavLink to={"resume"}><i className="fa fa-user" />
+                        <NavLink className={"sidebar__link"} to={"resume"}><FaFileInvoice />
                             Curriculum
                         </NavLink>
                     </li>

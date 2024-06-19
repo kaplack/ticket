@@ -45,7 +45,7 @@ export const canGetProfile = createAsyncThunk('profile/get', async (candidateDat
     }
 })
 
-//Get profile
+//Del CV
 export const delCvFile = createAsyncThunk('profile/delCv', async (fileId, thunkAPI) => {
     try{
         const token = thunkAPI.getState().auth.user.token
