@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const API_URL = '/api/profile/candidate/resume'
+const API_URL = process.env.REACT_APP_API_URL+'/api/profile/candidate/resume'
 
 //CREATE PROFILE
 const createResume = async (infoData, token) => {

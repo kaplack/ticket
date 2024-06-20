@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = '/api/works/'
-const PUBLIC_API_URL = '/api/allworks/'
+const API_URL = process.env.REACT_APP_API_URL+'/api/works/'
+const PUBLIC_API_URL = process.env.REACT_APP_API_URL+'/api/allworks/'
 
 // Create new work
 

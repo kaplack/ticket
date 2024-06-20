@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 
-const API_URL = '/api/profile/candidate'
+const API_URL = process.env.REACT_APP_API_URL+'/api/profile/candidate'
 
 //CREATE PROFILE
 const createProfile = async (profileData, token) => {
