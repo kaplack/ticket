@@ -41,7 +41,7 @@ const getMe = async (token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const response  = await axios.get(API_URL + "/me", config)
+    const response  = await axios.get(API_URL + "me", config)
 
     // if(response.data){
     //     localStorage.setItem('user', JSON.stringify(response.data))
@@ -54,7 +54,7 @@ const getMe = async (token) => {
 
 //LOGIN USER
 const login = async (userData) => {
-    const response  = await axios.post(API_URL + '/login', userData)
+    const response  = await axios.post(API_URL + 'login', userData)
 
     if(response.data){
         localStorage.setItem('user', JSON.stringify(response.data))
