@@ -10,6 +10,7 @@ const path = require('path')
 const fs = require('fs')
 
 
+
 // ---------------------------------------------------------------- CANDIDATE CONTROLLER 
 
 // @desc    create candidate profile
@@ -69,31 +70,36 @@ const updateCanProfile = asyncHandler(async (req, res) => {
       return res.status(404).json({ error: 'Perfil no encontrado' });
     }
 
-    
+     // Convertir age a una instancia de Date
+     const isValidDate = (d) => d instanceof Date && !isNaN(d);
+     let ageDate = new Date(age);
+    //  if (!isValidDate(ageDate)) {
+    //      return res.status(400).json({ error: 'Invalid date format for age' });
+    //  }
 
     // Actualizar el perfil del candidato con el resto de los datos
-    profile.name = name;
-    profile.lastName = lastName;
-    profile.tipoDoc = tipoDoc;
-    profile.doc = doc;
-    profile.phone = phone;
+    if(name !== undefined) profile.name = name;
+    if(lastName !== undefined) profile.lastName = lastName;
+    if(tipoDoc !== undefined) profile.tipoDoc = tipoDoc;
+    if(doc !== undefined) profile.doc = doc;
+    
     if (lang !== undefined && lang.length > 0) {
         profile.lang = JSON.parse(lang); // Convertir el JSON string de vuelta a un array
     }
-    profile.nationality = nationality;
-    profile.genre = genre;
-    if(age !== undefined ) {
-      profile.age = age;
+    if(nationality !== undefined) profile.nationality = nationality;
+    if(genre !== undefined) profile.genre = genre;
+    if (age !== undefined && isValidDate(ageDate)) {
+      profile.age = ageDate;
     }
-    profile.disability = disability;
-    profile.diagnosis = diagnosis;
-    profile.country = country;
-    profile.city = city;
-    profile.postalCode = postalCode;
-    profile.address = address;
-    profile.nivEduc = nivEduc;
-    profile.experience = experience;
-    profile.professionalProfile = professionalProfile;
+    if(disability !== undefined) profile.disability = disability;
+    if(diagnosis !== undefined) profile.diagnosis = diagnosis;
+    if(country !== undefined) profile.country = country;
+    if(city !== undefined) profile.city = city;
+    
+    if(address !== undefined) profile.address = address;
+    if(nivEduc !== undefined) profile.nivEduc = nivEduc;
+    if(experience !== undefined) profile.experience = experience;
+    if(professionalProfile !== undefined) profile.professionalProfile = professionalProfile;
 
     await profile.save();
 

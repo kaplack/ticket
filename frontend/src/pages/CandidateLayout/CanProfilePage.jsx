@@ -7,6 +7,7 @@ import { getMe } from '../../features/auth/authSlice'
 import { FaDeleteLeft } from "react-icons/fa6";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { IoIosCloseCircle } from "react-icons/io";
+import utils from '../../utils/utils'
 
 function CanProfilePage() {
 
@@ -22,7 +23,7 @@ function CanProfilePage() {
     const {user} = useSelector((state)=> state.auth) 
     // const [editedProfile, setEditedProfile] = useState({})
     const {candidate} = useSelector((state)=>state.candidate)
-    console.log(candidate.doc)
+    //console.log(candidate.doc)
     
     // State del formulario del perfil
     const [name, setName] = useState('');
@@ -90,31 +91,36 @@ function CanProfilePage() {
     const handleSaveChanges = (e) => {
         e.preventDefault()
         const formData = new FormData()
-        //Informacion personal
-        formData.append('name', name)
-        formData.append('lastName', lastName)
-        formData.append('tipoDoc', tipoDoc)
-        formData.append('doc', doc)
-        formData.append('phone', phone)
-        // Verificar si hay un archivo adjunto en cvFile antes de agregarlo al FormData
-        if (lang && lang.length !== 0 && lang != null) {
-            formData.append('lang', JSON.stringify(lang)); // Convertir el array a JSON string)
-        }
-        formData.append('nationality', nationality)
-        formData.append('genre', genre)
-        formData.append('age', age)
-        formData.append('disability', disability)
-        formData.append('diagnosis', diagnosis)
-        //Residencia
-        formData.append('country', country)
-        formData.append('city', city)
-        formData.append('postalCode', postalCode)
-        formData.append('address', address)
-        //curricular
-        formData.append('nivEduc', nivEduc)
-        formData.append('experience', experience)
-        formData.append('professionalProfile', professionalProfile)
-        
+        // Verificación de campos
+    //const isValidDate = (d) => d instanceof Date && !isNaN(d);
+    const ageDate = new Date(age);
+
+    // Información personal
+    if (name) formData.append('name', name);
+    if (lastName) formData.append('lastName', lastName);
+    if (tipoDoc) formData.append('tipoDoc', tipoDoc);
+    if (doc) formData.append('doc', doc);
+    if (lang && lang.length !== 0 && lang !== null) {
+        formData.append('lang', JSON.stringify(lang)); // Convertir el array a JSON string
+    }
+    if (nationality) formData.append('nationality', nationality);
+    if (genre) formData.append('genre', genre);
+    if (utils.isValidDate(ageDate)) {
+        formData.append('age', ageDate.toISOString());
+    }
+    if (disability) formData.append('disability', disability);
+    if (diagnosis) formData.append('diagnosis', diagnosis);
+
+    // Residencia
+    if (country) formData.append('country', country);
+    if (city) formData.append('city', city);
+    if (postalCode) formData.append('postalCode', postalCode);
+    if (address) formData.append('address', address);
+
+    // Curricular
+    if (nivEduc) formData.append('nivEduc', nivEduc);
+    if (experience) formData.append('experience', experience);
+    if (professionalProfile) formData.append('professionalProfile', professionalProfile);
         // Verificar si hay un archivo adjunto en cvFile antes de agregarlo al FormData
         if (cvFile && cvFile.length !== 0 && cvFile != null) {
             formData.append('resume', cvFile);

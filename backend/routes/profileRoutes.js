@@ -8,7 +8,8 @@ const { createCanProfile, getCanProfile, updateCanProfile, delCvFile, createEmpP
 //ruta para crear o actualizar el perfil del candidato
 router.route("/candidate/").post(protect, createCanProfile )
 router.route("/candidate/").get(protect, getCanProfile )
-router.route("/candidate/").put(protect, upload.single('resume'), updateCanProfile )
+//router.route("/candidate/").put(protect, upload.single('resume'), updateCanProfile )
+router.route("/candidate/").put(protect, upload.none(), updateCanProfile )
 router.route("/candidate/:id").delete(protect, delCvFile )
 //Candidate/Resume
 router.route("/candidate/resume").post(protect,createResume)

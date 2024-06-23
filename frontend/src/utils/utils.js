@@ -21,7 +21,10 @@ const utils = {
         const month = (`0${date.getMonth() + 1}`).slice(-2); // Agrega un 0 si el mes es menor a 10
         const day = (`0${date.getDate() +1}`).slice(-2); // Agrega un 0 si el día es menor a 10
         return `${year}-${month}-${day}`;
-    }
+    },
+
+    //Valida si la variable d es una instancia de Date diferente de NaN
+    isValidDate: (d) => d instanceof Date && !isNaN(d),
 
 }
 
