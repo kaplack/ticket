@@ -29,6 +29,10 @@ const emProfileSchema = mongoose.Schema({
         type: String,
         //enum: ['RUC', 'RUS']
     },
+    web:{
+        type: String,
+        //enum: ['RUC', 'RUS']
+    },
     numCol:{
         type: String,
     },

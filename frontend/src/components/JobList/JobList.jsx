@@ -7,15 +7,16 @@ import JobListItem from './JobListItem'
 import { NavLink } from 'react-router-dom'
 
 
-function JobList() {
+function JobList({jobsFiltered}) {
 
-  const [itemInfo,setItemInfo] =useState(null)
+  //const [itemInfo,setItemInfo] =useState(null)
     const {allWorks} = useSelector((state)=>state.work)
     const {allEmployers} = useSelector((state)=>state.employer)
     
     //User,Puesto, FechaDePublicación, lugar, salarioMensual, empresa, webDeLaEmpresa 
     //modificar 
 
+    let worksList = jobsFiltered || allWorks
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -46,27 +47,42 @@ function JobList() {
         };
       }, [dispatch]);
 
+      // Verificar que `allEmployers` es un array antes de usar `reduce`
+  const logoMap = Array.isArray(allEmployers)
+  ? allEmployers.reduce((acc, employer) => {
+      acc[employer.user] = {
+        logo: employer.logo,
+        companyName: employer.companyName,
+        web: employer.web
+      };
+      return acc;
+    }, {})
+  : {};
+
+// Verificar que `allWorks` es un array antes de usar `map`
+const workWithImg = Array.isArray(worksList)
+  ? worksList.map((work) => ({
+      ...work,
+      logo: logoMap[work.user]?.logo || null,
+      companyName: logoMap[work.user]?.companyName || null,
+      web: logoMap[work.user]?.web || null,
+      
+    }))
+  : [];
+
+//console.log(workWithImg);
+
 
   return (
     <>
     
-            <div className="section-full p-t120 p-b90 site-bg-light-purple twm-bg-ring-wrap">
-                <div className="twm-bg-ring-right" />
-                <div className="twm-bg-ring-left" />
-                <div className="container">
-                    {/* title="" START*/}
-                    <div className="section-head center wt-small-separator-outer">
-                        <div className="wt-small-separator site-text-primary">
-                            <div>Todos los puestos</div>
-                        </div>
-                        <h2 className="wt-title">Encuentra el empleo que te mereces</h2>
-                    </div>
-                    {/* title="" END*/}
+            
+                    {/* Section-content-start */}
                     <div className="section-content">
                         <div className="twm-jobs-list-wrap">
-                            {allWorks.length > 0 ? (
+                            {worksList.length > 0 ? (
                                 <ul>
-                                    {allWorks.map((work) => (
+                                    {workWithImg.map((work) => (
                                         <li key={work._id}>
                                             <JobListItem work={work} />
                                         </li>
@@ -75,14 +91,11 @@ function JobList() {
                             ) : (
                                 <p>No se han publicado trabajos aún.</p>
                             )}
-                            <div className="text-center m-b30">
-                                <NavLink to="/works" className=" site-button">Ver todos los trabajos</NavLink>
-                            </div>
+                            
                         </div>
                     </div>
-                </div>
-            </div>
-            {/* JOB POST END */}
+                    {/* Section-content-finish */}
+                
 
     </>
   )

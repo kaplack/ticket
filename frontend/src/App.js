@@ -23,15 +23,24 @@ function App() {
       <Router>
         <Header />
           <Routes>
-          
+            {/* public pages */}
             <Route path='/' element={<Home />} />
+
+            {/* AUTH */}
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+
+            {/* PRIVATE PAGES */}
             <Route path='/new-work' element={<PrivateRoute><NewWork /></PrivateRoute>} />
             <Route path='/works' element={<PrivateRoute><Works /></PrivateRoute>} />
             <Route path='/works/:workId' element={<PrivateRoute><Work /></PrivateRoute>} />
-            <Route path='/profile/candidate/*' element={<PrivateRoute><CanLayout/></PrivateRoute>} />
+            
+            {/* EMPLOYER ADMIN */}
             <Route path='/profile/employer/*' element={<PrivateRoute><EmpLayout/></PrivateRoute>} />
+            
+            {/* CANDIDATE ADMIN */}
+            <Route path='/profile/candidate/*' element={<PrivateRoute><CanLayout/></PrivateRoute>} />
+            
             
           </Routes>
         <Footer />

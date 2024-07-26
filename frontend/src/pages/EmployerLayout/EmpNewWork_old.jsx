@@ -2,12 +2,11 @@ import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
-import { createWork, reset } from "../features/work/workSlice"
-import Spinner from "../components/Spinner"
-import BackButton from "../components/BackButton"
+import { createWork, reset } from "../../features/work/workSlice"
+import Spinner from "../../components/Spinner"
+import BackButton from "../../components/BackButton"
 
-function NewWork() {
-
+function EmpNewWork() {
     const {user} = useSelector((state)=> state.auth)
 
     const {isLoading, isError, isSuccess, message} = useSelector(
@@ -61,7 +60,7 @@ function NewWork() {
         <BackButton url='/' />
         <section className="heading">
             <h1>Publica un empleo</h1>
-            <p>Estas a un paso de contratar a alguien diferente!</p>
+            <p>Estas a un paso de contratar a alguien diferente</p>
         </section>
         <section className="form">
             <form onSubmit={onSubmit}>
@@ -120,4 +119,4 @@ function NewWork() {
   )
 }
 
-export default NewWork
+export default EmpNewWork

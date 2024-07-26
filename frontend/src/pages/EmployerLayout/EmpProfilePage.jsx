@@ -35,6 +35,7 @@ function EmpProfilePage() {
   const [email, setEmail] = useState('')
   const [compType, setCompType] = useState('')
   const [idNumber, setIdNumber] = useState('')
+  const [web, setWeb] = useState('')
   const [country, setCountry] = useState('')
   const [city, setCity] = useState('')
   const [address, setAddress] = useState('')
@@ -57,6 +58,7 @@ function EmpProfilePage() {
           setEmail(user.email || '');
           setCompType(employer.compType || '');
           setIdNumber(employer.idNumber || '');
+          setWeb(employer.web || '');
           setCountry(employer.country || '');
           setCity(employer.city || '');
           setAddress(employer.address || '');
@@ -93,6 +95,7 @@ function EmpProfilePage() {
     }
     formData.append('companyName', companyName)
     formData.append('idNumber', idNumber)
+    formData.append('web', web)
     formData.append('compType', compType)
     formData.append('country', country)
     formData.append('city', city)
@@ -271,6 +274,15 @@ function EmpProfilePage() {
                                   </div>
                               </div>
                           </div>
+                          <div className="col-xl-4 col-lg-12 col-md-12">
+                              <div className="form-group">
+                                  <label>Pagina Web</label>
+                                  <div className="ls-inputicon-box">
+                                      <input className="form-control" name="web" type="text" placeholder="www.fippla.com" value={web} onChange={(e)=>setWeb(e.target.value)}/>
+                                      <i className="fs-input-icon fa fa-globe-americas" />
+                                  </div>
+                              </div>
+                          </div>
                           <div className="col-md-12">
                               <div className="form-group">
                                   <label>Descripción</label>
@@ -278,9 +290,7 @@ function EmpProfilePage() {
                               </div>
                           </div>
                           {/* ----------------------------------------------- RESIDENCIA ------------------------------------------------------------- */}
-                          <div className="panel-heading wt-panel-heading p-a20">
-                                <h4 className="panel-tittle m-a0">Ubicación</h4>
-                            </div>
+                                                     
                             <div className="col-xl-4 col-lg-6 col-md-12">
                                 <div className="form-group city-outer-bx has-feedback">
                                     <label>País</label>
@@ -308,6 +318,7 @@ function EmpProfilePage() {
                                     </div>
                                 </div>
                             </div>
+                            
                           <div className="col-lg-12 col-md-12">
                               <div className="text-left">
                                   <button type="submit" className="site-button">Guardar cambios</button>

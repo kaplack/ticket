@@ -1,6 +1,6 @@
 
 
-import {FaAngleRight } from "react-icons/fa";
+import {FaAngleRight, FaUserTie, FaSuitcase, FaSignOutAlt } from "react-icons/fa";
 import { loadScript, setMenuActive } from "../../components/globals/constans";
 //import { employer, empRoute, publicUser } from "../../../../globals/route-names";
 import { useEffect, useState } from "react";
@@ -73,25 +73,26 @@ function EmpSidebarSection(props) {
                 </div>
                 <div className="admin-nav scrollbar-macosx">
                     <ul>
-                        <li
+                        {/* <li
                             className="nav-element"
                             onClick={elClick}>
                             <NavLink className="prueba" to="/"><span className="admin-nav-text">Inicio</span></NavLink>
-                        </li>
+                        </li> */}
                         <li
                             className="nav-element"
                             onClick={elClick}>
-                            <NavLink to="profile"><span className="admin-nav-text">Company Profile</span></NavLink>
+                            <NavLink to="profile" className="nav-element__link" ><i><FaUserTie /></i><span className="admin-nav-text">Perfil de la Compañia</span></NavLink>
                         </li>
                         <li
                             className="nav-element has-child" onClick={displayBlock}>
-                                <a href="#" className="nav-element__element">
-                                    <span className="admin-nav-text">Jobs</span>
+                                <a href="#" className="nav-element__link">
+                                    <i><FaSuitcase /></i>
+                                    <span className="admin-nav-text">Empleos</span>
                                     <FaAngleRight className="submenu-toggle"/>
                                 </a>
                             <ul className="sub-menu" style={{display:"none"}}>
-                                <li> <NavLink to="new-work" id="jobMenuId1"><span className="nav-element sub-menu__li admin-nav-text">Post a New Jobs</span></NavLink></li>
-                                <li> <NavLink to="works" id="jobMenuId2"><span className="nav-element sub-menu__li admin-nav-text">Manage Jobs</span></NavLink></li>
+                                <li> <NavLink to="new-work" id="jobMenuId1"><span className="nav-element sub-menu__li admin-nav-text">Publicar empleo</span></NavLink></li>
+                                <li> <NavLink to="works" id="jobMenuId2"><span className="nav-element sub-menu__li admin-nav-text">Gestiona los empleos</span></NavLink></li>
                             </ul>
                         </li>
                         {/* <li className="nav-element">
@@ -101,8 +102,8 @@ function EmpSidebarSection(props) {
                             <a href="#" data-bs-toggle="modal" data-bs-target="#delete-dash-profile"><span className="admin-nav-text">Delete Profile</span></a>
                         </li> */}
                         <li className="nav-element">
-                            <a href="#" onClick={handleLogout}>
-                                
+                            <a href="#" className="nav-element__link" onClick={handleLogout}>
+                                <i><FaSignOutAlt /></i>
                                 <span className="admin-nav-text">Logout</span>
                             </a>
                         </li>

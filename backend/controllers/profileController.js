@@ -256,8 +256,8 @@ const createEmpProfile = asyncHandler(async (req, res) => {
 const updateEmpProfile = asyncHandler(async (req, res) => {
   try {
     // Los datos del formulario y la imagen subida estarán disponibles en 'req.body' y 'req.file'
-    const { companyName, compType, idNumber, country, city, address, description, facebook, twitter, linkedin, whatsapp, instagram, youtube } = req.body;
-  console.log(facebook, twitter)
+    const { companyName, compType, idNumber, web, country, city, address, description, facebook, twitter, linkedin, whatsapp, instagram, youtube } = req.body;
+  //console.log(facebook, twitter)
 
   // Obtener el perfil actual
   let profile = await EmpProfile.findOne({ user: req.user.id });
@@ -266,7 +266,7 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
   let relativePath = "";
   let fileName = "";
   if (req.files) {
-      console.log(req.files);
+      //console.log(req.files);
       const imgFiles = req.files;
       for (let key in imgFiles){
         const imgFile = imgFiles[key][0]
@@ -289,6 +289,7 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     if (companyName !== undefined) profile.companyName = companyName;
     if (compType !== undefined) profile.compType = compType;
     if (idNumber !== undefined) profile.idNumber = idNumber;
+    if (web !== undefined) profile.web = web;
     if (country !== undefined) profile.country = country;
     if (city !== undefined) profile.city = city;
     if (address !== undefined) profile.address = address; 
@@ -337,6 +338,7 @@ const getEmpAllProfile = asyncHandler(async (req,res) => {
     const el = {
       'user': item.user,
       'companyName': item.companyName,
+      'web': item.web,
       'logo': item.logo[0].relativePath
     }
     allProfilesSelection.push(el)

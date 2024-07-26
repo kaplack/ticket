@@ -11,8 +11,52 @@ const workSchema = mongoose.Schema({
         type: String,
         require: true,
     },
+    jobCategory:{
+        type: String,
+        require: true,
+    },
+    workTime:{
+        type: String,
+        require: true,
+    },
+    workWay:{
+        type: String,
+        require: true,
+    },
+    experience:{
+        type: String,
+        require: true,
+    },
+    qualification:{
+        type: String,
+        require: true,
+    },
+    workPay:{
+        type: Number,
+    },
+    country:{
+        type: String,
+    },
+    city:{
+        type: String,
+    },
+    workPlace:{
+        type: String,
+    },
     description:{
         type: String,
+        require: true,
+    },
+    contactMail:{
+        type: String,
+        require: true,
+    },
+    iDate:{
+        type: Date,
+        require: true,
+    },
+    fDate:{
+        type: Date,
         require: true,
     },
     workFunctions:{
@@ -22,16 +66,6 @@ const workSchema = mongoose.Schema({
     workRequire:{
         type: String,
         require: true,
-    },
-    workPay:{
-        type: Number,
-    },
-    workWay:{
-        type: String,
-        require: true,
-    },
-    workPlace:{
-        type: String,
     },
     actTime:{
         type: Date,
@@ -45,6 +79,9 @@ const workSchema = mongoose.Schema({
     active:{
         type: Boolean,
     },
+    views:{
+        type: Number,
+    }
 }, 
 {
     timestamps: true

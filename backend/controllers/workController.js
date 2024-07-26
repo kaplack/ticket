@@ -56,7 +56,7 @@ const getWork = asyncHandler(async (req,res) => {
 // @access  Private
 const createWorks = asyncHandler(async (req,res) => {
     
-    const {title, description, workFunctions, workRequire, workPay, workWay, workPlace, actTime, workStatus, active } = req.body
+    const {title, jobCategory, workTime, workWay, experience, qualification, workPay, country, city, workPlace, description, contactMail, iDate, fDate, actTime, workStatus, active } = req.body
 
     if(!title || !description){
         res.status(400)
@@ -73,12 +73,19 @@ const createWorks = asyncHandler(async (req,res) => {
 
     const work = await Work.create({
         title,
-        description,
-        workFunctions,
-        workRequire,
-        workPay,
+        jobCategory,
+        workTime,
         workWay,
+        experience,
+        qualification,
+        workPay,
+        country,
+        city,
         workPlace,
+        description,
+        contactMail,
+        iDate,
+        fDate,
         actTime,
         workStatus,
         active,
@@ -100,7 +107,7 @@ const deleteWork = asyncHandler(async (req,res) => {
         res.status(401)
         throw new Error('User not found or not conected')
     }
-
+    console.log("controller: ", req.params.id)
     const work = await Work.findById(req.params.id)
 
     if(!work){

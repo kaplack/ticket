@@ -56,6 +56,17 @@ export const updateWork = createAsyncThunk('works/update', async ( workData, thu
     }
 })
 
+//Delete job
+export const deleteWork = createAsyncThunk('works/delete', async ( workId, thunkAPI) => {
+    try{
+        const token = thunkAPI.getState().auth.user.token
+        return await workService.deleteWork( workId, token)
+    }catch (error){
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 //Get all job
 export const getAllWorks = createAsyncThunk('works/getAllWorks', async (_, thunkAPI) => {
     try{

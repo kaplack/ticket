@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import {useSelector} from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import utils from '../../utils/utils'
 
 function JobListItem({work}) {
 
@@ -14,29 +15,15 @@ function JobListItem({work}) {
     //     }
     // })
     
-    function calcularDiferenciaDias(fechaBase) {
-        // Convertir la fecha de la base de datos a un objeto de fecha
-        const fechaBaseObjeto = new Date(fechaBase);
-      
-        // Obtener la fecha actual
-        const fechaActual = new Date();
-      
-        // Calcular la diferencia en milisegundos
-        const diferenciaMilisegundos = fechaActual - fechaBaseObjeto;
-      
-        // Convertir la diferencia a días
-        const diferenciaDias = Math.floor(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
-      
-        return diferenciaDias;
-      }
     
-    const numeroDias = calcularDiferenciaDias(work.createdAt)
+    
+    const numeroDias = utils.calcularDiferenciaDias(work.createdAt)
 
   return (
     <>
         <div className="twm-jobs-list-style1 mb-5">
             <div className="twm-media">
-                <img src="" alt="logo empleador" />
+                <img src={work.logo} alt="logo empleador" />
             </div>
             <div className="twm-mid-content">
                 <NavLink to="/" className="twm-job-title">
@@ -44,7 +31,7 @@ function JobListItem({work}) {
                     <h4>{work.title}<span className="twm-job-post-duration">/ hace {numeroDias} {numeroDias > 1 ? 'dias' : "día."}</span></h4>
                 </NavLink>
                 <p className="twm-job-address">{`${work.workWay + ", " + work.workPlace }`}</p>
-                <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-job-websites site-text-primary">https://thewebmax.com</a>
+                <a href={"https://"+work.web} className="twm-job-websites site-text-primary">{work.companyName}</a>
             </div>
             <div className="twm-right-content">
                 {

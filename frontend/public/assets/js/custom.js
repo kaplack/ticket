@@ -10,6 +10,7 @@ All JavaScript fuctions Start
 
 	//  selectpicker function by = bootstrap-select.min.js ========================== //
 	function select_picker_select() {
+		console.log(jQuery('.selectpicker').selectpicker());
 		jQuery('.selectpicker').selectpicker();
 	}
 

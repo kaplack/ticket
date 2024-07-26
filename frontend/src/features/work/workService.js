@@ -6,6 +6,7 @@ const PUBLIC_API_URL = process.env.REACT_APP_API_URL+'/api/allworks/'
 // Create new work
 
 const createWork = async (ticketData, token) => {
+    console.log("workSlice: ", ticketData)
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
@@ -42,6 +43,20 @@ const getWork = async (workId, token) => {
     return response.data
 }
 
+// Get user work
+
+const deleteWork = async (workId, token) => {
+    console.log("delete work: ", workId)
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.delete(API_URL + workId,  config)
+
+    return response.data
+}
+
 // Create new work
 
 const updateWork = async (workData, token) => {
@@ -69,6 +84,7 @@ const workService = {
     getWorks,
     getWork,
     updateWork,
+    deleteWork,
     getAllWorks
 }
 
