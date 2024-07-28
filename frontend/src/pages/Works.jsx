@@ -42,20 +42,31 @@ function Works() {
   const [currentPage, setCurrentPage] = useState(1); // Estado para el número de página actual
   const [itemsPerPage, setItemsPerPage] = useState(10); // Estado para el número de ítems por página
   const [sortBy, setSortBy] = useState('most_recent'); // Estado para el criterio de ordenamiento
+  const [category, setCategory] = useState('') 
   const [searchTerm, setSearchTerm] = useState('') // Estado para la busqueda
   const [locationTerm, setLocationTerm] = useState('') // Estado de busqueda para la ubicación
+  const [companyType, setCompanyType] = useState([]); 
 
   // Paginación - Calcula el índice del primer y último elemento de la página actual
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const sorted = sortedWorks(allWorks, sortBy);
-  //search
-  const filteredData = sorted.filter(item => 
-    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    item.location.toLowerCase().includes(locationTerm.toLowerCase())
-  )
+
+  // Busca en la data filtrada 
+  const filteredData = sorted.filter(item => {
+    const jobCategory = item.jobCategory ? item.jobCategory.toLowerCase() : '';
+    const title = item.title ? item.title.toLowerCase() : '';
+    const description = item.description ? item.description.toLowerCase() : '';
+    const location = item.location ? item.location.toLowerCase() : '';
+    //const companyType = item.setCompanyType ? item.jobType.toLowerCase() : '';
+    
+    const matchesCategory = category === '' || jobCategory.includes(category.toLowerCase());
+    const matchesSearch = title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase());
+    const matchesLocation = location.includes(locationTerm.toLowerCase());
+    
+    return matchesCategory && matchesSearch && matchesLocation;
+  });
   const pages = Math.ceil(filteredData.length / itemsPerPage);
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
@@ -66,6 +77,8 @@ function Works() {
   };
 
   const _searchFiltered = {
+    category,
+    setCategory,
     searchTerm,
     setSearchTerm,
     locationTerm,

@@ -83,12 +83,15 @@ const createWorks = asyncHandler(async (req,res) => {
         city,
         workPlace,
         description,
+        workFunctions,
+        workRequire,
         contactMail,
         iDate,
         fDate,
         actTime,
         workStatus,
         active,
+        location: workPlace + ", " + city + " - " + country,
         user: req.user.id
     })
 
@@ -149,7 +152,31 @@ const updateWork = asyncHandler(async (req,res) => {
         throw new Error('Not Authorizer')
     }
 
-    const updatedWork = await Work.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    const {title, jobCategory, workTime, workWay, experience, qualification, workPay, country, city, workPlace, description, contactMail, iDate, fDate, actTime, workStatus, active } = req.body
+
+    const updatedWork = await Work.findByIdAndUpdate(req.params.id, {
+        title,
+        jobCategory,
+        workTime,
+        workWay,
+        experience,
+        qualification,
+        workPay,
+        country,
+        city,
+        workPlace,
+        description,
+        workFunctions,
+        workRequire,
+        contactMail,
+        iDate,
+        fDate,
+        actTime,
+        workStatus,
+        active,
+        location: workPlace + ", " + city + " - " + country,
+        user: req.user.id
+    }, {new:true})
 
     res.status(200).json(updatedWork)
 })

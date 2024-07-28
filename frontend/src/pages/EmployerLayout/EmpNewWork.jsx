@@ -152,24 +152,24 @@ function EmpNewWork() {
                                     <div className="ls-inputicon-box">
                                         <select className="form-control" name="jobCategory" value={formData.jobCategory} onChange={handleChange}>
                                             <option value="">Selecciona la categoría</option>
-                                            <option value="administrativo">Administrativo</option>
-                                            <option value="operario">Operario</option>
-                                            <option value="tecnico">Técnico</option>
-                                            <option value="ejecutivo">Ejecutivo / Gerencial</option>
-                                            <option value="ventas-y-marketing">Ventas y Marketing</option>
-                                            <option value="servicio-al-cliente">Servicio al Cliente</option>
-                                            <option value="soporte-tecnico">Soporte Técnico</option>
-                                            <option value="educacion-y-formacion">Educación y Formación</option>
-                                            <option value="salud-y-asistencia-social">Salud y Asistencia Social</option>
-                                            <option value="ingenieria">Ingeniería</option>
-                                            <option value="investigacion-y-desarrollo">Investigación y Desarrollo</option>
-                                            <option value="logistica-y-transporte">Logística y Transporte</option>
-                                            <option value="produccion-y-manufactura">Producción y Manufactura</option>
-                                            <option value="limpieza-y-mantenimiento">Limpieza y Mantenimiento</option>
-                                            <option value="diseno-y-creatividad">Diseño y Creatividad</option>
-                                            <option value="recursos-humanos">Recursos Humanos</option>
-                                            <option value="contabilidad-y-finanzas">Contabilidad y Finanzas</option>
-                                            <option value="legal-y-compliance">Legal y Compliance</option>
+                                            <option value="Administrativo">Administrativo</option>
+                                            <option value="Operario">Operario</option>
+                                            <option value="Técnico">Técnico</option>
+                                            <option value="Ejecutivo o Gerencial">Ejecutivo o Gerencial</option>
+                                            <option value="Ventas y Marketing">Ventas y Marketing</option>
+                                            <option value="Servicio al Cliente">Servicio al Cliente</option>
+                                            <option value="Soporte Técnico">Soporte Técnico</option>
+                                            <option value="Educación y Formación">Educación y Formación</option>
+                                            <option value="Salud y Asistencia Social">Salud y Asistencia Social</option>
+                                            <option value="Ingeniería">Ingeniería</option>
+                                            <option value="Investigación y Desarrollo">Investigación y Desarrollo</option>
+                                            <option value="Logística y Transporte">Logística y Transporte</option>
+                                            <option value="Producción y Manufactura">Producción y Manufactura</option>
+                                            <option value="Limpieza y Mantenimiento">Limpieza y Mantenimiento</option>
+                                            <option value="Diseño y Creatividad">Diseño y Creatividad</option>
+                                            <option value="Recursos Humanos">Recursos Humanos</option>
+                                            <option value="Contabilidad y Finanzas">Contabilidad y Finanzas</option>
+                                            <option value="Legal y Compliance">Legal y Compliance</option>
                                         </select>
                                         <div className="fs-input-icon"><FaBorderAll /></div>
                                     </div>

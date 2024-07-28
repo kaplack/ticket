@@ -12,79 +12,77 @@ function SectionJobsSidebar({_searchFiltered}) {
         _searchFiltered.setLocationTerm(e.target.value);
       };
 
+      const handleCategory = (e) => {
+        _searchFiltered.setCategory(e.target.value);
+      };
+
+      const handleCompanyType = (e) => {
+        
+        //_searchFiltered.setCompanyType(e.target.value);
+        console.log(e.target.value)
+      };
+
+
     return (
         <>
             <div className="side-bar">
                 <div className="sidebar-elements search-bx">
                     <form>
                         <div className="form-group mb-4">
-                            <h4 className="section-head-small mb-4">Category</h4>
+                            <h4 className="section-head-small mb-4">Categoría</h4>
                             {/* <select className="wt-select-bar-large selectpicker" data-live-search="true" data-bv-field="size"> */}
-                            <select className="wt-select-bar-large" data-live-search="true" data-bv-field="size">
-                                <option>All Category</option>
-                                <option>Web Designer</option>
-                                <option>Developer</option>
-                                <option>Acountant</option>
+                            <select className="wt-select-bar-large" value={_searchFiltered.category} onChange={handleCategory} >
+                                <option value={""}>All Category</option>
+                                <option value="Administrativo">Administrativo</option>
+                                <option value="Operario">Operario</option>
+                                <option value="Técnico">Técnico</option>
+                                <option value="Ejecutivo o Gerencial">Ejecutivo o Gerencial</option>
+                                <option value="Ventas y Marketing">Ventas y Marketing</option>
+                                <option value="Servicio al Cliente">Servicio al Cliente</option>
+                                <option value="Soporte Técnico">Soporte Técnico</option>
+                                <option value="Educación y Formación">Educación y Formación</option>
+                                <option value="Salud y Asistencia Social">Salud y Asistencia Social</option>
+                                <option value="Ingeniería">Ingeniería</option>
+                                <option value="Investigación y Desarrollo">Investigación y Desarrollo</option>
+                                <option value="Logística y Transporte">Logística y Transporte</option>
+                                <option value="Producción y Manufactura">Producción y Manufactura</option>
+                                <option value="Limpieza y Mantenimiento">Limpieza y Mantenimiento</option>
+                                <option value="Diseño y Creatividad">Diseño y Creatividad</option>
+                                <option value="Recursos Humanos">Recursos Humanos</option>
+                                <option value="Contabilidad y Finanzas">Contabilidad y Finanzas</option>
+                                <option value="Legal y Compliance">Legal y Compliance</option>
                             </select>
                         </div>
                         <div className="form-group mb-4">
-                            <h4 className="section-head-small mb-4">Keyword</h4>
+                            <h4 className="section-head-small mb-4">Palabra clave</h4>
                             <div className="input-group">
                                 <input type="text" className="form-control" onChange={handleSearch} placeholder="Job title or Keyword" />
                                 <button className="btn" type="button"><FaSearch /></button>
                             </div>
                         </div>
                         <div className="form-group mb-4">
-                            <h4 className="section-head-small mb-4">Location</h4>
+                            <h4 className="section-head-small mb-4">Ubicación</h4>
                             <div className="input-group">
                                 <input type="text" className="form-control" onChange={handleLocationSearch} placeholder="Search location" />
                                 <button className="btn" type="button"><FaMapPin /></button>
                             </div>
                         </div>
                         <div className="twm-sidebar-ele-filter">
-                            <h4 className="section-head-small mb-4">Job Type</h4>
+                            <h4 className="section-head-small mb-4">Tipo de Empresa</h4>
                             <ul>
                                 <li>
-                                    <div className=" form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                                        <label className="form-check-label" htmlFor="exampleCheck1">Freelance</label>
+                                    <div className="form-check">
+                                        <input type="radio" name='companyType' className="form-check-input-sidebar" id="exampleCheck1" value="Pública" onChange={handleCompanyType}/>
+                                        <label className="form-check-label-sidebar" htmlFor="exampleCheck1">Pública</label>
                                     </div>
                                     <span className="twm-job-type-count">09</span>
                                 </li>
                                 <li>
-                                    <div className=" form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck2" />
-                                        <label className="form-check-label" htmlFor="exampleCheck2">Full Time</label>
+                                    <div className="form-check">
+                                        <input type="radio" name='companyType' className="form-check-input-sidebar" id="exampleCheck2" value="Privada" onChange={handleCompanyType}/>
+                                        <label className="form-check-label-sidebar" htmlFor="exampleCheck2">Privada</label>
                                     </div>
                                     <span className="twm-job-type-count">07</span>
-                                </li>
-                                <li>
-                                    <div className=" form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck3" />
-                                        <label className="form-check-label" htmlFor="exampleCheck3">Internship</label>
-                                    </div>
-                                    <span className="twm-job-type-count">15</span>
-                                </li>
-                                <li>
-                                    <div className=" form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck4" />
-                                        <label className="form-check-label" htmlFor="exampleCheck4">Part Time</label>
-                                    </div>
-                                    <span className="twm-job-type-count">20</span>
-                                </li>
-                                <li>
-                                    <div className=" form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck5" />
-                                        <label className="form-check-label" htmlFor="exampleCheck5">Temporary</label>
-                                    </div>
-                                    <span className="twm-job-type-count">22</span>
-                                </li>
-                                <li>
-                                    <div className=" form-check">
-                                        <input type="checkbox" className="form-check-input" id="exampleCheck6" />
-                                        <label className="form-check-label" htmlFor="exampleCheck6">Volunteer</label>
-                                    </div>
-                                    <span className="twm-job-type-count">25</span>
                                 </li>
                             </ul>
                         </div>

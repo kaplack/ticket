@@ -43,6 +43,9 @@ const workSchema = mongoose.Schema({
     workPlace:{
         type: String,
     },
+    location:{
+        type: String,
+    },
     description:{
         type: String,
         require: true,

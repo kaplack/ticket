@@ -52,6 +52,18 @@ const emProfileSchema = mongoose.Schema({
         type: String,
         
     },
+    address:{
+        type: String,
+        
+    },
+    city:{
+        type: String,
+        
+    },
+    country:{
+        type: String,
+        
+    },
     worksNumber:{
         type: String,
         
