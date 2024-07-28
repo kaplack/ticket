@@ -86,7 +86,7 @@ function SectionJobsSidebar({_searchFiltered}) {
                                 </li>
                             </ul>
                         </div>
-                        <div className="twm-sidebar-ele-filter">
+                        {/* <div className="twm-sidebar-ele-filter">
                             <h4 className="section-head-small mb-4">Date Posts</h4>
                             <ul>
                                 <li>
@@ -155,7 +155,7 @@ function SectionJobsSidebar({_searchFiltered}) {
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
                     </form>
                 </div>
                 {/* <div className="widget tw-sidebar-tags-wrap">
