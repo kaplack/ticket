@@ -73,11 +73,11 @@ function Header() {
                                     </div>
                                     {/* Header Right Section */}
                                     <div className="extra-nav header-2-nav">
-                                        <div className="extra-cell">
+                                        {/* <div className="extra-cell">
                                             <div className="header-search">
                                                 <a href="#search" onClick={handleSearchLinkClick} className="header-search-icon"><FaSearch /></a>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="extra-cell">
                                             <div className="header-nav-btn-section">
                                                 {user ? (

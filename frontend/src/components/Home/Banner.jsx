@@ -14,29 +14,29 @@ function Banner() {
             <div className="col-xl-7 col-lg-12 col-md-12">
                 <div className="twm-bnr-left-section">
                     <div className="twm-bnr-title-large">
-                        <span>¿Buscamos un empleo?</span>
+                        <span>¿Buscas un empleo?</span>
                         <span className="typewrite site-text-primary" data-period={2000} data-type="[ &quot;Dream Job&quot; , &quot;Next Job&quot;]" />
-                        <div><span>Te ayudaremos</span> </div>
+                        <div><span>Te ayudaremos!</span> </div>
                     </div>
-                    <div className="twm-bnr-search-bar">
+                    {/* <div className="twm-bnr-search-bar">
                         <form>
                             <div className="row">
                                 {/*Title*/}
-                                <div className="form-group col-xl-8 col-lg-8 col-md-8">
+                                {/* <div className="form-group col-xl-8 col-lg-8 col-md-8">
                                     <label>Dinos lo que buscas</label>
                                     <div className="twm-single-iput">
                                         <input name="username" type="text" required className="form-control  bg-none" placeholder="puesto, palabra clave o compañia" />
                                     </div>
-                                </div>
+                                </div> */}
                                 {/*Find job btn*/}
-                                <div className="form-group col-xl-4 col-lg-4 col-md-4">
+                                {/*<div className="form-group col-xl-4 col-lg-4 col-md-4">
                                     <button type="button" className="site-button">Buscar empleo</button>
                                 </div>
                             </div>
                         </form>
-                    </div>
-                    <div className="twm-bnr-popular-search">
-                        <span className="twm-title">Busquedas populares</span>
+                    </div> */}
+                    {/* <div className="twm-bnr-popular-search">
+                        <span className="twm-title">Busquedas populares</span> */}
                         {/* <NavLink to={publicUser.jobs.LIST}>Developer</NavLink> ,
                         <NavLink to={publicUser.jobs.LIST}>Designer</NavLink> ,
                         <NavLink to={publicUser.jobs.LIST}>Architect</NavLink> ,
@@ -45,7 +45,7 @@ function Banner() {
                         <NavLink to={publicUser.jobs.LIST}>Banking</NavLink> ,
                         <NavLink to={publicUser.jobs.LIST}>Ios</NavLink> ,
                         <NavLink to={publicUser.jobs.LIST}>Accountancy</NavLink>... */}
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
             {/*right Section*/}
