@@ -17,9 +17,8 @@ function SectionJobsSidebar({_searchFiltered}) {
       };
 
       const handleCompanyType = (e) => {
-        
-        //_searchFiltered.setCompanyType(e.target.value);
-        console.log(e.target.value)
+        _searchFiltered.setCompanyType(e.target.value);
+        //console.log(e.target.value)
       };
 
 
@@ -27,12 +26,28 @@ function SectionJobsSidebar({_searchFiltered}) {
         <>
             <div className="side-bar">
                 <div className="sidebar-elements search-bx">
+                <h4 className="section-head-small mb-4 ">Filtros de busqueda</h4>
                     <form>
+                        
                         <div className="form-group mb-4">
-                            <h4 className="section-head-small mb-4">Categoría</h4>
+                            {/* <h4 className="section-head-small mb-4">Palabra clave</h4> */}
+                            <div className="input-group">
+                                <input type="text" className="form-control" onChange={handleSearch} placeholder="Palabra clave: Analista" />
+                                <button className="btn" type="button"><FaSearch /></button>
+                            </div>
+                        </div>
+                        <div className="form-group mb-4">
+                            {/* <h4 className="section-head-small mb-4">Ubicación</h4> */}
+                            <div className="input-group">
+                                <input type="text" className="form-control" onChange={handleLocationSearch} placeholder="Ubicación: Lima" />
+                                <button className="btn" type="button"><FaMapPin /></button>
+                            </div>
+                        </div>
+                        <div className="form-group mb-4">
+                            
                             {/* <select className="wt-select-bar-large selectpicker" data-live-search="true" data-bv-field="size"> */}
-                            <select className="wt-select-bar-large" value={_searchFiltered.category} onChange={handleCategory} >
-                                <option value={""}>All Category</option>
+                            <select className="wt-select-bar-large category-style"  onChange={handleCategory} >
+                                <option value={""}>Todas las categorias</option>
                                 <option value="Administrativo">Administrativo</option>
                                 <option value="Operario">Operario</option>
                                 <option value="Técnico">Técnico</option>
@@ -53,38 +68,13 @@ function SectionJobsSidebar({_searchFiltered}) {
                                 <option value="Legal y Compliance">Legal y Compliance</option>
                             </select>
                         </div>
-                        <div className="form-group mb-4">
-                            <h4 className="section-head-small mb-4">Palabra clave</h4>
-                            <div className="input-group">
-                                <input type="text" className="form-control" onChange={handleSearch} placeholder="Job title or Keyword" />
-                                <button className="btn" type="button"><FaSearch /></button>
-                            </div>
-                        </div>
-                        <div className="form-group mb-4">
-                            <h4 className="section-head-small mb-4">Ubicación</h4>
-                            <div className="input-group">
-                                <input type="text" className="form-control" onChange={handleLocationSearch} placeholder="Search location" />
-                                <button className="btn" type="button"><FaMapPin /></button>
-                            </div>
-                        </div>
                         <div className="twm-sidebar-ele-filter">
-                            <h4 className="section-head-small mb-4">Tipo de Empresa</h4>
-                            <ul>
-                                <li>
-                                    <div className="form-check">
-                                        <input type="radio" name='companyType' className="form-check-input-sidebar" id="exampleCheck1" value="Pública" onChange={handleCompanyType}/>
-                                        <label className="form-check-label-sidebar" htmlFor="exampleCheck1">Pública</label>
-                                    </div>
-                                    <span className="twm-job-type-count">09</span>
-                                </li>
-                                <li>
-                                    <div className="form-check">
-                                        <input type="radio" name='companyType' className="form-check-input-sidebar" id="exampleCheck2" value="Privada" onChange={handleCompanyType}/>
-                                        <label className="form-check-label-sidebar" htmlFor="exampleCheck2">Privada</label>
-                                    </div>
-                                    <span className="twm-job-type-count">07</span>
-                                </li>
-                            </ul>
+                        <select className="wt-select-bar-large category-style"  onChange={handleCompanyType} >
+                                <option value={""}>Todos los tipos de empresa</option>
+                                <option value="Pública">Pública</option>
+                                <option value="Privada">Privada</option>
+                                
+                            </select>
                         </div>
                         {/* <div className="twm-sidebar-ele-filter">
                             <h4 className="section-head-small mb-4">Date Posts</h4>

@@ -26,7 +26,7 @@ function JobListItem({work}) {
                 <img src={work.logo} alt="logo empleador" />
             </div>
             <div className="twm-mid-content">
-                <NavLink to="/" className="twm-job-title">
+                <NavLink to={"/works/" + work._id} className="twm-job-title">
                     
                     <h4>{work.title}<span className="twm-job-post-duration">/ hace {numeroDias} {numeroDias > 1 ? 'dias' : "día."}</span></h4>
                 </NavLink>
@@ -36,7 +36,7 @@ function JobListItem({work}) {
             <div className="twm-right-content">
                 {
                     numeroDias < 7 ? (
-                        <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
+                        <div className="twm-jobs-category green"><span className="twm-bg-green">Nuevo</span></div>
                     ):(
                         <div className="twm-jobs-category green"><span className="twm-bg-green" style={{backgroundColor: "#fff" }}></span></div>
                     )
@@ -44,7 +44,7 @@ function JobListItem({work}) {
                 }
                 
                 <div className="twm-jobs-amount">{work.workPay} soles <span>/ Mensuales</span></div>
-                <NavLink to="/works" className="twm-jobs-browse site-text-primary">Browse Job</NavLink>
+                <NavLink to={"/works/" + work._id} className="twm-jobs-browse site-text-primary">Ver Empleo</NavLink>
             </div>
         </div>
     </>

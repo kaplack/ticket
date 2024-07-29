@@ -39,19 +39,45 @@ const sortedWorks = (allWorks = [], sortBy) => {
 
 function Works() {
   const { allWorks, isLoading, isSuccess } = useSelector((state) => state.work);
+  const {allEmployers} = useSelector((state)=>state.employer)
   const [currentPage, setCurrentPage] = useState(1); // Estado para el número de página actual
   const [itemsPerPage, setItemsPerPage] = useState(10); // Estado para el número de ítems por página
   const [sortBy, setSortBy] = useState('most_recent'); // Estado para el criterio de ordenamiento
   const [category, setCategory] = useState('') 
   const [searchTerm, setSearchTerm] = useState('') // Estado para la busqueda
   const [locationTerm, setLocationTerm] = useState('') // Estado de busqueda para la ubicación
-  const [companyType, setCompanyType] = useState([]); 
+  const [companyType, setCompanyType] = useState(''); 
+
+  // Verificar que `allEmployers` es un array antes de usar `reduce`
+  const logoMap = Array.isArray(allEmployers)
+  ? allEmployers.reduce((acc, employer) => {
+      acc[employer.user] = {
+        logo: employer.logo,
+        companyName: employer.companyName,
+        web: employer.web,
+        tipo:employer.tipo
+      };
+      return acc;
+    }, {})
+  : {};
+
+  // Verificar que `allWorks` es un array antes de usar `map`
+  const workWithImg = Array.isArray(allWorks)
+  ? allWorks.map((work) => ({
+      ...work,
+      logo: logoMap[work.user]?.logo || null,
+      companyName: logoMap[work.user]?.companyName || null,
+      web: logoMap[work.user]?.web || null,
+      tipo:logoMap[work.user]?.tipo || null,
+    }))
+  : [];
+
 
   // Paginación - Calcula el índice del primer y último elemento de la página actual
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const sorted = sortedWorks(allWorks, sortBy);
+  const sorted = sortedWorks(workWithImg, sortBy);
 
   // Busca en la data filtrada 
   const filteredData = sorted.filter(item => {
@@ -59,13 +85,14 @@ function Works() {
     const title = item.title ? item.title.toLowerCase() : '';
     const description = item.description ? item.description.toLowerCase() : '';
     const location = item.location ? item.location.toLowerCase() : '';
-    //const companyType = item.setCompanyType ? item.jobType.toLowerCase() : '';
+    const compType = item.tipo ? item.tipo.toLowerCase() : '';
     
     const matchesCategory = category === '' || jobCategory.includes(category.toLowerCase());
     const matchesSearch = title.includes(searchTerm.toLowerCase()) || description.includes(searchTerm.toLowerCase());
     const matchesLocation = location.includes(locationTerm.toLowerCase());
+    const matchesType =  companyType === '' || compType.includes(companyType.toLowerCase())
     
-    return matchesCategory && matchesSearch && matchesLocation;
+    return matchesCategory && matchesSearch && matchesLocation && matchesType;
   });
   const pages = Math.ceil(filteredData.length / itemsPerPage);
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -82,7 +109,9 @@ function Works() {
     searchTerm,
     setSearchTerm,
     locationTerm,
-    setLocationTerm
+    setLocationTerm,
+    companyType,
+    setCompanyType
   }
 
   const _filterConfig = {
@@ -98,6 +127,8 @@ function Works() {
   };
 
   const jobsFiltered = currentItems;
+
+  console.log(jobsFiltered)
 
   return (
     <>

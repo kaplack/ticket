@@ -7,6 +7,7 @@ const {protect} = require('../middleware/authMiddleware')
 router.route('/').get(protect, getWorks).post(protect, createWorks)
 
 router.route('/:id').get(protect, getWork).put(protect, updateWork).delete(protect, deleteWork)
+router.route('/work/:id').get(protect, getPublicWork)
 
 router.route('/all').get(getAllWorks)
 router.route('/all/:id').get(getPublicWork)

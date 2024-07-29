@@ -43,7 +43,20 @@ const getWork = async (workId, token) => {
     return response.data
 }
 
-// Get user work
+// Get public work
+
+const getPublicWork = async (workId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const response = await axios.get(API_URL+"/work/" + workId,  config)
+
+    return response.data
+}
+
+// Delete user work
 
 const deleteWork = async (workId, token) => {
     console.log("delete work: ", workId)
@@ -85,7 +98,8 @@ const workService = {
     getWork,
     updateWork,
     deleteWork,
-    getAllWorks
+    getAllWorks,
+    getPublicWork
 }
 
 export default workService

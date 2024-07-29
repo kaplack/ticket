@@ -11,7 +11,7 @@ function JobList({jobsFiltered}) {
 
   //const [itemInfo,setItemInfo] =useState(null)
     const {allWorks} = useSelector((state)=>state.work)
-    const {allEmployers} = useSelector((state)=>state.employer)
+    //const {allEmployers} = useSelector((state)=>state.employer)
     
     //User,Puesto, FechaDePublicación, lugar, salarioMensual, empresa, webDeLaEmpresa 
     //modificar 
@@ -48,30 +48,30 @@ function JobList({jobsFiltered}) {
       }, [dispatch]);
 
       // Verificar que `allEmployers` es un array antes de usar `reduce`
-  const logoMap = Array.isArray(allEmployers)
-  ? allEmployers.reduce((acc, employer) => {
-      acc[employer.user] = {
-        logo: employer.logo,
-        companyName: employer.companyName,
-        web: employer.web
-      };
-      return acc;
-    }, {})
-  : {};
+  // const logoMap = Array.isArray(allEmployers)
+  // ? allEmployers.reduce((acc, employer) => {
+  //     acc[employer.user] = {
+  //       logo: employer.logo,
+  //       companyName: employer.companyName,
+  //       web: employer.web
+  //     };
+  //     return acc;
+  //   }, {})
+  // : {};
 
 // Verificar que `allWorks` es un array antes de usar `map`
-const workWithImg = Array.isArray(worksList)
-  ? worksList.map((work) => ({
-      ...work,
-      logo: logoMap[work.user]?.logo || null,
-      companyName: logoMap[work.user]?.companyName || null,
-      web: logoMap[work.user]?.web || null,
+// const workWithImg = Array.isArray(worksList)
+//   ? worksList.map((work) => ({
+//       ...work,
+//       logo: logoMap[work.user]?.logo || null,
+//       companyName: logoMap[work.user]?.companyName || null,
+//       web: logoMap[work.user]?.web || null,
       
-    }))
-  : [];
+//     }))
+//   : [];
 
 //console.log(workWithImg);
-
+console.log(worksList)
 
   return (
     <>
@@ -82,7 +82,7 @@ const workWithImg = Array.isArray(worksList)
                         <div className="twm-jobs-list-wrap">
                             {worksList.length > 0 ? (
                                 <ul>
-                                    {workWithImg.map((work) => (
+                                    {worksList.map((work) => (
                                         <li key={work._id}>
                                             <JobListItem work={work} />
                                         </li>

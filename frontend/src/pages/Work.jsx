@@ -1,211 +1,129 @@
+import React, { useEffect, useState } from 'react'
+import {empGetProfile } from '../features/employer/empSlice'
+import { getWorks, getAllWorks } from "../features/work/workSlice"
+import SectionJobsSidebar from '../pages/WorksLayout/SectionJobsSidebar';
 import {useSelector, useDispatch} from 'react-redux'
-import {toast} from 'react-toastify'
-import {getWork,updateWork, reset} from '../features/work/workSlice'
-import BackButton from '../components/BackButton'
-import Spinner from '../components/Spinner'
-import {useParams} from 'react-router-dom'
-import { useEffect, useState } from 'react'
-
+import { useAsyncError, useParams } from 'react-router-dom';
+import utils from '../utils/utils';
 
 function Work() {
+    
+    const [logo, setLogo] = useState('')
+    const [cover, setCover] = useState('')
+    const [workDetail, setWorkDetail] = useState([])
+    const {workId} = useParams();
+    const dispatch = useDispatch();
+    console.log("workId ", workId)
+    useEffect(() => {
+        dispatch(getAllWorks())
+        dispatch(empGetProfile());
+    }, []);
 
-    const {work, isLoading, isSuccess, isError, message} = useSelector((state)=> state.work)
-    const [isEditing, setIsEditing] = useState(false)
-    const [editedWork, setEditedWork] = useState({
-        title: '',
-        // Agrega más campos según sea necesario
-    });
-
-    const [minDate] = useState(getMinDate()); // Obtiene la fecha actual y establece como mínimo
-
-
-    const dispatch = useDispatch()
-    const {workId} = useParams()
-
-    useEffect(()=>{
-        dispatch(getWork(workId))
-        .unwrap()
-        .catch(toast.error)
-        
-    }, [workId, dispatch])
-
-    useEffect(()=>{
-        setEditedWork({
-            id:workId,
-            title: work.title,
-            workWay: work.workWay,
-            description: work.description,
-            workFunctions: work.workFunctions,
-            workRequire: work.workRequire,
-            workPay: work.workPay,
-            actTime: work.actTime
-
-            // Agrega más campos según sea necesario
-            })
-    }, [work, isEditing])
-
-    const handleEdit = () =>{
-        setIsEditing(!isEditing)
+    const {works} = useSelector((state)=> state.work)
+    const {employer} = useSelector((state)=> state.employer)
+    
+    
+// Carga de variables al modificarse las estate employer y user
+useEffect(() => {
+    if (employer) {
+      setLogo(employer.logo && employer.logo.length > 0 ? employer.logo[0].relativePath : '');
+      setCover(employer.cover && employer.cover.length > 0 ? employer.cover[0].relativePath : '');
     }
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setEditedWork((prevWork) => ({
-            ...prevWork,
-            [name]: value,
-        }));
+    if (works){
+        const work = works.find((el) => el._id === workId);
+        setWorkDetail(work || null);
+    }
+}, [employer, works]);
+
+    // const logo = employer.logo[0].relativePath;
+    // const cover = employer.cover[0].relativePath;
+
+    if (!workDetail) {
+        return <div>Loading...</div>;
     }
 
-    const handleSaveChanges = () => {
-        dispatch(updateWork(editedWork))
-            .then(() => {
-                dispatch(getWork(workId))
-                toast.success('Work updated successfully!');
-                setIsEditing(false);
+    const sidebarConfig = {
+        showJobInfo: false,
+        workDetail
+    }
+    return (
+        <>
+            <div className="section-full  p-t120 p-b90 bg-white">
+                <div className="container">
+                    {/* BLOG SECTION START */}
+                    <div className="section-content">
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-lg-8 col-md-12">
+                                {/* Candidate detail START */}
+                                <div className="cabdidate-de-info">
+                                    <div className="twm-job-self-wrap">
+                                        <div className="twm-job-self-info">
+                                            <div className="twm-job-self-top">
+                                                <div className="twm-media-bg">
+                                                    <img src={cover} alt="aaaa" className='emp__cover'/>
+                                                    <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
+                                                </div>
+                                                <div className="twm-mid-content">
+                                                    <div className="twm-media">
+                                                        <img src={logo} alt="bbb" className='emp__logo'/>
+                                                    </div>
+                                                    <h4 className="twm-job-title">{workDetail.title || ""} , {workDetail.jobCategory} <span className="twm-job-post-duration">/ {utils.calcularDiferenciaDias(workDetail.iDate)*1 < 2 ? "Nueva Publicación" : "Publicado hace: " + utils.calcularDiferenciaDias(workDetail.iDate) + " días."  }</span></h4>
+                                                    <p className="twm-job-address"><i className="feather-map-pin" />{workDetail.workPlace + ", " + workDetail.city + " - " + workDetail.country}</p>
+                                                    <div className="twm-job-self-mid">
+                                                        <div className="twm-job-self-mid-left">
+                                                            {/* <a href="https://themeforest.net/user/thewebmax/portfolio" className="twm-job-websites site-text-primary">https://thewebmax.com</a> */}
+                                                            <div className="twm-jobs-amount">{"S/" + workDetail.workPay + " Soles"} <span>/ Mensual</span></div>
+                                                        </div>
+                                                        <div className="twm-job-apllication-area">Finaliza: 
+                                                            <span className="twm-job-apllication-date">{" " + utils.cambiarFormatoFecha(utils.convertDate(workDetail.fDate))}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="twm-job-self-bottom">
+                                                        <a className="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
+                                                            Aplicar
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 className="twm-s-title">Descripción:</h4>
+                                    <p>{workDetail.description}
+                                    </p>
+                                    
+                                    <h4 className="twm-s-title">Requisitos:</h4>
+                                    
+                                    <p>{workDetail.workRequire}</p>
 
-            })
-            .catch((error) => {
-                toast.error(error.message || 'An error occurred while updating the work.');
-            });
-    };
+                                    <h4 className="twm-s-title">Responsabilities:</h4>
+                                    <p>{workDetail.workFunctions}</p>
 
-    function getMinDate(date) {
-        let now = new Date();  
-        if(date){
-           now = new Date(date); 
-        } 
-        
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()+1).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-      }
+                                    {/* <SectionShareProfile />
+                                    <SectionJobLocation /> */}
 
-  return (
-    <div className='ticket-page'>
-        <header className="ticket-header">
-            <BackButton url={'/works'}/>
-            <h2>
-                    {isEditing ? (
-                        <>
-                            <div className="form-group">
-                                <label htmlFor="titile">Convocatoria</label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    className='form-control'
-                                    value={editedWork?.title || ''}
-                                    onChange={handleInputChange}
-                                />
+                                    {/* <div className="twm-two-part-section">
+                                        <div className="row">
+                                            <div className="col-lg-6 col-md-12">
+                                                <SectionOfficePhotos1 />
+                                            </div>
+                                            <div className="col-lg-6 col-md-12">
+                                                <SectionOfficeVideo1 />
+                                            </div>
+                                        </div>
+                                    </div> */}
+                                </div>
                             </div>
-                        </>
-                        
-                    ) : (
-                        work.title
-                    )}  
-                    
-            </h2>
-                <span className={`status status-${work.workStatus}`}>
-                {work.workStatus}   
-                </span>
-            
-            <p>
-                Publicado el: {new Date(work.createdAt).toLocaleString()}
-            </p>
-            
-            
-            
-            {isEditing ? (
-                <>
-                    <div className="form-group">
-                    <label>Lugar de trabajo: </label>
-                        <select
-                            name="workWay"
-                            value={editedWork.workWay}
-                            onChange={handleInputChange}
-                            className='form-control'
-                        >
-                            <option value="Remoto" selected={editedWork.workWay == 'Remoto'}>Remoto</option>
-                            <option value="Presencial" selected={editedWork.workWay == 'Presencial'}>Presencial</option>
-                            <option value="Híbrido" selected={editedWork.workWay == 'Híbrido'}>Híbrido</option>
-                        </select>
+                            <div className="col-lg-4 col-md-12 rightSidebar">
+                                <SectionJobsSidebar _config={sidebarConfig} />
+                            </div>
+                        </div>
                     </div>
-                    
-                    {editedWork.workWay !== 'Remoto' && (
-                    <div className="form-group">
-                        <label htmlFor="workPlace">Ubicado en:</label>
-                        <input name="workPlace" type="text" className="form-control" value={editedWork?.workPlace || ''} onChange={handleInputChange} />
-                    </div>
-                    ) }
-                </>
-                ) :(
-                <>
-                    
-                    <h3>{work.workWay}</h3>
-                    {editedWork.workWay !== 'Remoto' && (
-                        <h3>{work.workPlace}</h3>
-                    )}
-                </>
-                
-            )}
-            
-            <hr />
-            <div className="ticket-desc">
-                {isEditing ? (
-                    <>
-                        <div className="form-group">
-                            <h3><label htmlFor="description">Breve Descripción</label></h3>
-                            <textarea name="description" className="form-control" value={editedWork?.description} onChange={handleInputChange}  required/>
-                        </div>
-                        <div className="form-group">
-                            <h3><label htmlFor="workFunctions">Describe las funciones que realizaría</label></h3>
-                            <textarea name="workFunctions" className="form-control" value={editedWork?.workFunctions} onChange={handleInputChange}  required/>
-                        </div>
-                        <div className="form-group">
-                            <h3><label htmlFor="workRequire">Requisitos</label></h3>
-                            <textarea name="workRequire" className="form-control" value={editedWork?.workRequire} onChange={handleInputChange}  required/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="workPay">Sueldo mensual (opcional)</label>
-                            <input name="workPay" type="number" className="form-control" value={editedWork?.workPay} onChange={handleInputChange} />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="actTime">Hasta que fecha estará activa la publicación</label>
-                            <input name="actTime" type="date" className="form-control" min={minDate} value={getMinDate(editedWork?.actTime)} onChange={handleInputChange} />
-                        </div>
-                    </>
-                ):(
-                    <>
-                        <h3>Descripción</h3>
-                        <p>{work.description}</p>
-                        <h3>Funciones</h3>
-                        <p>{work.workFunctions}</p>
-                        <h3>Requisitos</h3>
-                        <p>{work.workRequire}</p>
-                        {work.workPay && (
-                            <>
-                                <h3>Salario</h3>
-                                <p>S/ {work.workPay} Soles.</p>
-                            </>
-                        )}
-                        <h3>Puedes postular hasta el {`${new Date(work.actTime).toLocaleString('es-PE')}`}</h3>
-                    </>
-                )}
-                
-                
-                
-                
-                
+                </div>
             </div>
-            <div className="edit-buttons">
-                <button className='btn' onClick={handleEdit}>Editar</button>
-                <button className='btn' onClick={handleSaveChanges}>Guardar</button>
-            </div>
-            
-        </header>
-      
-    </div>
-  )
+            {/* <ApplyJobPopup /> */}
+        </>
+    )
 }
 
-export default Work
+export default Work;
