@@ -13,7 +13,7 @@ function Work() {
     const [workDetail, setWorkDetail] = useState([])
     const {workId} = useParams();
     const dispatch = useDispatch();
-    console.log("workId ", workId)
+    //console.log("workId ", workId)
     useEffect(() => {
         dispatch(getAllWorks())
         dispatch(empGetProfile());

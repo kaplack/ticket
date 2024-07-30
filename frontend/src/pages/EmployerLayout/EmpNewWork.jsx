@@ -107,7 +107,7 @@ function EmpNewWork() {
             dispatch(createWork(formData))
                 .unwrap()
                 .then(() => {
-                    navigate('/profile/employer/works');
+                    navigate('/profile/Employer/works');
                     toast.success('Trabajo publicado');
                 })
                 .catch(toast.error);

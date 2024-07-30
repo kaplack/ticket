@@ -56,7 +56,7 @@ const getWork = asyncHandler(async (req,res) => {
 // @access  Private
 const createWorks = asyncHandler(async (req,res) => {
     
-    const {title, jobCategory, workTime, workWay, experience, qualification, workPay, country, city, workPlace, description, contactMail, iDate, fDate, actTime, workStatus, active } = req.body
+    const {title, jobCategory, workTime, workWay, experience, qualification, workPay, country, city, workPlace, description, contactMail, workFunctions, workRequire, iDate, fDate, actTime, workStatus, active } = req.body
 
     if(!title || !description){
         res.status(400)
@@ -152,7 +152,7 @@ const updateWork = asyncHandler(async (req,res) => {
         throw new Error('Not Authorizer')
     }
 
-    const {title, jobCategory, workTime, workWay, experience, qualification, workPay, country, city, workPlace, description, contactMail, iDate, fDate, actTime, workStatus, active } = req.body
+    const {title, jobCategory, workTime, workWay, experience, qualification, workPay, country, city, workPlace, description, workFunctions, workRequire, contactMail, iDate, fDate, actTime, workStatus, active } = req.body
 
     const updatedWork = await Work.findByIdAndUpdate(req.params.id, {
         title,
