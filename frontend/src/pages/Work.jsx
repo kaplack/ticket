@@ -40,8 +40,8 @@ useEffect(() => {
         if(allEmployers) {
             const employerinfo = allEmployers.find((el) => el.user === work.user)
             console.log("Work.js", employerinfo)
-            setLogo( employerinfo.logo ? employerinfo.logo : '');
-            setCover( employerinfo.cover ? employerinfo.cover : '');
+            setLogo( employerinfo && employerinfo.logo ? employerinfo.logo : '');
+            setCover(employerinfo && employerinfo.cover ? employerinfo.cover : '');
     
         }
     }
@@ -72,12 +72,12 @@ useEffect(() => {
                                         <div className="twm-job-self-info">
                                             <div className="twm-job-self-top">
                                                 <div className="twm-media-bg">
-                                                    <img src={cover} alt="banner del empleador" className='emp__cover'/>
+                                                    <img src={cover || ""} alt="banner del empleador" className='emp__cover'/>
                                                     <div className="twm-jobs-category green"><span className="twm-bg-green">New</span></div>
                                                 </div>
                                                 <div className="twm-mid-content">
                                                     <div className="twm-media">
-                                                        <img src={logo} alt="logo de empleador" className='emp__logo'/>
+                                                        <img src={logo || ""} alt="logo de empleador" className='emp__logo'/>
                                                     </div>
                                                     <h4 className="twm-job-title">{workDetail.title || ""} , {workDetail.jobCategory} <span className="twm-job-post-duration">/ {utils.calcularDiferenciaDias(workDetail.iDate)*1 < 2 ? "Nueva Publicación" : "Publicado hace: " + utils.calcularDiferenciaDias(workDetail.iDate) + " días."  }</span></h4>
                                                     <p className="twm-job-address"><i className="feather-map-pin" />{workDetail.workPlace + ", " + workDetail.city + " - " + workDetail.country}</p>
