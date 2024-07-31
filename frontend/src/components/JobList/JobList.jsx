@@ -11,12 +11,42 @@ function JobList({jobsFiltered}) {
 
   //const [itemInfo,setItemInfo] =useState(null)
     const {allWorks} = useSelector((state)=>state.work)
-    //const {allEmployers} = useSelector((state)=>state.employer)
+    const {allEmployers} = useSelector((state)=>state.employer)
     
     //User,Puesto, FechaDePublicación, lugar, salarioMensual, empresa, webDeLaEmpresa 
     //modificar 
 
-    let worksList = jobsFiltered || allWorks
+    let workWithImg = []    
+
+    if(!jobsFiltered){
+
+        // Verificar que `allEmployers` es un array antes de usar `reduce`
+        const logoMap = Array.isArray(allEmployers)
+        ? allEmployers.reduce((acc, employer) => {
+            acc[employer.user] = {
+              logo: employer.logo,
+              companyName: employer.companyName,
+              web: employer.web,
+              tipo:employer.tipo
+            };
+            return acc;
+          }, {})
+        : {};
+
+        // Verificar que `allWorks` es un array antes de usar `map`
+        workWithImg = Array.isArray(allWorks)
+        ? allWorks.map((work) => ({
+            ...work,
+            logo: logoMap[work.user]?.logo || null,
+            companyName: logoMap[work.user]?.companyName || null,
+            web: logoMap[work.user]?.web || null,
+            tipo:logoMap[work.user]?.tipo || null,
+          }))
+        : [];
+
+    }
+
+    let worksList = jobsFiltered || workWithImg
 
     const dispatch = useDispatch()
     useEffect(() => {
