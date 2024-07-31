@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {empGetProfile } from '../features/employer/empSlice'
+import {empGetAllProfile } from '../features/employer/empSlice'
 import {getAllWorks } from "../features/work/workSlice"
 import {useSelector, useDispatch} from 'react-redux'
 import { useParams } from 'react-router-dom';
@@ -16,25 +16,36 @@ function Work() {
     //console.log("workId ", workId)
     useEffect(() => {
         dispatch(getAllWorks())
-        dispatch(empGetProfile());
+        dispatch(empGetAllProfile());
     }, []);
 
     const {allWorks} = useSelector((state)=> state.work)
-    const {employer} = useSelector((state)=> state.employer)
+    const {allEmployers} = useSelector((state)=> state.employer)
     
     
 // Carga de variables al modificarse las estate employer y user
 useEffect(() => {
-    if (employer) {
-      setLogo(Array.isArray(employer.logo) && employer.logo[0] && employer.logo[0].relativePath && employer.logo.length > 0 ? employer.logo[0].relativePath : '');
-      setCover(Array.isArray(employer.cover) && employer.cover[0] &&employer.cover[0].relativePath && employer.cover.length > 0 ? employer.cover[0].relativePath : '');
-    }
+    // if (allEmployers) {
+    //     const emp = allEmployers.map((el)=>{
+    //         el._id ===workId
+    //     })
+    //   setLogo(Array.isArray(employer.logo) && employer.logo[0] && employer.logo[0].relativePath && employer.logo.length > 0 ? employer.logo[0].relativePath : '');
+    //   setCover(Array.isArray(employer.cover) && employer.cover[0] &&employer.cover[0].relativePath && employer.cover.length > 0 ? employer.cover[0].relativePath : '');
+    // }
 
     if (allWorks){
         const work = allWorks.find((el) => el._id === workId);
         setWorkDetail(work || null);
+        console.log("Work.js", work)
+        if(allEmployers) {
+            const employerinfo = allEmployers.find((el) => el.user === work.user)
+            console.log("Work.js", employerinfo)
+            setLogo( employerinfo.logo ? employerinfo.logo : '');
+            setCover( employerinfo.cover ? employerinfo.cover : '');
+    
+        }
     }
-}, [employer, allWorks, workId]);
+}, [allEmployers, allWorks, workId]);
 
     // const logo = employer.logo[0].relativePath;
     // const cover = employer.cover[0].relativePath;

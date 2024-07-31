@@ -3,7 +3,7 @@ import empService from './employerService'
 
 const initialState = {
     employer: {},
-    allEmployers:{},
+    allEmployers:[],
     message: ''
 }
 
