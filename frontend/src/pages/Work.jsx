@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {empGetProfile } from '../features/employer/empSlice'
-import { getWorks, getAllWorks } from "../features/work/workSlice"
-import SectionJobsSidebar from '../pages/WorksLayout/SectionJobsSidebar';
+import {getAllWorks } from "../features/work/workSlice"
 import {useSelector, useDispatch} from 'react-redux'
-import { useAsyncError, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import utils from '../utils/utils';
+import WorkDetailSidebar from '../components/WorkDetailSidebar';
 
 function Work() {
     
@@ -19,7 +19,7 @@ function Work() {
         dispatch(empGetProfile());
     }, []);
 
-    const {works} = useSelector((state)=> state.work)
+    const {allWorks} = useSelector((state)=> state.work)
     const {employer} = useSelector((state)=> state.employer)
     
     
@@ -30,11 +30,11 @@ useEffect(() => {
       setCover(employer.cover && employer.cover.length > 0 ? employer.cover[0].relativePath : '');
     }
 
-    if (works){
-        const work = works.find((el) => el._id === workId);
+    if (allWorks){
+        const work = allWorks.find((el) => el._id === workId);
         setWorkDetail(work || null);
     }
-}, [employer, works]);
+}, [employer, allWorks, workId]);
 
     // const logo = employer.logo[0].relativePath;
     // const cover = employer.cover[0].relativePath;
@@ -115,7 +115,7 @@ useEffect(() => {
                                 </div>
                             </div>
                             <div className="col-lg-4 col-md-12 rightSidebar">
-                                <SectionJobsSidebar _config={sidebarConfig} />
+                                <WorkDetailSidebar _config={sidebarConfig} />
                             </div>
                         </div>
                     </div>

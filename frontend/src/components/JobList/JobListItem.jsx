@@ -26,12 +26,12 @@ function JobListItem({work}) {
                 <img src={work.logo} alt="logo empleador" />
             </div>
             <div className="twm-mid-content">
-                <NavLink to={"/works/" + work._id} className="twm-job-title">
+                <NavLink to={"/works/" + work._id} className="twm-job-title" >
                     
                     <h4>{work.title}<span className="twm-job-post-duration">/ hace {numeroDias} {numeroDias > 1 ? 'dias' : "día."}</span></h4>
                 </NavLink>
                 <p className="twm-job-address">{`${work.workWay + ", " + work.workPlace }`}</p>
-                <a href={"https://"+work.web} className="twm-job-websites site-text-primary">{work.companyName}</a>
+                <a href={"https://"+work.web} className="twm-job-websites site-text-primary" target="_blank">{work.companyName}</a>
             </div>
             <div className="twm-right-content">
                 {

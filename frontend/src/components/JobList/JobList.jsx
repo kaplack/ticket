@@ -70,8 +70,7 @@ function JobList({jobsFiltered}) {
 //     }))
 //   : [];
 
-//console.log(workWithImg);
-console.log(worksList)
+
 
   return (
     <>
