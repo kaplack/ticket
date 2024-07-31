@@ -339,7 +339,7 @@ const getEmpAllProfile = asyncHandler(async (req,res) => {
       'user': item.user,
       'companyName': item.companyName,
       'web': item.web,
-      'logo': item.logo.length > 0 ? item.logo[0].relativePath:"",
+      'logo': Array.isArray(item.logo) && item.logo.length > 0 && item.logo[0] && item.logo[0].relativePath ? item.logo[0].relativePath : "",
       'tipo': item.compType,
     }
     allProfilesSelection.push(el)
