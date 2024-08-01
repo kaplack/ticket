@@ -33,16 +33,16 @@ useEffect(() => {
     //   setCover(Array.isArray(employer.cover) && employer.cover[0] &&employer.cover[0].relativePath && employer.cover.length > 0 ? employer.cover[0].relativePath : '');
     // }
 
-    if (allWorks){
+    if (allWorks) {
         const work = allWorks.find((el) => el._id === workId);
         setWorkDetail(work || null);
         console.log("Work.js", work)
-        if(allEmployers) {
+
+        if (work && allEmployers && allEmployers.length > 0) {
             const employerinfo = allEmployers.find((el) => el.user === work.user)
             console.log("Work.js", employerinfo)
-            setLogo( employerinfo && employerinfo.logo ? employerinfo.logo : '');
+            setLogo(employerinfo && employerinfo.logo ? employerinfo.logo : '');
             setCover(employerinfo && employerinfo.cover ? employerinfo.cover : '');
-    
         }
     }
 }, [allEmployers, allWorks, workId]);
@@ -107,7 +107,7 @@ useEffect(() => {
                                     
                                     <p>{workDetail.workRequire}</p>
 
-                                    <h4 className="twm-s-title">Responsabilities:</h4>
+                                    <h4 className="twm-s-title">Responsabilidades:</h4>
                                     <p>{workDetail.workFunctions}</p>
 
                                     {/* <SectionShareProfile />
