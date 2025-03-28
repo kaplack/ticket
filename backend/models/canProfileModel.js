@@ -1,83 +1,78 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const resumeSchema = new mongoose.Schema({
-    fileName: String,
-    relativePath: String
-  });
+const socialSchema = new mongoose.Schema({
+  platform: String,
+  url: String,
+});
 
-const canProfileSchema = mongoose.Schema({
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        //type: String,
-        require: true,
-        ref:'User'
+const canProfileSchema = mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      //type: String,
+      require: true,
+      ref: "User",
     },
-    name:{
-        type: String,
+    name: {
+      type: String,
     },
-    lastName:{
-        type: String,
+    lastName: {
+      type: String,
     },
-    tipoDoc:{
-        type: String,
+    tipoDoc: {
+      type: String,
     },
-    doc:{
-        type: String,
+    doc: {
+      type: String,
     },
-    phone:{
-        type: String,
-        require: true
+    phone: {
+      type: String,
+      require: true,
     },
-    lang:{
-        type: [String]
+    lang: {
+      type: [String],
     },
-    nationality:{
-        type: String
+    nationality: {
+      type: String,
     },
-    genre:{
-        type: String,
-        
+    genre: {
+      type: String,
     },
-    age:{
-        type: Date,
-        
+    age: {
+      type: Date,
     },
-    disability:{
-        type: String,
-        
+    disability: {
+      type: String,
     },
-    diagnosis:{
-        type: String,
-        
+    diagnosis: {
+      type: String,
     },
-    country:{
-        type: String
+    country: {
+      type: String,
     },
-    city:{
-        type: String
+    city: {
+      type: String,
     },
-    postalCode:{
-        type: String
+    postalCode: {
+      type: String,
     },
-    address:{
-        type: String
+    address: {
+      type: String,
     },
-    nivEduc:{
-        type: String,
-        
+    nivEduc: {
+      type: String,
     },
-    experience:{
-        type: String,
+    experience: {
+      type: String,
     },
-    professionalProfile:{
-        type: String,
+    professionalProfile: {
+      type: String,
     },
-    resume:[resumeSchema]
+    socials: [socialSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-    
-}, 
-{
-    timestamps: true
-})
-
-module.exports = mongoose.model('CanProfile', canProfileSchema)
+module.exports = mongoose.model("CanProfile", canProfileSchema);

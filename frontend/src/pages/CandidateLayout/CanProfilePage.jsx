@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import {updateProfile, canGetProfile, delCvFile} from '../../features/candidate/canSlice'
 import {toast} from 'react-toastify'
-import { getMe } from '../../features/auth/authSlice'
-import { FaDeleteLeft } from "react-icons/fa6";
+import { FaUser,FaAddressCard, FaPhoneAlt } from "react-icons/fa";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { IoIosCloseCircle } from "react-icons/io";
 import utils from '../../utils/utils'
@@ -197,7 +196,7 @@ function CanProfilePage() {
                                     <label>Nombre</label>
                                     <div className="ls-inputicon-box">
                                         <input className="form-control" name="name" type="text" value={name} onChange={(e)=>setName(e.target.value)} required/>
-                                        <i className="fs-input-icon fa fa-user " />
+                                        <i className='fs-input-icon'><FaUser /></i>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +205,7 @@ function CanProfilePage() {
                                     <label>Apellido</label>
                                     <div className="ls-inputicon-box">
                                         <input className="form-control" name="lastName" type="text" value={lastName} onChange={(e)=>setLastName(e.target.value)} required/>
-                                        <i className="fs-input-icon fas fa-at" />
+                                        <i className='fs-input-icon'><FaUser /></i>
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +224,7 @@ function CanProfilePage() {
                                             <option value="Carnet de Extranjeria" >Carnet de Extranjeria</option>
                                             <option value="Pasaporte" >Pasaporte</option>
                                         </select>
-                                        <i className="fs-input-icon fa fa-user-graduate" />
+                                        <i className='fs-input-icon'><FaAddressCard/></i>
                                     </div>
                                 </div>
                             </div>
@@ -235,7 +234,7 @@ function CanProfilePage() {
                                     <label>Documento de identidad </label>
                                     <div className="ls-inputicon-box">
                                     <input className="form-control" name="doc" type="text" placeholder="40407898" value={doc} onChange={(e)=>setDoc(e.target.value)} />
-                                        <i className="fs-input-icon fa fa-phone-alt" />
+                                    <i className='fs-input-icon'><FaAddressCard/></i>
                                     </div>
                                 </div>
                             </div>
@@ -244,7 +243,8 @@ function CanProfilePage() {
                                     <label>Numero Telefonico</label>
                                     <div className="ls-inputicon-box">
                                         <input className="form-control" name="phone" type="text" placeholder="234-456-890" value={phone} onChange={(e)=>setPhone(e.target.value)} />
-                                        <i className="fs-input-icon fa fa-phone-alt" />
+                                        
+                                        <i className='fs-input-icon'><FaPhoneAlt /></i>
                                     </div>
                                 </div>
                             </div>
@@ -263,7 +263,7 @@ function CanProfilePage() {
                                         customCloseIcon={<span> <IoIosCloseCircle /></span>} // Custom close icon for selected items
                                     />
                                         
-                                        <i className="fs-input-icon fa fa-language" />
+                                        {/* <i className='fs-input-icon'><FaPhoneAlt /></i> */}
                                     </div>
                                 </div>
                             </div>
