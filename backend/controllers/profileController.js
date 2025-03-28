@@ -115,7 +115,7 @@ const updateCanProfile = asyncHandler(async (req, res) => {
     if (experience !== undefined) profile.experience = experience;
     if (professionalProfile !== undefined)
       profile.professionalProfile = professionalProfile;
-    if (socials !== undefined) profile.socials = socials;
+    if (socials !== undefined) profile.socials = JSON.parse(socials);
 
     await profile.save();
 
