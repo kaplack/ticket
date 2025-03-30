@@ -218,10 +218,26 @@ const updateResume = asyncHandler(async (req, res) => {
   try {
     // Obtener el resume actual
     let resume = await CanResume.findOne({ user: req.user.id });
-    console.log("profileController", resume);
+    //console.log("profileController", resume);
+    // Obtener  ruta relativa después de la carpeta 'uploads'
+
+    if (req.file) {
+      console.log(req.file);
+      const relativePath = req.file.location;
+      const fileName = req.file.key;
+
+      // Si el perfil ya tiene información en el campo resume, agregamos un nuevo objeto
+      if (resume.cv_file && resume.cv_file.length > 0) {
+        resume.cv_file.push({ fileName, relativePath });
+      } else {
+        // Si no hay información en el campo resume, lo inicializamos con un array que contiene el nuevo objeto
+        resume.cv_file = [{ fileName, relativePath }];
+      }
+    }
+
     // El registro dispara un createProfile que se crea con el código de usuario unicamente.
     const { skills, experiences, education } = req.body;
-    console.log("profileController req.body", req.body);
+    //console.log("profileController req.body", req.body);
     // Crear el perfil del candidato
 
     if (skills !== undefined) resume.skills = JSON.parse(skills);

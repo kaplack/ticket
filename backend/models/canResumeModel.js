@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const educationSchema = new Schema({
@@ -6,7 +6,7 @@ const educationSchema = new Schema({
   institute: { type: String, required: true },
   iyear: { type: Number, required: true },
   fyear: { type: Number, required: true },
-  currentEducation: { type: String, required: true }
+  currentEducation: { type: Boolean, required: true },
 });
 
 const experienceSchema = new Schema({
@@ -16,24 +16,32 @@ const experienceSchema = new Schema({
   idate: { type: Date, required: true },
   fdate: { type: Date, required: true },
   description: { type: String, required: true },
-  currentWork: { type: Boolean }
+  currentWork: { type: Boolean },
 });
 
-
-
-const canResumeSchema = new Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  skills: {
-    type: [String]
-  },
-  education: [educationSchema],
-  experiences: [experienceSchema]
-}, {
-  timestamps: true
+const cv_fileSchema = new Schema({
+  // Define los campos del CV aquí
+  fileName: String,
+  relativePath: String,
 });
 
-module.exports = mongoose.model('CanResume', canResumeSchema);
+const canResumeSchema = new Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    skills: {
+      type: [String],
+    },
+    education: [educationSchema],
+    experiences: [experienceSchema],
+    cv_file: [cv_fileSchema],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model("CanResume", canResumeSchema);
