@@ -148,42 +148,38 @@ const getCanProfile = asyncHandler(async (req, res) => {
 const delCvFile = asyncHandler(async (req, res) => {
   try {
     const { fileId } = req.params; // ID del archivo a eliminar
-    const userId = req.user.id;
+    const resume = await CanResume.findOne({ user: req.user.id });
 
-    // Buscar el perfil del usuario
-    let resume = await CanResume.findOne({ user: userId });
     if (!resume) {
-      return res.status(404).json({ message: "Perfil no encontrado" });
+      return res.status(404).json({ error: "Perfil no encontrado" });
     }
 
     // Buscar el archivo en el array cv_file
     const fileIndex = resume.cv_file.findIndex(
       (file) => file._id.toString() === fileId
     );
+
     if (fileIndex === -1) {
-      return res.status(404).json({ message: "Archivo no encontrado" });
+      return res.status(404).json({ error: "Archivo no encontrado" });
     }
 
-    // Obtener el nombre del archivo para eliminar de S3
-    const fileKey = resume.cv_file[fileIndex].fileName;
+    const fileToDelete = resume.cv_file[fileIndex];
 
-    // Eliminar el archivo de AWS S3
-    const deleteParams = {
-      Bucket: process.env.AWS_S3_BUCKET_NAME,
-      Key: fileKey,
+    // Eliminar de AWS S3
+    const s3Params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: fileToDelete.fileName, // Nombre del archivo en S3
     };
 
-    await s3.deleteObject(deleteParams).promise();
+    await s3.deleteObject(s3Params).promise();
 
-    // Eliminar el archivo del array cv_file
+    // Eliminar del array cv_file en la base de datos
     resume.cv_file.splice(fileIndex, 1);
-
-    // Guardar cambios en la base de datos
     await resume.save();
 
-    res.status(200).json({ message: "Archivo eliminado correctamente" });
+    res.json({ message: "Archivo eliminado correctamente" });
   } catch (error) {
-    console.error("Error al eliminar archivo:", error);
+    console.error("Error al eliminar el archivo:", error);
     res.status(500).json({ error: "Error al eliminar el archivo" });
   }
 });
