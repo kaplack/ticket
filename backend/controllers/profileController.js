@@ -173,7 +173,7 @@ const delCvFile = asyncHandler(async (req, res) => {
 
     // Eliminar de AWS S3
     const s3Params = {
-      Bucket: process.env.AWS_BUCKET_NAME,
+      Bucket: process.env.S3_BUCKET_NAME,
       Key: fileToDelete.fileName, // Nombre del archivo en S3
     };
 
