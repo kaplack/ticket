@@ -19,11 +19,14 @@ const experienceSchema = new Schema({
   currentWork: { type: Boolean },
 });
 
-const cv_fileSchema = new Schema({
-  // Define los campos del CV aquí
-  fileName: String,
-  relativePath: String,
-});
+const cv_fileSchema = new Schema(
+  {
+    // Define los campos del CV aquí
+    fileName: String,
+    relativePath: String,
+  },
+  { timestamps: true }
+);
 
 const canResumeSchema = new Schema(
   {

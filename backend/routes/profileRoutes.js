@@ -22,9 +22,10 @@ router.route("/candidate/").post(protect, createCanProfile);
 router.route("/candidate/").get(protect, getCanProfile);
 //router.route("/candidate/").put(protect, upload.single('resume'), updateCanProfile )
 router.route("/candidate/").put(protect, upload.none(), updateCanProfile);
-router.route("/candidate/:id").delete(protect, delCvFile);
+// router.route("/candidate/:id").delete(protect, delCvFile);
 //Candidate/Resume
 router.route("/candidate/resume").post(protect, createResume);
+router.route("/candidate/resume/:fileId").delete(protect, delCvFile);
 router
   .route("/candidate/resume")
   .put(protect, upload.single("cv_file"), updateResume);

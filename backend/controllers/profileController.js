@@ -7,6 +7,7 @@ const EmpProfile = require("../models/empProfileModel");
 const CanResume = require("../models/canResumeModel");
 const path = require("path");
 const fs = require("fs");
+const AWS = require("aws-sdk");
 
 // ---------------------------------------------------------------- CANDIDATE CONTROLLER
 
@@ -146,44 +147,43 @@ const getCanProfile = asyncHandler(async (req, res) => {
 // @access  Private
 const delCvFile = asyncHandler(async (req, res) => {
   try {
+    const { fileId } = req.params; // ID del archivo a eliminar
+    const userId = req.user.id;
+
     // Buscar el perfil del usuario
-    const profile = await CanProfile.findOne({ user: req.user._id });
-    if (!profile) {
-      return res.status(404).json({ error: "Perfil no encontrado" });
+    let resume = await CanResume.findOne({ user: userId });
+    if (!resume) {
+      return res.status(404).json({ message: "Perfil no encontrado" });
     }
 
-    // Encontrar el índice del archivo en el array "resume"
-    const index = profile.resume.findIndex(
-      (item) => item._id.toString() === req.params.id
+    // Buscar el archivo en el array cv_file
+    const fileIndex = resume.cv_file.findIndex(
+      (file) => file._id.toString() === fileId
     );
-    if (index === -1) {
-      return res
-        .status(404)
-        .json({ error: "Archivo no encontrado en el perfil" });
+    if (fileIndex === -1) {
+      return res.status(404).json({ message: "Archivo no encontrado" });
     }
 
-    // Obtener la ruta del archivo relativa al directorio de uploads
-    const filePath = path.join(
-      __dirname,
-      "..",
-      "uploads",
-      profile.resume[index].relativePath.split("uploads")[1]
-    );
+    // Obtener el nombre del archivo para eliminar de S3
+    const fileKey = resume.cv_file[fileIndex].fileName;
 
-    // Eliminar el archivo del sistema de archivos
-    fs.unlinkSync(filePath);
+    // Eliminar el archivo de AWS S3
+    const deleteParams = {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: fileKey,
+    };
 
-    // Eliminar el archivo del array "resume"
-    profile.resume.splice(index, 1);
+    await s3.deleteObject(deleteParams).promise();
 
-    // Guardar el perfil actualizado
-    await profile.save();
+    // Eliminar el archivo del array cv_file
+    resume.cv_file.splice(fileIndex, 1);
 
-    res
-      .status(200)
-      .json({ message: "Archivo eliminado correctamente", profile });
+    // Guardar cambios en la base de datos
+    await resume.save();
+
+    res.status(200).json({ message: "Archivo eliminado correctamente" });
   } catch (error) {
-    console.log("Error al eliminar el archivo:", error);
+    console.error("Error al eliminar archivo:", error);
     res.status(500).json({ error: "Error al eliminar el archivo" });
   }
 });
