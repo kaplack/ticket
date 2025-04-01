@@ -146,6 +146,12 @@ const getCanProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/profile/
 // @access  Private
 const delCvFile = asyncHandler(async (req, res) => {
+  // Configura AWS S3
+  const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+  });
   try {
     const { fileId } = req.params; // ID del archivo a eliminar
     const resume = await CanResume.findOne({ user: req.user.id });
