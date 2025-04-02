@@ -25,7 +25,7 @@ router.route("/candidate/").get(protect, getCanProfile);
 router
   .route("/candidate/")
   .put(protect, upload.single("profilePicture"), updateCanProfile);
-router.route("/candidate/:fileKey").delete(protect, delProfilePicture);
+router.route("/candidate/").delete(protect, delProfilePicture);
 //
 // //Candidate/Resume
 router.route("/candidate/resume").post(protect, createResume);
