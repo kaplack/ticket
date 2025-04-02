@@ -7,6 +7,7 @@ const {
   createCanProfile,
   getCanProfile,
   updateCanProfile,
+  delProfilePicture,
   delCvFile,
   createEmpProfile,
   updateEmpProfile,
@@ -24,8 +25,9 @@ router.route("/candidate/").get(protect, getCanProfile);
 router
   .route("/candidate/")
   .put(protect, upload.single("profilePicture"), updateCanProfile);
-// router.route("/candidate/:id").delete(protect, delCvFile);
-//Candidate/Resume
+router.route("/candidate/:fileKey").delete(protect, delProfilePicture);
+//
+// //Candidate/Resume
 router.route("/candidate/resume").post(protect, createResume);
 router.route("/candidate/resume/:fileId").delete(protect, delCvFile);
 router

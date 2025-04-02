@@ -182,6 +182,34 @@ const delCvFile = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Del CV file from a user profile
+// @route   GET /api/profile/
+// @access  Private
+const delProfilePicture = asyncHandler(async (req, res) => {
+  // Configura AWS S3
+  const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION,
+  });
+  try {
+    const { fileKey } = req.params; // ID del archivo a eliminar
+
+    // Eliminar de AWS S3
+    const s3Params = {
+      Bucket: process.env.S3_BUCKET_NAME,
+      Key: fileKey, // Nombre del archivo en S3
+    };
+
+    await s3.deleteObject(s3Params).promise();
+
+    res.json({ message: "Archivo eliminado correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar el archivo:", error);
+    res.status(500).json({ error: "Error al eliminar el archivo" });
+  }
+});
+
 // CANDIDATE /RESUME
 
 // @desc    create user resume
@@ -411,6 +439,7 @@ module.exports = {
   createCanProfile,
   updateCanProfile,
   getCanProfile,
+  delProfilePicture,
   delCvFile,
   createEmpProfile,
   updateEmpProfile,
