@@ -69,6 +69,9 @@ const canProfileSchema = mongoose.Schema(
       type: String,
     },
     socials: [socialSchema],
+    profilePicture: {
+      type: String,
+    },
   },
   {
     timestamps: true,

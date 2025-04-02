@@ -66,19 +66,9 @@ const updateCanProfile = asyncHandler(async (req, res) => {
 
     // Obtener  ruta relativa después de la carpeta 'uploads'
     let relativePath = "";
-    let fileName = "";
-    if (req.file) {
-      console.log(req.file);
-      relativePath = req.file.location;
-      fileName = req.file.key;
 
-      // Si el perfil ya tiene información en el campo resume, agregamos un nuevo objeto
-      if (profile.resume && profile.resume.length > 0) {
-        profile.resume.push({ fileName, relativePath });
-      } else {
-        // Si no hay información en el campo resume, lo inicializamos con un array que contiene el nuevo objeto
-        profile.resume = [{ fileName, relativePath }];
-      }
+    if (req.file) {
+      relativePath = req.file.location;
     }
 
     if (!profile) {
@@ -117,6 +107,7 @@ const updateCanProfile = asyncHandler(async (req, res) => {
     if (professionalProfile !== undefined)
       profile.professionalProfile = professionalProfile;
     if (socials !== undefined) profile.socials = JSON.parse(socials);
+    if (profilePicture !== undefined) profile.profilePicture = relativePath;
 
     await profile.save();
 
