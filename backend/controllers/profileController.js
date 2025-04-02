@@ -193,7 +193,7 @@ const delProfilePicture = asyncHandler(async (req, res) => {
     region: process.env.AWS_REGION,
   });
   try {
-    const { fileKey } = req.params; // ID del archivo a eliminar
+    const { fileKey } = req.body; // ID del archivo a eliminar
 
     // Eliminar de AWS S3
     const s3Params = {
