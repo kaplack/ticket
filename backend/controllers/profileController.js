@@ -69,7 +69,7 @@ const updateCanProfile = asyncHandler(async (req, res) => {
 
     if (req.file) {
       relativePath = req.file.location;
-      console.log(relativePath);
+      //console.log(relativePath);
     }
 
     if (!profile) {
@@ -108,7 +108,7 @@ const updateCanProfile = asyncHandler(async (req, res) => {
     if (professionalProfile !== undefined)
       profile.professionalProfile = professionalProfile;
     if (socials !== undefined) profile.socials = JSON.parse(socials);
-    if (profilePicture !== undefined) profile.profilePicture = relativePath;
+    if (relativePath) profile.profilePicture = relativePath;
 
     await profile.save();
 
