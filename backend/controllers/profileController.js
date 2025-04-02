@@ -69,6 +69,7 @@ const updateCanProfile = asyncHandler(async (req, res) => {
 
     if (req.file) {
       relativePath = req.file.location;
+      console.log(relativePath);
     }
 
     if (!profile) {
