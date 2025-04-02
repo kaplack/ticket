@@ -194,6 +194,7 @@ const delProfilePicture = asyncHandler(async (req, res) => {
   });
   try {
     const { fileKey } = req.body; // ID del archivo a eliminar
+    console.log("fileKey: ", fileKey);
 
     // Eliminar de AWS S3
     const s3Params = {
