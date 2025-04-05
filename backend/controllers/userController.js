@@ -98,28 +98,36 @@ const updateUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password, profile } = req.body;
 
-  const user = await User.findOne({ email });
+  try {
+    const user = await User.findOne({ email });
 
-  console.log("loginUser: ", user);
+    console.log("loginUser: ", user);
 
-  //Check user and password match
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
 
-  if (
-    user &&
-    user.profile === profile &&
-    (await bcrypt.compare(password, user.password))
-  ) {
-    res.status(200).json({
-      _id: user._id,
-      email: user.email,
-      phone: user.phone,
-      profile: user.profile,
-      picture: user.picture,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(401);
-    throw new Error("Ivalid Credential or chose the correct profile");
+    // Check profile and password
+    if (
+      user.profile === profile &&
+      (await bcrypt.compare(password, user.password))
+    ) {
+      res.status(200).json({
+        _id: user._id,
+        email: user.email,
+        phone: user.phone,
+        profile: user.profile,
+        picture: user.picture,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(401);
+      throw new Error("Invalid credentials or incorrect profile");
+    }
+  } catch (error) {
+    res.status(res.statusCode === 200 ? 500 : res.statusCode);
+    throw new Error(error.message || "Something went wrong");
   }
 });
 
