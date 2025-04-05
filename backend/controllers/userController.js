@@ -100,6 +100,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
 
+  console.log("loginUser: ", user);
+
   //Check user and password match
 
   if (
