@@ -343,7 +343,7 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     let relativePath = "";
     let fileName = "";
     if (req.files) {
-      //console.log(req.files);
+      console.log(req.files);
       const imgFiles = req.files;
       for (let key in imgFiles) {
         const imgFile = imgFiles[key][0];
