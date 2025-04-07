@@ -354,19 +354,32 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     if (req.files) {
       console.log(req.files);
       const imgFiles = req.files;
+
       for (let key in imgFiles) {
-        const imgFile = imgFiles[key][0];
-        //console.log("Dentro del for: ", imgFile[0])
-        //console.log(key[0])
-        relativePath = imgFile.location;
-        fileName = imgFile.key;
-        if (key === "logo") {
-          profile.logo = { fileName, relativePath };
+        const files = imgFiles[key];
+
+        if (key === "gallery") {
+          profile.gallery = [];
+
+          for (const imgFile of files) {
+            const relativePath = imgFile.location;
+            const fileName = imgFile.key;
+            profile.gallery.push({ fileName, relativePath });
+          }
         } else {
-          profile.cover = { fileName, relativePath };
+          const imgFile = files[0];
+          const relativePath = imgFile.location;
+          const fileName = imgFile.key;
+
+          if (key === "logo") {
+            profile.logo = { fileName, relativePath };
+          } else {
+            profile.cover = { fileName, relativePath };
+          }
         }
       }
     }
+
     if (!profile) {
       return res.status(404).json({ error: "Perfil no encontrado" });
     }
