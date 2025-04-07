@@ -336,6 +336,12 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
       purpose,
       goal,
       description,
+      linkedin,
+      facebook,
+      instagram,
+      twitter,
+      whatsapp,
+      youtube,
     } = req.body;
     //console.log(facebook, twitter)
 
@@ -382,6 +388,12 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     if (purpose !== undefined) profile.purpose = purpose;
     if (goal !== undefined) profile.goal = goal;
     if (description !== undefined) profile.description = description;
+    if (linkedin !== undefined) profile.linkedin = linkedin;
+    if (facebook !== undefined) profile.facebook = facebook;
+    if (instagram !== undefined) profile.instagram = instagram;
+    if (twitter !== undefined) profile.twitter = twitter;
+    if (whatsapp !== undefined) profile.whatsapp = whatsapp;
+    if (youtube !== undefined) profile.youtube = youtube;
     //console.log(profile)
     await profile.save();
 
