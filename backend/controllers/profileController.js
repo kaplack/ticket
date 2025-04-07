@@ -320,19 +320,22 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     // Los datos del formulario y la imagen subida estarán disponibles en 'req.body' y 'req.file'
     const {
       companyName,
-      compType,
+      tradeName,
+      companyType,
       idNumber,
+      email,
+      phone,
+      ownershipType,
       web,
+      teamSize,
+      estSince,
       country,
-      city,
+      department,
+      province,
       address,
+      purpose,
+      goal,
       description,
-      facebook,
-      twitter,
-      linkedin,
-      whatsapp,
-      instagram,
-      youtube,
     } = req.body;
     //console.log(facebook, twitter)
 
@@ -363,19 +366,22 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     }
     // Actualizar el perfil del candidato con el resto de los datos
     if (companyName !== undefined) profile.companyName = companyName;
-    if (compType !== undefined) profile.compType = compType;
+    if (tradeName !== undefined) profile.tradeName = tradeName;
+    if (companyType !== undefined) profile.companyType = companyType;
     if (idNumber !== undefined) profile.idNumber = idNumber;
+    if (email !== undefined) profile.email = email;
+    if (phone !== undefined) profile.phone = phone;
+    if (ownershipType !== undefined) profile.ownershipType = ownershipType;
     if (web !== undefined) profile.web = web;
+    if (teamSize !== undefined) profile.teamSize = teamSize;
+    if (estSince !== undefined) profile.estSince = estSince;
     if (country !== undefined) profile.country = country;
-    if (city !== undefined) profile.city = city;
+    if (department !== undefined) profile.department = department;
+    if (province !== undefined) profile.province = province;
     if (address !== undefined) profile.address = address;
+    if (purpose !== undefined) profile.purpose = purpose;
+    if (goal !== undefined) profile.goal = goal;
     if (description !== undefined) profile.description = description;
-    if (facebook !== undefined) profile.facebook = facebook;
-    if (twitter !== undefined) profile.twitter = twitter;
-    if (linkedin !== undefined) profile.linkedin = linkedin;
-    if (whatsapp !== undefined) profile.whatsapp = whatsapp;
-    if (instagram !== undefined) profile.instagram = instagram;
-    if (youtube !== undefined) profile.youtube = youtube;
     //console.log(profile)
     await profile.save();
 
