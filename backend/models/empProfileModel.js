@@ -1,104 +1,107 @@
-const mongoose = require('mongoose');
+const { GlobalAccelerator } = require("aws-sdk");
+const mongoose = require("mongoose");
 
 const imgSchema = new mongoose.Schema({
-    fileName: String,
-    relativePath: String
+  fileName: String,
+  relativePath: String,
 });
 
-const emProfileSchema = mongoose.Schema({
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        //type: String,
-        require: true,
-        ref:'User'
+const emProfileSchema = mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      //type: String,
+      require: true,
+      ref: "User",
     },
-    companyName:{
-        type: String
+    companyName: {
+      type: String,
     },
-    phone:{
-        type: String
+    tradeName: {
+      type: String,
     },
-    email:{
-        type: String
+    companyType: {
+      type: String,
     },
-    compType:{
-        type: String,   
-        //enum: ['Publica', 'Privada']
+    idNumber: {
+      type: String,
+      //enum: ['RUC', 'RUS']
     },
-    idNumber:{
-        type: String,
-        //enum: ['RUC', 'RUS']
+    email: {
+      type: String,
     },
-    web:{
-        type: String,
-        //enum: ['RUC', 'RUS']
+    phone: {
+      type: String,
     },
-    numCol:{
-        type: String,
+    ownershipType: {
+      type: String,
     },
-    description:{
-        type: String,
-        
+    web: {
+      type: String,
+      //enum: ['RUC', 'RUS']
     },
-    mission:{
-        type: String,
-        
+    teamSize: {
+      type: String,
+      //enum: ['RUC', 'RUS']
     },
-    vision:{
-        type: String,
-        
+    estSince: {
+      type: String,
+      //enum: ['RUC', 'RUS']
     },
-    ubication:{
-        type: String,
-        
+    country: {
+      type: String,
     },
-    address:{
-        type: String,
-        
+    department: {
+      type: String,
     },
-    city:{
-        type: String,
-        
+    province: {
+      type: String,
     },
-    country:{
-        type: String,
-        
+    address: {
+      type: String,
     },
-    worksNumber:{
-        type: String,
-        
+    purpose: {
+      type: String,
     },
-    sector:{
-        type: String,
-        
+    goal: {
+      type: String,
     },
-    rating:{
-        type: Number,
+    description: {
+      type: String,
     },
-    logo:[imgSchema],
-    cover:[imgSchema],
+
+    sector: {
+      type: String,
+    },
+    rating: {
+      type: Number,
+    },
+    logo: [imgSchema],
+    cover: [imgSchema],
+    gallery: [imgSchema],
 
     facebook: {
-        type: String,
+      type: String,
     },
     twitter: {
-        type: String,
+      type: String,
     },
     linkedin: {
-        type: String,
+      type: String,
     },
     whatsapp: {
-        type: String,
+      type: String,
     },
     instagram: {
-        type: String,
+      type: String,
     },
     youtube: {
-        type: String,
-    }
-}, 
-{
-    timestamps: true
-})
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model('EmProfile', emProfileSchema)
+module.exports = mongoose.model("EmProfile", emProfileSchema);
