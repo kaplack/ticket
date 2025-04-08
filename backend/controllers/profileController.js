@@ -359,7 +359,10 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
         const files = imgFiles[key];
 
         if (key === "gallery") {
-          profile.gallery = [];
+          // Asegúrate de no reemplazar la galería completa
+          if (!profile.gallery) {
+            profile.gallery = [];
+          }
 
           for (const imgFile of files) {
             const relativePath = imgFile.location;
