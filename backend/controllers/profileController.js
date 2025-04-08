@@ -348,9 +348,16 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     // Obtener el perfil actual
     let profile = await EmpProfile.findOne({ user: req.user.id });
 
+    //Delete item gallery by id
+    if (req.body.deletedGallery) {
+      const fileToDelete = req.body.deletedGallery;
+
+      profile.gallery = profile.gallery.filter(
+        (file) => file._id !== fileToDelete
+      );
+    }
     // Obtener  ruta relativa después de la carpeta 'uploads'
-    let relativePath = "";
-    let fileName = "";
+
     if (req.files) {
       console.log(req.files);
       const imgFiles = req.files;
