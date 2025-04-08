@@ -42,13 +42,16 @@ router.route("/candidate/resume").get(protect, getCanResume);
 router.route("/employer").post(protect, createEmpProfile);
 router.route("/employer").get(protect, getEmpProfile);
 router.route("/allemployers").get(getEmpAllProfile);
-router.route("/employer").put(
-  protect,
-  upload.fields([
-    { name: "logo", maxCount: 1 },
-    { name: "cover", maxCount: 1 },
-  ]),
-  updateEmpProfile
-);
+router
+  .route("/employer")
+  .put(
+    protect,
+    upload.fields([
+      { name: "logo", maxCount: 1 },
+      { name: "cover", maxCount: 1 },
+      { name: "gallery" },
+    ]),
+    updateEmpProfile
+  );
 
 module.exports = router;
