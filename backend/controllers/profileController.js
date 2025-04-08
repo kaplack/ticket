@@ -354,7 +354,7 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
       console.log("fileToDelete: ", fileToDelete);
 
       profile.gallery = profile.gallery.filter(
-        (file) => file._id !== fileToDelete
+        (file) => file.fileName !== fileToDelete
       );
       console.log("profile.gallery: ", profile.gallery);
     }
