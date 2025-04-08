@@ -351,10 +351,12 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
     //Delete item gallery by id
     if (req.body.deletedGallery) {
       const fileToDelete = req.body.deletedGallery;
+      console.log("fileToDelete: ", fileToDelete);
 
       profile.gallery = profile.gallery.filter(
         (file) => file._id !== fileToDelete
       );
+      console.log("profile.gallery: ", profile.gallery);
     }
     // Obtener  ruta relativa después de la carpeta 'uploads'
 
