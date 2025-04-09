@@ -4,13 +4,13 @@ const {} = require("../controllers/workController");
 
 const { protect } = require("../middleware/authMiddleware");
 
-router.route("/application").post(protect, createApplication);
+router.route("/").post(protect, createApplication);
 
 router
-  .route("/application/:id")
+  .route("/:id")
   .get(protect, getApplication)
   .delete(protect, deleteApplication)
   .put(protect, updateApplication);
-router.get("/application/my", protect, getMyApplications);
-router.get("/application/bywork/:workId", protect, getApplicationsByWork);
+router.get("/my", protect, getMyApplications);
+router.get("/bywork/:workId", protect, getApplicationsByWork);
 module.exports = router;
