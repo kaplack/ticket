@@ -18,7 +18,14 @@ const createApplication = asyncHandler(async (req, res) => {
         .json({ error: "Falta el ID del trabajo (workId)" });
     }
 
-    // Validar si ya se postuló
+    // Verificar si el usuario tiene perfil de CANDIDATE
+    if (req.user.profile !== "Candidate") {
+      return res
+        .status(403)
+        .json({ error: "Solo candidatos pueden postularse." });
+    }
+
+    // Verificar si ya se postuló a ese trabajo
     const alreadyApplied = await Application.findOne({
       user: req.user.id,
       workId,
@@ -30,7 +37,7 @@ const createApplication = asyncHandler(async (req, res) => {
         .json({ error: "Ya te has postulado a este trabajo." });
     }
 
-    // Crear nueva postulación
+    // Crear la postulación
     const newApplication = await Application.create({
       user: req.user.id,
       workId,
@@ -44,7 +51,7 @@ const createApplication = asyncHandler(async (req, res) => {
 });
 
 // @desc    update application
-// @route   PUT /api/application/:id
+// @route   PUT /api/application/item/:id
 // @access  Private
 // Update application controller
 const updateApplication = asyncHandler(async (req, res) => {
@@ -71,7 +78,7 @@ const updateApplication = asyncHandler(async (req, res) => {
 });
 
 // @desc    get application by id
-// @route   GET /api/application/:id
+// @route   GET /api/application/item/:id
 // @access  Private
 // Get application controller
 const getApplication = asyncHandler(async (req, res) => {
@@ -97,7 +104,7 @@ const getApplication = asyncHandler(async (req, res) => {
 });
 
 // @desc    delete application by id
-// @route   DELETE /api/application/:id
+// @route   DELETE /api/application/item/:id
 // @access  Private
 // Delete application controller
 const deleteApplication = asyncHandler(async (req, res) => {
@@ -114,7 +121,7 @@ const deleteApplication = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get my applications by User Id
-// @route   GET /api/application/:id
+// @route   GET /api/application/my
 // @access  Private
 // Get my applications controller
 const getMyApplications = asyncHandler(async (req, res) => {

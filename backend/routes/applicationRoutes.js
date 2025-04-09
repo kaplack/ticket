@@ -14,7 +14,7 @@ const { protect } = require("../middleware/authMiddleware");
 router.route("/").post(protect, createApplication);
 
 router
-  .route("/:id")
+  .route("/item/:id")
   .get(protect, getApplication)
   .delete(protect, deleteApplication)
   .put(protect, updateApplication);
