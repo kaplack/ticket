@@ -1,6 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const {} = require("../controllers/workController");
+const {
+  createApplication,
+  updateApplication,
+  getApplication,
+  deleteApplication,
+  getMyApplications,
+  getApplicationsByWork,
+} = require("../controllers/applicationController");
 
 const { protect } = require("../middleware/authMiddleware");
 
