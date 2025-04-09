@@ -1,36 +1,3 @@
-// router
-//   .route("/application")
-//   .post(protect, createApplication)
-//   .put(protect, updateApplication);
-// router
-//   .route("/application/:id")
-//   .get(protect, getApplication)
-//   .delete(protect, deleteApplication);
-// router.route("/application/all").get(getAllApplications);
-
-// const applicationSchema = new mongoose.Schema(
-//   {
-//     candidate: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "User", // asumiendo que tienes una colección 'users'
-//       required: true,
-//     },
-//     job: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "Job", // asumiendo que tienes una colección 'jobs'
-//       required: true,
-//     },
-//     appliedAt: {
-//       type: Date,
-//       default: Date.now,
-//     },
-//     status: {
-//       type: String,
-//       enum: ["pending", "accepted", "rejected"],
-//       default: "pending",
-//     },
-//   },
-
 const asyncHandler = require("express-async-handler");
 const Application = require("../models/applicationModel");
 const User = require("../models/userModel");
