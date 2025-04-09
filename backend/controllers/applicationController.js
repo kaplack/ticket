@@ -126,8 +126,12 @@ const deleteApplication = asyncHandler(async (req, res) => {
 // Get my applications controller
 const getMyApplications = asyncHandler(async (req, res) => {
   const applications = await Application.find({ user: req.user.id })
-    .populate("workId") // Trae información del trabajo
-    .sort({ createdAt: -1 }); // Opcional: las más recientes primero
+    .populate("workId") // Podés hacer .populate("workId", "title company location")
+    .sort({ createdAt: -1 });
+
+  if (applications.length === 0) {
+    return res.status(404).json({ error: "No tienes postulaciones todavía." });
+  }
 
   res.json(applications);
 });
