@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Application = require("../models/applicationModel");
+const CanProfile = require("../models/canProfileModel");
 const User = require("../models/userModel");
 const Works = require("../models/workModel");
 
