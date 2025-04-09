@@ -145,7 +145,8 @@ const getApplicationsByWork = asyncHandler(async (req, res) => {
 
   // Buscar todas las postulaciones al trabajo
   const applications = await Application.find({ workId })
-    .populate("user", "email") // Obtenemos solo el email del usuario
+    .populate("user", "email")
+    .populate("workId", "title") // Obtenemos solo el email del usuario
     .sort({ createdAt: -1 });
 
   // Para cada postulación, buscamos el perfil asociado
