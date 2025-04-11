@@ -48,7 +48,7 @@ const getWork = asyncHandler(async (req, res) => {
   // Traer solo algunos campos del perfil del candidato
   const empProfile = await EmpProfile.findOne({
     user: req.user.id,
-  }).select("tradeName CompanyName logo cover");
+  }).select("tradeName companyName logo cover");
 
   res.status(200).json({
     ...work.toObject(),
