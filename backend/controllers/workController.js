@@ -245,7 +245,7 @@ const getAllWorks = asyncHandler(async (req, res) => {
 // @route   GET /allworks/:id
 // @access  Public
 const getPublicWork = asyncHandler(async (req, res) => {
-  const work = await Work.findById(req.params.id);
+  const work = await Work.findById(req.params.workId);
 
   if (!work) {
     res.status(400);
