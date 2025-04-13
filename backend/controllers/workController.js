@@ -45,7 +45,7 @@ const getWork = asyncHandler(async (req, res) => {
     throw new Error("Not Authorizer");
   }
 
-  // Traer solo algunos campos del perfil del candidato
+  // Traer solo algunos campos del perfil de la empresa
   const empProfile = await EmpProfile.findOne({
     user: req.user.id,
   }).select("tradeName companyName logo cover gallery web");
@@ -251,6 +251,17 @@ const getPublicWork = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Work not found");
   }
+
+  // Traer solo algunos campos del perfil de la empresa
+  const empProfile = await EmpProfile.findOne({
+    user: work.user._id,
+  }).select("tradeName companyName logo cover gallery web");
+
+  res.status(200).json({
+    ...work.toObject(),
+    companyProfile: empProfile || null, // Agregar el perfil de la empresa});
+  });
+
   res.status(200).json(work);
 });
 
