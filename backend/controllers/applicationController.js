@@ -29,7 +29,7 @@ const createApplication = asyncHandler(async (req, res) => {
   if (alreadyApplied) {
     return res
       .status(400)
-      .json({ error: "Ya te has postulado a este trabajo." });
+      .json({ message: "Ya te has postulado a este trabajo." });
   }
 
   const newApplication = await Application.create({
