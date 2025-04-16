@@ -9,45 +9,35 @@ const Works = require("../models/workModel");
 // @access  Private
 // Controlador para crear application
 const createApplication = asyncHandler(async (req, res) => {
-  try {
-    const { workId } = req.body;
+  const { workId } = req.body;
 
-    if (!workId) {
-      return res
-        .status(400)
-        .json({ error: "Falta el ID del trabajo (workId)" });
-    }
-
-    // Verificar si el usuario tiene perfil de CANDIDATE
-    if (req.user.profile !== "Candidate") {
-      return res
-        .status(403)
-        .json({ error: "Solo candidatos pueden postularse." });
-    }
-
-    // Verificar si ya se postuló a ese trabajo
-    const alreadyApplied = await Application.findOne({
-      user: req.user.id,
-      workId,
-    });
-
-    if (alreadyApplied) {
-      return res
-        .status(400)
-        .json({ error: "Ya te has postulado a este trabajo." });
-    }
-
-    // Crear la postulación
-    const newApplication = await Application.create({
-      user: req.user.id,
-      workId,
-    });
-
-    res.status(201).json(newApplication);
-  } catch (error) {
-    console.log("Error al aplicar:", error);
-    res.status(500).json({ error: "Error al aplicar" });
+  if (!workId) {
+    return res.status(400).json({ error: "Falta el ID del trabajo (workId)" });
   }
+
+  if (req.user.profile !== "Candidate") {
+    return res
+      .status(403)
+      .json({ error: "Solo candidatos pueden postularse." });
+  }
+
+  const alreadyApplied = await Application.findOne({
+    user: req.user.id,
+    workId,
+  });
+
+  if (alreadyApplied) {
+    return res
+      .status(400)
+      .json({ error: "Ya te has postulado a este trabajo." });
+  }
+
+  const newApplication = await Application.create({
+    user: req.user.id,
+    workId,
+  });
+
+  res.status(201).json(newApplication);
 });
 
 // @desc    update application
