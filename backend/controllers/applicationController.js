@@ -30,7 +30,7 @@ const createApplication = asyncHandler(async (req, res) => {
     console.log({ error: "Ya te postulaste a este trabajo." });
     return res
       .status(400)
-      .json({ message: "Ya te has postulado a este trabajo." });
+      .json({ error: "Ya te has postulado a este trabajo." });
   }
 
   const newApplication = await Application.create({
