@@ -234,23 +234,29 @@ const updateWork = asyncHandler(async (req, res) => {
 // @access  Public
 
 const getAllWorks = asyncHandler(async (req, res) => {
-  const work = await Work.find();
+  const works = await Work.find();
 
-  //filtrar solo los elementos necesarios para el JobList
+  const worksWithEmpData = await Promise.all(
+    works.map(async (item) => {
+      const emp = await EmpProfile.findOne({ user: item.user });
 
-  work.map((item) => {
-    //Agregar a cada item el logo de la empresa buscando en EmpProfile
-    EmpProfile.findOne({ user: item.user }).then((emp) => {
-      item.logo = emp.logo;
-      item.companyName = emp.companyName;
-      item.tradeName = emp.tradeName;
-      item.cover = emp.cover;
-      item.gallery = emp.gallery;
-      item.web = emp.web;
-    });
-  });
+      // Convertimos el item a objeto plano (para que no sea un documento de Mongoose si hace falta)
+      const workObj = item.toObject();
 
-  res.status(200).json(work);
+      if (emp) {
+        workObj.logo = emp.logo;
+        workObj.companyName = emp.companyName;
+        workObj.tradeName = emp.tradeName;
+        workObj.cover = emp.cover;
+        workObj.gallery = emp.gallery;
+        workObj.web = emp.web;
+      }
+
+      return workObj;
+    })
+  );
+
+  res.status(200).json(worksWithEmpData);
 });
 
 // @desc    Get user works
