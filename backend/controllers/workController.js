@@ -238,6 +238,18 @@ const getAllWorks = asyncHandler(async (req, res) => {
 
   //filtrar solo los elementos necesarios para el JobList
 
+  work.map((item) => {
+    //Agregar a cada item el logo de la empresa buscando en EmpProfile
+    EmpProfile.findOne({ user: item.user }).then((emp) => {
+      item.logo = emp.logo;
+      item.companyName = emp.companyName;
+      item.tradeName = emp.tradeName;
+      item.cover = emp.cover;
+      item.gallery = emp.gallery;
+      item.web = emp.web;
+    });
+  });
+
   res.status(200).json(work);
 });
 

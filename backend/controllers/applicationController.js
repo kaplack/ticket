@@ -12,7 +12,9 @@ const createApplication = asyncHandler(async (req, res) => {
   const { workId } = req.body;
 
   if (!workId) {
-    return res.status(400).json({ error: "Falta el ID del trabajo (workId)" });
+    return res
+      .status(400)
+      .json({ message: "Falta el ID del trabajo (workId)" });
   }
 
   if (req.user.profile !== "Candidate") {
@@ -30,7 +32,7 @@ const createApplication = asyncHandler(async (req, res) => {
     console.log({ error: "Ya te postulaste a este trabajo." });
     return res
       .status(400)
-      .json({ error: "Ya te has postulado a este trabajo." });
+      .json({ message: "Ya te has postulado a este trabajo." });
   }
 
   const newApplication = await Application.create({
