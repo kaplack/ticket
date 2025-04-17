@@ -245,10 +245,7 @@ const getAllWorks = asyncHandler(async (req, res) => {
 
       if (emp) {
         workObj.logo = emp.logo;
-        workObj.companyName = emp.companyName;
         workObj.tradeName = emp.tradeName;
-        workObj.cover = emp.cover;
-        workObj.gallery = emp.gallery;
         workObj.web = emp.web;
       }
 
