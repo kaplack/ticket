@@ -256,6 +256,34 @@ const getAllWorks = asyncHandler(async (req, res) => {
   res.status(200).json(worksWithEmpData);
 });
 
+// @desc    Get All works
+// @route   GET /allworks/
+// @access  Public
+
+const getAllWorksPaginated = asyncHandler(async (req, res) => {
+  // Obtén los parámetros de página y límite de la query string
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  // Obtén los trabajos y el total de trabajos en paralelo
+  const [works, total] = await Promise.all([
+    Work.find().skip(skip).limit(limit), // Obtiene los trabajos con paginación
+    Work.countDocuments(), // Obtiene el total de documentos
+  ]);
+
+  // Calcula el número total de páginas
+  const totalPages = Math.ceil(total / limit);
+
+  // Responde con los datos de los trabajos, total de trabajos y páginas
+  res.json({
+    data: works,
+    total,
+    page,
+    totalPages,
+  });
+});
+
 // @desc    Get user works
 // @route   GET /allworks/:id
 // @access  Public
@@ -287,5 +315,6 @@ module.exports = {
   updateWork,
   deleteWork,
   getAllWorks,
+  getAllWorksPaginated,
   getPublicWork,
 };
