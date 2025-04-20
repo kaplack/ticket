@@ -261,27 +261,39 @@ const getAllWorks = asyncHandler(async (req, res) => {
 // @access  Public
 
 const getAllWorksPaginated = asyncHandler(async (req, res) => {
-  // Obtén los parámetros de página y límite de la query string
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-  const skip = (page - 1) * limit;
+  try {
+    // Obtén los parámetros de página y límite de la query string
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
 
-  // Obtén los trabajos y el total de trabajos en paralelo
-  const [works, total] = await Promise.all([
-    Work.find().skip(skip).limit(limit), // Obtiene los trabajos con paginación
-    Work.countDocuments(), // Obtiene el total de documentos
-  ]);
+    // Validaciones simples
+    if (page <= 0 || limit <= 0) {
+      res.status(400);
+      throw new Error("Los parámetros 'page' y 'limit' deben ser mayores a 0.");
+    }
 
-  // Calcula el número total de páginas
-  const totalPages = Math.ceil(total / limit);
+    const skip = (page - 1) * limit;
 
-  // Responde con los datos de los trabajos, total de trabajos y páginas
-  res.json({
-    data: works,
-    total,
-    page,
-    totalPages,
-  });
+    // Obtén los trabajos y el total de trabajos en paralelo
+    const [works, total] = await Promise.all([
+      Work.find().skip(skip).limit(limit),
+      Work.countDocuments(),
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    // Respuesta
+    res.json({
+      data: works,
+      total,
+      page,
+      totalPages,
+    });
+  } catch (error) {
+    console.error("Error al obtener trabajos paginados:", error.message);
+    res.status(500);
+    throw new Error("Hubo un error al obtener los trabajos paginados.");
+  }
 });
 
 // @desc    Get user works
