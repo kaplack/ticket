@@ -265,10 +265,15 @@ const getAllWorksPaginated = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-    const searchTerm = req.query.search || "";
-    const locationTerm = req.query.location || "";
-    const category = req.query.category || "";
-    const sort = req.query.sort || "Más reciente";
+
+    const searchTerm =
+      typeof req.query.search === "string" ? req.query.search : "";
+    const locationTerm =
+      typeof req.query.location === "string" ? req.query.location : "";
+    const category =
+      typeof req.query.category === "string" ? req.query.category : "";
+    const sort =
+      typeof req.query.sort === "string" ? req.query.sort : "Más reciente";
 
     const searchRegex = new RegExp(searchTerm, "i");
     const locationRegex = new RegExp(locationTerm, "i");
