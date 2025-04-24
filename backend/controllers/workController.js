@@ -260,41 +260,62 @@ const getAllWorks = asyncHandler(async (req, res) => {
 // @route   GET /allworks/
 // @access  Public
 
-const getAllWorksPaginated = asyncHandler(async (req, res) => {
+const getAllWorksPaginated = async (req, res) => {
   try {
-    // Obtén los parámetros de página y límite de la query string
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const searchTerm = req.query.search || "";
+    const locationTerm = req.query.location || "";
+    const category = req.query.category || "";
+    const sort = req.query.sort || "Más reciente";
 
-    // Validaciones simples
-    if (page <= 0 || limit <= 0) {
-      res.status(400);
-      throw new Error("Los parámetros 'page' y 'limit' deben ser mayores a 0.");
+    const searchRegex = new RegExp(searchTerm, "i");
+    const locationRegex = new RegExp(locationTerm, "i");
+
+    const filter = {
+      active: true,
+      workStatus: "publicado",
+    };
+
+    if (searchTerm) {
+      filter.$or = [{ title: searchRegex }, { description: searchRegex }];
     }
 
-    const skip = (page - 1) * limit;
+    if (locationTerm) {
+      filter.location = locationRegex;
+    }
 
-    // Obtén los trabajos y el total de trabajos en paralelo
-    const [works, total] = await Promise.all([
-      Work.find().skip(skip).limit(limit),
-      Work.countDocuments(),
-    ]);
+    if (category) {
+      filter.jobCategory = category;
+    }
+
+    let sortOption = {};
+    if (sort === "Más reciente") {
+      sortOption = { iDate: -1 };
+    } else if (sort === "Mejor pagado") {
+      sortOption = { workPay: -1 };
+    }
+
+    const total = await Work.countDocuments(filter);
+    const works = await Work.find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit);
 
     const totalPages = Math.ceil(total / limit);
 
-    // Respuesta
-    res.json({
-      data: works,
+    res.status(200).json({
       total,
-      page,
+      data: works,
       totalPages,
+      page,
     });
   } catch (error) {
-    console.error("Error al obtener trabajos paginados:", error.message);
-    res.status(500);
-    throw new Error("Hubo un error al obtener los trabajos paginados.");
+    console.error("Error getting paginated works:", error);
+    res.status(500).json({ message: "Server error" });
   }
-});
+};
 
 // @desc    Get user works
 // @route   GET /allworks/:id
