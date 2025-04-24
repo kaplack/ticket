@@ -308,11 +308,28 @@ const getAllWorksPaginated = async (req, res) => {
       .skip(skip)
       .limit(limit);
 
+    // Aquí agregamos los datos del empleador a cada trabajo
+    const worksWithEmpData = await Promise.all(
+      works.map(async (item) => {
+        const emp = await EmpProfile.findOne({ user: item.user });
+
+        const workObj = item.toObject();
+
+        if (emp) {
+          workObj.logo = emp.logo;
+          workObj.tradeName = emp.tradeName;
+          workObj.web = emp.web;
+        }
+
+        return workObj;
+      })
+    );
+
     const totalPages = Math.ceil(total / limit);
 
     res.status(200).json({
       total,
-      data: works,
+      data: worksWithEmpData,
       totalPages,
       page,
     });
