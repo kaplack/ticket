@@ -21,14 +21,13 @@ const {
 //ruta para crear o actualizar el perfil del candidato
 router.route("/candidate/").post(protect, createCanProfile);
 router.route("/candidate/").get(protect, getCanProfile);
-//router.route("/candidate/").put(protect, upload.single('resume'), updateCanProfile )
 router
   .route("/candidate/")
   .put(protect, upload.single("profilePicture"), updateCanProfile);
 router
   .route("/candidate/delProfilePicture")
   .post(protect, upload.none(), delProfilePicture);
-//
+
 // //Candidate/Resume
 router.route("/candidate/resume").post(protect, createResume);
 router.route("/candidate/resume/:fileId").delete(protect, delCvFile);
@@ -36,9 +35,9 @@ router
   .route("/candidate/resume")
   .put(protect, upload.single("cv_file"), updateResume);
 router.route("/candidate/resume").get(protect, getCanResume);
+router.route("/candidate/:candidateId").get(protect, getCanProfile);
 
 //ruta para crear o actualizar el perfil de la empresa
-
 router.route("/employer").post(protect, createEmpProfile);
 router.route("/employer").get(protect, getEmpProfile);
 router.route("/allemployers").get(getEmpAllProfile);
