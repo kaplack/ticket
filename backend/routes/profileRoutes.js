@@ -35,7 +35,7 @@ router
   .route("/candidate/resume")
   .put(protect, upload.single("cv_file"), updateResume);
 router.route("/candidate/resume").get(protect, getCanResume);
-router.route("/candidate/:candidateId").get(protect, getCanProfile);
+router.route("/candidate/:candidateId").get(getCanProfile);
 
 //ruta para crear o actualizar el perfil de la empresa
 router.route("/employer").post(protect, createEmpProfile);
