@@ -124,7 +124,9 @@ const updateCanProfile = asyncHandler(async (req, res) => {
 // @access  Private
 const getCanProfile = asyncHandler(async (req, res) => {
   // Get works using id in the JWT
-  const profile = await CanProfile.findOne({ user: req.user.id });
+  const userId = req.params.candidateId || req.user.id;
+
+  const profile = await CanProfile.findOne({ user: userId });
 
   if (!profile) {
     res.status(401);
