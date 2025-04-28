@@ -283,8 +283,10 @@ const updateResume = asyncHandler(async (req, res) => {
 // @route   GET /api/profile/candidate/resume
 // @access  Private
 const getCanResume = asyncHandler(async (req, res) => {
+  const userId = req.params.userIdo || req.user.id;
+
   // Get works using id in the JWT
-  const resume = await CanResume.findOne({ user: req.user.id });
+  const resume = await CanResume.findOne({ user: userId });
 
   if (!resume) {
     res.status(401);
