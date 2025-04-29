@@ -53,5 +53,6 @@ router
     ]),
     updateEmpProfile
   );
+router.route("/employer/:userId").get(protect, getEmpProfile);
 
 module.exports = router;

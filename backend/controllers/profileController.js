@@ -437,8 +437,9 @@ const updateEmpProfile = asyncHandler(async (req, res) => {
 // @route   GET /api/profile/
 // @access  Private
 const getEmpProfile = asyncHandler(async (req, res) => {
+  const userId = req.params.userId || req.user.id;
   // Get works using id in the JWT
-  const profile = await EmpProfile.findOne({ user: req.user.id });
+  const profile = await EmpProfile.findOne({ user: userId });
 
   if (!profile) {
     res.status(401);
