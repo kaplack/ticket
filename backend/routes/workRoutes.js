@@ -25,5 +25,5 @@ router
   .put(protect, updateWork)
   .delete(protect, deleteWork);
 router.route("/work/:id").get(protect, getPublicWork);
-router.route("/employer/:userId/list").get(protect, getWorksByEmployer);
+router.route("/employer/:userId/list").get(getWorksByEmployer);
 module.exports = router;
