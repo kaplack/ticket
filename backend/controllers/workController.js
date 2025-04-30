@@ -367,11 +367,11 @@ const getPublicWork = asyncHandler(async (req, res) => {
 // @route   GET /api/employers/:id/works?limit=5
 // @access  Public or Private (según tu lógica)
 const getWorksByEmployer = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
   const limit = parseInt(req.query.limit) || 5;
 
   // Buscar el usuario
-  const employer = await User.findById(id);
+  const employer = await User.findById(userId);
   if (!employer) {
     res.status(404);
     throw new Error("Employer not found");
