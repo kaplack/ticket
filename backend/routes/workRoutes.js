@@ -9,6 +9,7 @@ const {
   getAllWorks,
   getPublicWork,
   getAllWorksPaginated,
+  getWorksByEmployer,
 } = require("../controllers/workController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -24,4 +25,5 @@ router
   .put(protect, updateWork)
   .delete(protect, deleteWork);
 router.route("/work/:id").get(protect, getPublicWork);
+router.route("/employer/:userId/list").get(protect, getWorksByEmployer);
 module.exports = router;

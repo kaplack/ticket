@@ -363,6 +363,34 @@ const getPublicWork = asyncHandler(async (req, res) => {
   res.status(200).json(work);
 });
 
+// @desc    Get works by employer ID
+// @route   GET /api/employers/:id/works?limit=5
+// @access  Public or Private (según tu lógica)
+const getWorksByEmployer = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const limit = parseInt(req.query.limit) || 5;
+
+  // Buscar el usuario
+  const employer = await User.findById(id);
+  if (!employer) {
+    res.status(404);
+    throw new Error("Employer not found");
+  }
+
+  // Validar que el perfil sea tipo Employer (puedes ajustarlo si profile es un array o un string)
+  if (employer.profile !== "Employer") {
+    res.status(400);
+    throw new Error("User is not an employer");
+  }
+
+  // Buscar trabajos
+  const works = await Work.find({ user: id })
+    .sort({ createdAt: -1 })
+    .limit(limit);
+
+  res.status(200).json(works);
+});
+
 module.exports = {
   getWorks,
   getWork,
@@ -372,4 +400,5 @@ module.exports = {
   getAllWorks,
   getAllWorksPaginated,
   getPublicWork,
+  getWorksByEmployer,
 };
