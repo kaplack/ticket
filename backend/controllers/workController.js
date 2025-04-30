@@ -384,7 +384,7 @@ const getWorksByEmployer = asyncHandler(async (req, res) => {
   }
 
   // Buscar trabajos
-  const works = await Work.find({ user: id })
+  const works = await Work.find({ user: userId })
     .sort({ createdAt: -1 })
     .limit(limit);
 
