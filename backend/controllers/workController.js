@@ -387,7 +387,7 @@ const getWorksByEmployer = asyncHandler(async (req, res) => {
 
   // Buscar trabajos y hacer populate del usuario
   const works = await Work.find({ user: userId })
-    .populate("user", "name email") // puedes agregar más campos si lo deseas
+    .populate("User", "name email") // puedes agregar más campos si lo deseas
     .sort({ createdAt: -1 })
     .limit(limit);
 
