@@ -8,6 +8,12 @@ const workSchema = mongoose.Schema(
       require: true,
       ref: "User",
     },
+    // profileId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   //type: String,
+    //   //require: true,
+    //   ref: "EmProfile",
+    // },
     title: {
       type: String,
       require: true,
