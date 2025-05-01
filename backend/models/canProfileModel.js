@@ -11,7 +11,7 @@ const canProfileSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       //type: String,
       require: true,
-      ref: "User",
+      ref: "Users",
     },
     name: {
       type: String,
