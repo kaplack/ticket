@@ -364,31 +364,45 @@ const getPublicWork = asyncHandler(async (req, res) => {
 });
 
 // @desc    Get works by employer ID
-// @route   GET /api/employers/:id/works?limit=5
+// @route   GET /api/employers/:userId/list?limit=5
 // @access  Public or Private (según tu lógica)
 const getWorksByEmployer = asyncHandler(async (req, res) => {
   const { userId } = req.params;
   const limit = parseInt(req.query.limit) || 5;
 
-  // Buscar el usuario
+  // Verificar que el user existe y es employer
   const employer = await User.findById(userId);
   if (!employer) {
     res.status(404);
     throw new Error("Employer not found");
   }
 
-  // Validar que el perfil sea tipo Employer (puedes ajustarlo si profile es un array o un string)
   if (employer.profile !== "Employer") {
     res.status(400);
     throw new Error("User is not an employer");
   }
 
-  // Buscar trabajos
+  // Buscar perfil del empleador una sola vez
+  const empProfile = await EmpProfile.findOne({ user: userId });
+
+  // Buscar trabajos y hacer populate del usuario
   const works = await Work.find({ user: userId })
+    .populate("user", "name email") // puedes agregar más campos si lo deseas
     .sort({ createdAt: -1 })
     .limit(limit);
 
-  res.status(200).json(works);
+  // Agregar datos del perfil al trabajo (si existe)
+  const worksWithEmpData = works.map((item) => {
+    const workObj = item.toObject();
+    if (empProfile) {
+      workObj.logo = empProfile.logo;
+      workObj.tradeName = empProfile.tradeName;
+      workObj.web = empProfile.web;
+    }
+    return workObj;
+  });
+
+  res.status(200).json(worksWithEmpData);
 });
 
 module.exports = {
