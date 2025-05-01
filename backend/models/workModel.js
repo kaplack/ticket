@@ -6,7 +6,7 @@ const workSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       //type: String,
       require: true,
-      ref: "User",
+      ref: "Users",
     },
     // profileId: {
     //   type: mongoose.Schema.Types.ObjectId,
